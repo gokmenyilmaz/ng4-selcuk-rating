@@ -11,9 +11,11 @@ import { AppComponent } from './app.component';
 
 import { MaterialModule } from '@angular/material';
 
+
 @NgModule({
   declarations: [
     AppComponent
+
   ],
   imports: [
     BrowserAnimationsModule,
