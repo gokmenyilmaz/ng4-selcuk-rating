@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 
 
 import { MaterialModule } from '@angular/material';
-
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { MaterialModule } from '@angular/material';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
