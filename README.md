@@ -11,3 +11,5 @@ https://github.com/johnpapa/angular-event-view-cli
 http://angular2-first-look.azurewebsites.net/live-examples/storyline-tracker/eplnkr.html?bust=1496264081348
 https://run.plnkr.co/rqG14iCwqX7DcOyG/dashboard
 
+# realtime
+- https://app.pluralsight.com/player?course=building-web-application-polymer-material-design&author=bill-stavroulakis&name=building-web-application-polymer-material-design-m1&clip=1&mode=live
