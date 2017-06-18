@@ -8,17 +8,21 @@ import { AppComponent } from './app.component';
 import { SharedModule } from "app/shared/shared.module";
 import { CoreModule } from "app/core/core.module";
 import { AdminModule } from "app/admin/admin.module";
+import { AppRoutingModule } from "app/app-routing.module";
+import { PuanlarComponent } from './puanlar/puanlar.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PuanlarComponent
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     HttpModule,
+    AppRoutingModule,
 
     SharedModule,
     CoreModule,
