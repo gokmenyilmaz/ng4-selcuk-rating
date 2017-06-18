@@ -1,30 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { SharedModule } from "app/shared/shared.module";
+import { CoreModule } from "app/core/core.module";
+import { AdminModule } from "app/admin/admin.module";
 
-import { MaterialModule } from '@angular/material';
-import { CoreModule } from './core/core.module';
+
 
 @NgModule({
   declarations: [
     AppComponent
-
   ],
   imports: [
     BrowserAnimationsModule,
-    MaterialModule,
     BrowserModule,
-    FormsModule,
     HttpModule,
-    AppRoutingModule,
-    CoreModule
+
+    SharedModule,
+    CoreModule,
+    AdminModule
+
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
