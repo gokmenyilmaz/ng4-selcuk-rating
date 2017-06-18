@@ -279,6 +279,17 @@ padding: 5px;
                                 <li><a (click)="satirKonumDegistir(row,-1)">Yukarı Hareket</a></li>
                                 <li> <a (click)="satirKonumDegistir(row,1)">Aşağı Hareket</a></li>
                             </ul>
+
+                            <md-menu #appMenu="mdMenu">
+                                <button md-menu-item> Settings </button>
+                                <button md-menu-item> Help </button>
+                            </md-menu>
+
+                            <button md-icon-button [mdMenuTriggerFor]="appMenu">
+                                <md-icon>more_vert</md-icon>
+                            </button>
+
+
                         </div>
 
                     </td>
