@@ -1,3 +1,388 @@
-<p>
-  mac-foy works!
-</p>
+<style type="text/css">
+    /*tr td {
+border: 3px solid whitesmoke;
+padding: 5px;
+}*/
+
+
+
+    table {
+        border: 3px solid black !important;
+        /* table-layout: fixed;*/
+    }
+
+
+    .siyah-zemin {
+        background-color: black !important;
+        width: 100%;
+        height: 45px;
+        border-radius: 5px;
+    }
+
+    
+    a {
+        cursor: pointer;
+    }
+
+
+    .siyah {
+        background-color: black;
+    }
+
+
+    .kirmizi {
+        background-color: red;
+    }
+
+
+    .yesil {
+        background-color: green;
+    }
+
+
+    .sari {
+        background-color: yellow !important;
+    }
+
+
+    .A {
+        background-color: moccasin;
+    }
+
+
+    .B {
+        background-color: white;
+    }
+
+
+    .C {
+        background-color: lightskyblue;
+    }
+
+
+    .D {
+        background-color: white;
+    }
+
+
+    .E {
+        background-color: deepskyblue;
+    }
+
+    .F {
+        background-color: beige;
+    }
+
+
+
+
+
+/*-----skor tablo ------------------*/
+    div#skortablo-container
+    {
+        overflow-x:auto;
+        margin-top: 10px;
+        padding: 5px;
+    }
+
+    table#skortablo
+    {
+        table-layout:fixed;
+        width:100%;
+        font-size: 0.90em;
+        zoom:90%;
+
+        /*transform: scale(0.9,0.9)*/
+    
+    }
+
+    table#skortablo .form-control
+    {
+        padding:2px!important;
+    
+    }
+
+    th.grup1-oyuncu
+    {
+        width: 100px;
+       
+    }
+
+    th.grup1-mopuan,th.grup1-mspuan
+    {
+         width:60px;
+    }
+    th.grup1-apuan
+    {
+        width:45px;
+    }
+ 
+    th.grup1-bonus
+    {
+        width: 45px;
+    }
+ 
+
+    th.skor
+    {
+        width:60px;
+    }
+
+     th, td button
+    {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    table#skortablo .form-control
+    {
+        padding:1px!important;
+    
+    }
+
+    table#skortablo input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    div#puanListeContainer
+    {
+        padding: 5px;
+    }
+
+</style>
+
+<div class="container">
+    <div class="row" id="sorgu_alanlari">
+        <div class="col-md-6" style="border: 1px solid yellow;">
+            <table style="margin-left:-15px;margin-right: -15px;">
+                <tr>
+                    <td>
+                        <fieldset [disabled]="grupluMu?1:0" [style.opacity]="grupluMu?0.5:1" style="width: 240px;">
+                            <select style="width:150px;display: inline-block" class="form-control" [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
+                                <option default>Oyuncu Seçiniz</option>
+                                <option>
+                                <span> <button class="btn btn-default">Yeni Ekle</button></span>
+                                </option>
+                                <option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">
+                                {{o.OyuncuAdSoyad}}
+                                </option>
+                            </select>
+
+                            <input class="form-control" style="display:inline-block;width:80px;text-align:right" type="number" placeholder="Reyting Puanı"
+                                (keyup.enter)="oyuncuEkle(eklenecekOyuncu)" [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
+                        </fieldset>
+
+                    </td>
+
+                    <td>
+                        <div>
+                            <label style="width: 100px;display: inline-block">
+                        <input type="checkbox" name="checkbox" [(ngModel)]='ciktiModu' value="value">Gelişmiş
+                     </label>
+                            <label style="width: 100px;display: inline-block">
+                        <input type="checkbox" [(ngModel)]='grupluMu' />Grup Modu
+                     </label>
+                        </div>
+                    </td>
+
+
+                    <td style="width:100%;text-align: right">
+                        <button style="width:100px" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
+                     <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
+                  </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-6" style="border: 1px solid darkgreen">
+            <table style="height: 70px;margin-left:-15px;margin-right:-15px">
+                <tr>
+
+                    <td>
+                        <select style="width: 70px" class="form-control" aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
+                     
+                     <option *ngFor="let number of haftalar">{{number}}</option>
+                  </select>
+                    </td>
+
+                    <td>
+                        <input style="width: 100px" type="text" class="form-control" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
+                    </td>
+
+                    <td>
+                        <select style="width: 70px" class="form-control" aria-placeholder="grup" [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
+                     <option *ngFor="let grup of gruplar">{{grup}}</option>
+
+                  </select>
+                    </td>
+
+                    <td>
+                        <input style="width:80px;display: inline-block" type="text" class="form-control" [(ngModel)]='grupElememanSayilari'>
+
+                    </td>
+
+                    <td style="width:100%;text-align: right">
+                        <button style="width:100px" class="btn btn-danger" (click)="kaydet()">kaydet</button>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div id="skortablo-container" class="row">
+        <table id="skortablo" rules="all" frame="border" class="table table-bordered table-hover table-condensed table-striped">
+            <caption>
+               
+            </caption>
+
+            <thead>
+                <tr>
+                    <th class="grup1-oyuncu">{{grup}} Grubu <br>{{grupMacTarih}}-{{hafta}} </th>
+                    <th class="grup1-mopuan">Maç Ö.Puan</th>
+                    <th class="grup1-apuan">Alınan TPuan</th>
+                    <th class="grup1-bonus" [hidden]='!ciktiModu'>Bonus Puan</th>
+                    <th class="grup1-mspuan">Maç S.Puan</th>
+                   
+                    <th class="skor" *ngFor='let oyuncu of eklenenOyuncular'>
+                        {{oyuncu.OyuncuAdSoyad}}
+                    </th>
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                <tr *ngFor="let row of mac_rows;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
+
+                    <td>
+                        <div class="btn-group btn-block">
+                            <button type="button" style="padding-left: 6px;padding-right:16px;text-align: left" 
+                                    class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown">
+                                {{row.OyuncuAdSoyad}}
+                                <span class="caret" style=" position: absolute; right: 6px;top: 40%;"></span>
+                            </button>
+
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <button class="btn btn-danger btn-block" (click)="MacaGelmedi(row)">
+                                        <span *ngIf='row.VarMi==false'>Maça Geldi</span>
+                                        <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
+                                    </button>
+                                </li>
+                                <li><a (click)="MacSil(row)">Listeden Kaldır</a></li>
+                                <li><a (click)="satirKonumDegistir(row,-1)">Yukarı Hareket</a></li>
+                                <li> <a (click)="satirKonumDegistir(row,1)">Aşağı Hareket</a></li>
+                            </ul>
+                        </div>
+
+                    </td>
+
+                    <td>
+                        <input class="form-control" type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)" />
+                    </td>
+
+                    <td>
+                        <div>{{row.AlinanTPuan}}</div>
+                    </td>
+
+                    <td  [hidden]='!ciktiModu'>
+                        <input class="form-control" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
+                    </td>
+
+                    <td>
+                        <span type="number">{{row.MS_Puan}}</span>
+                        <div class="glyphicon" [ngClass]="{'glyphicon-arrow-up text-success': row.AlinanTPuan > 0,'glyphicon-arrow-down text-danger':row.AlinanTPuan < 0,'glyphicon-option-horizontal text-muted': row.AlinanTPuan == 0}">
+
+                        </div>
+                    </td>
+
+                    <td *ngFor="let oyuncu of eklenenOyuncular;let inx=index" [class.sari]="mac_rows[inx].VarMi!==true">
+                        <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
+                            <select class="form-control" [(ngModel)]="row['C' + (inx+1)].Skor" (ngModelChange)='TabloyuGuncelle(row,(inx+1))'>
+                                <option value="__">__</option>
+                                <option value="4-0">4-0</option>
+                                <option value="3-1">3-1</option>
+                                <option value="2-2">2-2</option>
+                                <option value="1-3">1-3</option>
+                                <option value="0-4">0-4</option>
+                                <option value="(1-3)">*1-3</option>
+                                <option value="X-X">X-X</option>
+                            </select>
+                            <span class="label pull-right" [ngClass]="{'label-success':row['C' + (inx+1)].Puan>=0,'label-danger':row['C' + (inx+1)].Puan<0 }">{{row['C' + (inx+1)].Puan}}</span>
+                            <span class="label label-info pull-left">{{row['C' + (inx+1)].Aciklama}}</span>
+
+                        
+                        </div>
+
+                        <div *ngIf="row['C' + (inx+1)].Skor=='X-X'">
+                            <div class="siyah-zemin"></div>
+                        </div>
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+
+        <br>
+
+
+    </div>
+
+    <div class="row" id="puanListeUst">
+        <button class="btn btn-default" (click)='PuanTablosunuGuncelle(false)'>Mac Öncesi Sıralama</button>
+        <button class="btn btn-success" (click)='PuanTablosunuGuncelle(true)'>Puan Tablosunu Güncelle</button>
+        <div style="display:inline-block;width: 250px">
+            Tablo Genişliği :
+            <input style="display:inline-block!important" class="form-control" type="number" [(ngModel)]='puanTabloGenislik' />
+        </div>
+
+    </div>
+
+
+    <div class="row" id="puanListeContainer">
+
+        <table class="table table-bordered" style="margin-right: 15px" [style.width]="puanTabloGenislik + '%'">
+            <thead>
+                <tr>
+                    <th style="text-align: center">Sıra No</th>
+                    <th style="text-align: center;min-width: 160px">Oyuncu Ad Soyad</th>
+                    <th style="text-align: center">Maç Öncesi Puan</th>
+                    <th style="text-align: center">Alınan Puan</th>
+                    <th style="text-align: center">Maç Sonu Puan</th>
+                    <th style="text-align: center" *ngIf='ciktiModu'>Guncel Grup</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let o of PuanTabloItemList; let sira=index" class="{{o.Grup}}">
+                    <td style="text-align: center">{{sira+1}}</td>
+                    <td style="font-weight:bold">{{o.OyuncuAdSoyad}}</td>
+                    <td style="text-align: center">{{o.MO_Puan}}</td>
+                    <td style="text-align: center">{{o.AlinanPuan}}</td>
+                    <td style="text-align: center;font-weight: bold">{{o.MS_Puan}}
+                        <div class="glyphicon" [ngClass]="{'glyphicon-arrow-up text-success': o.AlinanPuan > 0,'glyphicon-arrow-down text-danger':o.AlinanPuan < 0,'glyphicon-option-horizontal text-muted': o.AlinanPuan == 0}">
+
+                        </div>
+
+
+                    </td>
+                    <td *ngIf='ciktiModu'>{{o.Grup}}</td>
+                    <td *ngIf='ciktiModu'>{{o.Dogum_Yili}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+</div>

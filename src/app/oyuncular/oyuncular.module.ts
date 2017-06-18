@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OyuncuListComponent } from "app/oyuncular/oyuncu-list/oyuncu-list.component";
 import { OyuncuEditComponent } from './oyuncu-edit/oyuncu-edit.component';
+import { OyuncuService } from "./oyuncu-service.service";
 
 
 @NgModule({
@@ -9,6 +10,7 @@ import { OyuncuEditComponent } from './oyuncu-edit/oyuncu-edit.component';
     CommonModule
   ],
   declarations: [OyuncuListComponent, OyuncuEditComponent],
-  exports:[OyuncuListComponent,OyuncuEditComponent]
+  exports:[OyuncuListComponent,OyuncuEditComponent],
+  providers:[OyuncuService]
 })
 export class OyuncularModule { }

@@ -13,3 +13,6 @@ export class OyuncuListComponent implements OnInit {
   }
 
 }
+
+
+
