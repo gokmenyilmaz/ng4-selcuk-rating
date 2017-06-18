@@ -260,36 +260,22 @@ padding: 5px;
                 <tr *ngFor="let row of mac_rows;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
 
                     <td>
-                        <div class="btn-group btn-block">
-                            <button type="button" style="padding-left: 6px;padding-right:16px;text-align: left" 
-                                    class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown">
+                        <div class="">
+                            <button type="button"  [mdMenuTriggerFor]="appMenu">
                                 {{row.OyuncuAdSoyad}}
-                                <span class="caret" style=" position: absolute; right: 6px;top: 40%;"></span>
+                                <md-icon>more_vert</md-icon>
+                              
                             </button>
-
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <button class="btn btn-danger btn-block" (click)="MacaGelmedi(row)">
-                                        <span *ngIf='row.VarMi==false'>Maça Geldi</span>
-                                        <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
-                                    </button>
-                                </li>
-                                <li><a (click)="MacSil(row)">Listeden Kaldır</a></li>
-                                <li><a (click)="satirKonumDegistir(row,-1)">Yukarı Hareket</a></li>
-                                <li> <a (click)="satirKonumDegistir(row,1)">Aşağı Hareket</a></li>
-                            </ul>
 
                             <md-menu #appMenu="mdMenu">
-                                <button md-menu-item> Settings </button>
-                                <button md-menu-item> Help </button>
-                            </md-menu>
-
-                            <button md-icon-button [mdMenuTriggerFor]="appMenu">
-                                <md-icon>more_vert</md-icon>
-                            </button>
-
-
+                                <button  md-menu-item (click)="MacaGelmedi(row)">
+                                    <span *ngIf='row.VarMi==false'>Maça Geldi</span>
+                                    <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
+                                </button>
+                                <button  (click)="MacSil(row)" md-menu-item> Listeden Kaldır </button>
+                                <button md-menu-item (click)="satirKonumDegistir(row,-1)"> Yukarı Hareket </button>
+                                <button md-menu-item (click)="satirKonumDegistir(row,1)"> Aşağı Hareket </button>
+                           </md-menu>
                         </div>
 
                     </td>
