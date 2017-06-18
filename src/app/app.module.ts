@@ -11,15 +11,14 @@ import { AdminModule } from "./admin/admin.module";
 
 
 import { AppRoutingModule } from "./app-routing.module";
-import { PuanlarComponent } from './puanlar/puanlar.component';
 import { OyuncularModule } from "./oyuncular/oyuncular.module";
+import { MacfoyModule } from "./macfoy/macfoy.module";
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PuanlarComponent,
+    AppComponent
     
   ],
   imports: [
@@ -32,7 +31,8 @@ import { OyuncularModule } from "./oyuncular/oyuncular.module";
     SharedModule,
    
     AdminModule,
-    OyuncularModule
+    OyuncularModule,
+    MacfoyModule
 
     
   ],
