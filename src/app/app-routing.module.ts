@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PuanlarComponent } from './puanlar/puanlar.component';
 
 const routes: Routes = [
-{path:"puan", component:PuanlarComponent}
-  
+{path:"oyuncular", component:PuanlarComponent}
 ];
 
 @NgModule({

@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from "app/shared/shared.module";
 import { NavComponent } from './nav/nav.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    RouterModule
   ],
   exports:[
     NavComponent

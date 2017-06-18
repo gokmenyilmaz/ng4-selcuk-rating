@@ -22,10 +22,11 @@ import { PuanlarComponent } from './puanlar/puanlar.component';
     BrowserAnimationsModule,
     BrowserModule,
     HttpModule,
+     CoreModule,
     AppRoutingModule,
 
     SharedModule,
-    CoreModule,
+   
     AdminModule
 
     
