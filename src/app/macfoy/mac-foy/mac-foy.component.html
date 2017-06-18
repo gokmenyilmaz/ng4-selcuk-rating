@@ -152,10 +152,11 @@ padding: 5px;
 </style>
 
 <md-card>
- 
-        <md-card >
-     
-            <fieldset [disabled]="grupluMu?1:0" [style.opacity]="grupluMu?0.5:1" style="width: 240px;">
+
+<md-tab-group>
+  <md-tab label="Grup Ayarı">
+          <fieldset [disabled]="grupluMu?1:0" [style.opacity]="grupluMu?0.5:1" style="width: 240px;">
+
 
                 <md-select style="width:150px;display: inline-block" 
                 [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
@@ -164,8 +165,9 @@ padding: 5px;
                     <md-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</md-option>
                 </md-select>
 
-                <md-input-container>
-                    <input mdInput class="form-control" style="display:inline-block;width:80px;text-align:right" type="number" placeholder="Reyting Puanı"
+                <md-input-container >
+                     <label>Rating Puanı</label>
+                    <input mdInput class="form-control" style="display:inline-block;width:80px;text-align:right" type="number" 
                     (keyup.enter)="oyuncuEkle(eklenecekOyuncu)" [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
                 </md-input-container>
 
@@ -180,16 +182,13 @@ padding: 5px;
             <button md-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
                 <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
             </button>
-  
-        </md-card>
-
-        <md-card>
-     
-            <md-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
+  </md-tab>
+  <md-tab label="Hafta Seçimi">
+     <md-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
                 <md-option *ngFor="let number of haftalar" [value]="number">{{number}}</md-option>
             </md-select>
         
-            <md-input-container>
+            <md-input-container md-no-float>
                 <input mdInput style="width: 100px" type="text" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
             </md-input-container>
             
@@ -198,16 +197,17 @@ padding: 5px;
                 <md-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</md-option>
             </md-select>
 
-            <md-input-container>
+            <md-input-container md-no-float>
                     <input mdInput style="width:80px;display: inline-block" type="text" class="form-control" [(ngModel)]='grupElememanSayilari'>
             </md-input-container>
 
             <button md-raised-button style="width:100px" color="primary" class="btn btn-danger" (click)="kaydet()">kaydet</button>
        
-        </md-card>
+  </md-tab>
+</md-tab-group>
 
 
- </md-card>
+
 
 
     <div id="skortablo-container" class="row">
@@ -368,4 +368,4 @@ padding: 5px;
 
     </div>
 
-
+</md-card>
