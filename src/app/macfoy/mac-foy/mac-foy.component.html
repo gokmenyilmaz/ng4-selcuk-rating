@@ -152,95 +152,62 @@ padding: 5px;
 </style>
 
 <md-card>
-    <div class="row" id="sorgu_alanlari">
-        <div class="col-md-6" style="border: 1px solid yellow;">
-            <table style="margin-left:-15px;margin-right: -15px;">
-                <tr>
-                    <td>
-                        <fieldset [disabled]="grupluMu?1:0" [style.opacity]="grupluMu?0.5:1" style="width: 240px;">
-                            
-                            <md-select style="width:150px;display: inline-block" 
-                                 [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
-                                <md-option default>Oyuncu Seçiniz</md-option>
-                                <md-option><span> <button class="btn btn-default">Yeni Ekle</button></span></md-option>
-                                <md-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</md-option>
-                            </md-select>
-                            
-                            <md-input-container>
-                                <input mdInput class="form-control" style="display:inline-block;width:80px;text-align:right" type="number" placeholder="Reyting Puanı"
-                                (keyup.enter)="oyuncuEkle(eklenecekOyuncu)" [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
-                            </md-input-container>
+ 
+        <md-card >
+     
+            <fieldset [disabled]="grupluMu?1:0" [style.opacity]="grupluMu?0.5:1" style="width: 240px;">
+
+                <md-select style="width:150px;display: inline-block" 
+                [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
+                    <md-option default>Oyuncu Seçiniz</md-option>
+                    <md-option><span> <button class="btn btn-default">Yeni Ekle</button></span></md-option>
+                    <md-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</md-option>
+                </md-select>
+
+                <md-input-container>
+                    <input mdInput class="form-control" style="display:inline-block;width:80px;text-align:right" type="number" placeholder="Reyting Puanı"
+                    (keyup.enter)="oyuncuEkle(eklenecekOyuncu)" [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
+                </md-input-container>
+
+            </fieldset>
 
 
-                        </fieldset>
+            <div>
+                <md-checkbox [(ngModel)]='ciktiModu'class="example-margin" [(ngModel)]="checked">Gelişmiş</md-checkbox>
+                <md-checkbox  [(ngModel)]='grupluMu' [(ngModel)]="checked">Grup Modu</md-checkbox>
+            </div>
 
-                    </td>
+            <button md-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
+                <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
+            </button>
+  
+        </md-card>
 
-                    <td>
-                        <div>
+        <md-card>
+     
+            <md-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
+                <md-option *ngFor="let number of haftalar" [value]="number">{{number}}</md-option>
+            </md-select>
+        
+            <md-input-container>
+                <input mdInput style="width: 100px" type="text" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
+            </md-input-container>
+            
+        
+            <md-select  style="width: 70px"  [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
+                <md-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</md-option>
+            </md-select>
 
-                            <md-checkbox [(ngModel)]='ciktiModu'class="example-margin" [(ngModel)]="checked">Gelişmiş</md-checkbox>
-                            <md-checkbox  [(ngModel)]='grupluMu' [(ngModel)]="checked">Grup Modu</md-checkbox>
+            <md-input-container>
+                    <input mdInput style="width:80px;display: inline-block" type="text" class="form-control" [(ngModel)]='grupElememanSayilari'>
+            </md-input-container>
 
-                        </div>
-                    </td>
-
-                    <td style="width:100%;text-align: right">
-                        <button md-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
-                            <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="col-md-6" style="border: 1px solid darkgreen">
-            <table style="height: 70px;margin-left:-15px;margin-right:-15px">
-                <tr>
-
-                    <td>
-
-                        <!--<md-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
-                            <md-option *ngFor="let number of haftalar">{{number}}</md-option>
-                        </md-select>-->
-
-                        <select style="width: 70px" class="form-control" aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
-                            <option *ngFor="let number of haftalar">{{number}}</option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <input style="width: 100px" type="text" class="form-control" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
-                    </td>
-
-                    <td>
-                        <select style="width: 70px" class="form-control" aria-placeholder="grup" [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
-                            <option *ngFor="let grup of gruplar">{{grup}}</option>
-                        </select>
+            <button md-raised-button style="width:100px" color="primary" class="btn btn-danger" (click)="kaydet()">kaydet</button>
+       
+        </md-card>
 
 
-                        <!--<md-select  style="width: 70px"  [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
-                            <md-option *ngFor="let grup of gruplar">{{grup}}</md-option>
-                        </md-select>-->
-
-                    </td>
-
-                    <td>
-                        <md-input-container>
-                             <input mdInput style="width:80px;display: inline-block" type="text" class="form-control" [(ngModel)]='grupElememanSayilari'>
-                       </md-input-container>
-
-                    </td>
-
-                    <td style="width:100%;text-align: right">
-                        <button md-raised-button style="width:100px" color="primary" class="btn btn-danger" (click)="kaydet()">kaydet</button>
-                    </td>
-
-                </tr>
-            </table>
-        </div>
-
-    </div>
+ </md-card>
 
 
     <div id="skortablo-container" class="row">
@@ -302,7 +269,9 @@ padding: 5px;
                     </td>
 
                     <td  [hidden]='!ciktiModu'>
-                        <input class="form-control" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
+                        <md-input-container>
+                            <input mdInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
+                       </md-input-container>
                     </td>
 
                     <td>
@@ -354,7 +323,10 @@ padding: 5px;
         <button md-raised-button class="btn btn-success" (click)='PuanTablosunuGuncelle(true)'>Puan Tablosunu Güncelle</button>
         <div style="display:inline-block;width: 250px">
             Tablo Genişliği :
-            <input style="display:inline-block!important" class="form-control" type="number" [(ngModel)]='puanTabloGenislik' />
+            
+        <md-input-container>
+            <input mdInput style="display:inline-block!important"  type="number" [(ngModel)]='puanTabloGenislik' />
+            </md-input-container>
         </div>
 
     </div>
@@ -397,5 +369,3 @@ padding: 5px;
     </div>
 
 
-
-</md-card>
