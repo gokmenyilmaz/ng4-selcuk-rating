@@ -1,52 +1,9 @@
 <md-card>
 
     <md-tab-group [attr.disabled]="grupluMu?1:0">
-        <md-tab label="Grup Ayarı">
-            
-            
-            <md-grid-list cols="3" rowHeight="2:1">
-                <md-grid-tile>
-                        <fieldset disabled>
-                          
-                                <md-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
-                                    [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
-                                    <md-option default>Oyuncu Seçiniz</md-option>
-                                    <md-option><span> <button class="btn btn-default">Yeni Ekle</button></span></md-option>
-                                    <md-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</md-option>
-                                </md-select>
+          <md-tab label="Hafta Seçimi">
 
-                                <md-input-container md-no-float style="width:150px;display: inline-block">
-                                    <input mdInput class="form-control" style="text-align:right"  placeholder="Puan"
-                                        type="number" (keyup.enter)="oyuncuEkle(eklenecekOyuncu)"
-                                        [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
-                                </md-input-container>
-                        
-                         </fieldset>
-
-                </md-grid-tile>
-                
-                <md-grid-tile>
-                    <md-card>
-                        <md-checkbox [(ngModel)]='ciktiModu' class="example-margin" [(ngModel)]="checked">Gelişmiş</md-checkbox>
-                        <md-checkbox [(ngModel)]='grupluMu' [(ngModel)]="checked">Grup Modu</md-checkbox>
-                    </md-card>
-                </md-grid-tile>
-                
-                <md-grid-tile>
-                    <button md-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
-                        <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
-                    </button>
-                </md-grid-tile>
-          
-            </md-grid-list>
-            
-    
-        </md-tab>
-
-
-        <md-tab label="Hafta Seçimi">
-
-            <md-grid-list cols="5" rowHeight="2:1">
+            <md-grid-list cols="6" rowHeight="2:1">
                 <md-grid-tile>
                     <md-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
                         <md-option *ngFor="let number of haftalar" [value]="number">{{number}}</md-option>
@@ -79,14 +36,62 @@
                 </md-grid-tile>
 
 
-                <md-grid-tile>
-
-                    <button md-raised-button style="width:100px" color="primary" class="btn btn-danger" (click)="kaydet()">kaydet</button>
+                <md-grid-tile colspan="2">
+                    <md-card>
+                        <button md-raised-button  color="primary" (click)="oyuncuEkle(eklenecekOyuncu)">
+                            <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
+                        </button>
+                        <button md-raised-button  color="primary" (click)="kaydet()">kaydet</button>
+                    </md-card>
                 </md-grid-tile>
 
             </md-grid-list>
 
         </md-tab>
+        <md-tab label="Grup Ayarı">
+          
+            <md-grid-list cols="3" rowHeight="2:1">
+                <md-grid-tile>
+                        <fieldset disabled>
+                          
+                                <md-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
+                                    [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
+                                    <md-option default>Oyuncu Seçiniz</md-option>
+                                    <md-option><span> <button class="btn btn-default">Yeni Ekle</button></span></md-option>
+                                    <md-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</md-option>
+                                </md-select>
+
+                                <md-input-container md-no-float style="width:150px;display: inline-block">
+                                    <input mdInput class="form-control" style="text-align:right"  placeholder="Puan"
+                                        type="number" (keyup.enter)="oyuncuEkle(eklenecekOyuncu)"
+                                        [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
+                                </md-input-container>
+                        
+                         </fieldset>
+
+                </md-grid-tile>
+                
+                <md-grid-tile>
+                    <md-card>
+                        
+                        <md-slide-toggle [(ngModel)]='ciktiModu' class="example-margin" [(ngModel)]="checked">Gelişmiş</md-slide-toggle>
+                        <md-slide-toggle [(ngModel)]='grupluMu' [(ngModel)]="checked">Grup Modu</md-slide-toggle>
+                    </md-card>
+                </md-grid-tile>
+                
+                <md-grid-tile>
+                    <button md-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
+                        <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
+                    </button>
+                </md-grid-tile>
+          
+            </md-grid-list>
+            
+    
+        </md-tab>
+
+
+      
     </md-tab-group>
 
 
@@ -168,7 +173,8 @@
                     <td *ngFor="let oyuncu of eklenenOyuncular;let inx=index" [class.sari]="mac_rows[inx].VarMi!==true">
                         <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
 
-                            <md-select class="form-control" [(ngModel)]="row['C' + (inx+1)].Skor" (ngModelChange)='TabloyuGuncelle(row,(inx+1))'>
+                            <md-select class="form-control" [(ngModel)]="row['C' + (inx+1)].Skor" 
+                            (ngModelChange)='TabloyuGuncelle(row,(inx+1))'>
                                 <md-option value="__">__</md-option>
                                 <md-option value="4-0">4-0</md-option>
                                 <md-option value="3-1">3-1</md-option>
@@ -180,7 +186,6 @@
                             </md-select>
 
                             <span class="label pull-right" [ngClass]="{'label-success':row['C' + (inx+1)].Puan>=0,'label-danger':row['C' + (inx+1)].Puan<0 }">{{row['C' + (inx+1)].Puan}}</span>
-
                             <span class="label label-info pull-left">{{row['C' + (inx+1)].Aciklama}}</span>
 
 

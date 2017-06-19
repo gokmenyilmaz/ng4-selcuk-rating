@@ -124,3 +124,38 @@
     div#puanListeContainer {
         padding: 5px;
     }
+
+
+    .label-success
+    {
+        background-color: green;
+        color: white;
+        width: 20px;
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    .label-danger
+    {
+       
+         background-color: red;
+          color: white;
+        width: 20px;
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    .pull-right
+    {
+        float: right;
+    }
+
+    .form-control
+    {
+        width: 100%;
+    }
+
+    .mat-select-trigger
+    {
+        min-width: 0px !important;
+    }
