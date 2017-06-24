@@ -1,6 +1,6 @@
 # Deploy
-npm i -g angular-cli-ghpages
-ng build --prod
+npm i -g angular-cli-ghpages  
+ng build --prod  
 ngh 
 
 
