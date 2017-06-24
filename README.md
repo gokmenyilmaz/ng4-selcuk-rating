@@ -3,6 +3,9 @@ npm i -g angular-cli-ghpages
 ng build --prod  
 ngh 
 
+## asset tanım
+.angular-cli içerisinde açıkça assets tanımlanmalı CNAME, favicon vs
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.6.
 
