@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Oyuncu, MacSatir } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
-import {MdDialog, MdDialogRef} from '@angular/material';
+import {MdDialog, MdDialogRef,MdSnackBar} from '@angular/material';
 
 //import {Observable} from 'rxjs/Rx' 
 import {Observable} from 'rxjs/Observable'
@@ -56,7 +56,9 @@ export class MacFoyComponent implements OnInit {
     constructor(
         private reytingServis: MacFoyService,
         private af: AngularFireDatabase,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
+        private _dialog: MdDialog,
+        private _snackbar: MdSnackBar
     ) {
         this.puanTabloGenislik = 100;
 
@@ -93,10 +95,6 @@ export class MacFoyComponent implements OnInit {
             this.grupMacTarih = m.Foy == undefined ? bugun : m.Tarih;
 
             this.oyunculariYukle();
-
-
-
-
         })
 
 
@@ -218,31 +216,19 @@ export class MacFoyComponent implements OnInit {
                 Foy: this.mac_rows
             });
 
+            return true;
+
     }
 
     kaydet() {
 
-        var _this = this;
-
-        // bootbox.confirm({
-        //     message: "Değişiklikler kaydediliyor?",
-        //     buttons: {
-        //         confirm: {
-        //             label: 'Evet',
-        //             className: 'btn-success'
-        //         },
-        //         cancel: {
-        //             label: 'Hayır',
-        //             className: 'btn-danger'
-        //         }
-        //     },
-        //     callback: function (result) {
-        //         if (result == true) {
-        //             _this.kayitEt();
-        //         };
-        //     }
-        // });
-
+       let dialogRef = this._dialog.open(DialogContent, { width:'400px', height:'200px'} );
+       
+        dialogRef.afterClosed().subscribe(result => {
+             if(result=='Ok'){
+                if(this.kayitEt()) this._snackbar.open('Kayıt işlemi yapıldı', '',{duration:400});
+            };
+        })
     }
 
     satirKonumDegistir(row: MacSatir, indexYon: number) {
@@ -308,8 +294,6 @@ export class MacFoyComponent implements OnInit {
 
 
     oyuncuEkle(_oyuncu: Oyuncu) {
-
-        alert("tıklandı");
 
         if (this.grupluMu == true) {
             let liste: number[] = this.grupElememanSayilari.split(',').map(x => { return parseInt(x) });
@@ -585,3 +569,20 @@ export class MacFoyComponent implements OnInit {
 }
 
 
+@Component({
+  template: `
+
+        <div style='display:flex;align-items:flex-end;height:98%;'>
+            <p style='align-self:flex-start;width:100%'>Kayıt yapılıyor...</p>
+            <div style='display:flex;justify-content:flex-end;width:100%'>
+                <button md-button  (click)="dialogRef.close('Cancel')">Vazgeç</button>
+                <button md-raised-button color="primary" (click)="dialogRef.close('Ok')">Kaydet</button>
+            </div>
+        </div>
+
+
+  `,
+})
+export class DialogContent {
+  constructor(public dialogRef: MdDialogRef<DialogContent>) { }
+}

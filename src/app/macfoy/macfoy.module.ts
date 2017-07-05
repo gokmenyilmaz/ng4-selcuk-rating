@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from "app/shared/shared.module";
 import { CommonModule } from '@angular/common';
-import { MacFoyComponent } from './mac-foy/mac-foy.component';
+import { MacFoyComponent,DialogContent } from './mac-foy/mac-foy.component';
 import { MacFoyService } from "./macfoy.service";
 
 
@@ -25,8 +25,9 @@ export const config = {
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
   ],
-  declarations: [MacFoyComponent],
+  declarations: [MacFoyComponent,DialogContent],
   exports:[MacFoyComponent],
+  entryComponents: [DialogContent],
   providers:[MacFoyService]
 })
 export class MacfoyModule { }
