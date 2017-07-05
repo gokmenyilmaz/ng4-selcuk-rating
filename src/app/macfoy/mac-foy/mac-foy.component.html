@@ -178,7 +178,7 @@
                     <td *ngFor="let oyuncu of eklenenOyuncular;let inx=index" [class.sari]="mac_rows[inx].VarMi!==true">
                         <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
 
-                            <md-select class="form-control" [(ngModel)]="row['C' + (inx+1)].Skor" 
+                            <md-select class="no-underline" [(ngModel)]="row['C' + (inx+1)].Skor" 
                             (ngModelChange)='TabloyuGuncelle(row,(inx+1))'>
                                 <md-option value="__">__</md-option>
                                 <md-option value="4-0">4-0</md-option>

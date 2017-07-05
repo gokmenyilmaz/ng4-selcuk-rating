@@ -3,16 +3,6 @@
         /* table-layout: fixed;*/
     }
 
- .mat-select,
-.mat-select-trigger,
-.mat-select-placeholder,
-.cdk-overlay-pane,
-.mat-select-panel,
-.mat-select-content
-{
-    min-width: 40px !important;
-    width: 40px !important;
-}
 .mat-option {
     padding: 0 2px!important;
 }
