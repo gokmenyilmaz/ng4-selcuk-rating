@@ -21,14 +21,15 @@ import {MdDialog, MdDialogRef,MdSnackBar} from '@angular/material';
 export class OyuncuListComponent implements OnInit {
 
    oyuncular: FirebaseListObservable<Oyuncu[]>;
+   eklenecek_oyuncu:Oyuncu=null;
   
   constructor( private af: AngularFireDatabase) {
 
         this.oyuncular=this.af.list('/Selcuk/Oyuncular/');
 
-           var d = new Date();
+      this.OyuncuVarsayilanDegerler();
 
-          // this.eklenecek_oyuncu=new Oyuncu("Koray Er",1500,d.toLocaleDateString(),d.toLocaleDateString(),'D',1970);
+         
 
       };
 
@@ -38,11 +39,20 @@ export class OyuncuListComponent implements OnInit {
   }
 
   OyuncuEkle(){
-    
-     
+      this.oyuncular.push(this.eklenecek_oyuncu);
 
-      //this.oyuncular.push( this.eklenecek_oyuncu);
-   
+        this.OyuncuVarsayilanDegerler();
+     
+  }
+
+
+  OyuncuVarsayilanDegerler()
+  {
+      var d = new Date();
+      var d1=new Date();d1.setFullYear(2020);
+
+      this.eklenecek_oyuncu=new Oyuncu("",1500,d.toLocaleDateString(),d1.toLocaleDateString(),'D',1970)
+  
   }
 
 }

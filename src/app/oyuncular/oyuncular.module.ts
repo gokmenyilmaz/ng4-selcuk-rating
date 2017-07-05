@@ -8,7 +8,7 @@ import { OyuncuService } from "./oyuncu-service.service";
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,SharedModule 
   ],
   declarations: [OyuncuListComponent, OyuncuEditComponent],
   exports:[OyuncuListComponent,OyuncuEditComponent],
