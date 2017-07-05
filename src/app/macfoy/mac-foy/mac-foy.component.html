@@ -125,10 +125,15 @@
                 <tr *ngFor="let row of mac_rows;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
 
                     <td>
-                        <div class="">
-                            <button type="button" [mdMenuTriggerFor]="appMenu">
-                                {{row.OyuncuAdSoyad}}
-                                <md-icon>more_vert</md-icon>
+                        <div>
+
+                            <button style="width:95%;margin:auto" type="button" [mdMenuTriggerFor]="appMenu">
+                                <div style="display:flex;align-items:center;justify-content:space-between">
+                                    <label> {{row.OyuncuAdSoyad}}</label>
+                                    <md-icon style="align-self: flex-end" >more_vert</md-icon>
+                                </div>
+                               
+                              
                               
                             </button>
 
