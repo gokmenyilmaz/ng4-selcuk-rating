@@ -1,32 +1,33 @@
-<div>
-    <div>
-        <div>Oyuncu Ad Soyad</div>
-        <div><input type="text" [(ngModel)]="eklenecek_oyuncu.OyuncuAdSoyad"/></div>
-    </div>
+<md-card>
+
+    <md-input-container md-no-float style="width:150px;display: inline-block">
+                <input mdInput class="form-control" style="text-align:center"  placeholder="Oyuncu Ad Soyad"
+                                    [(ngModel)]='eklenecek_oyuncu.OyuncuAdSoyad'>
+    </md-input-container>
+
+    <md-input-container md-no-float style="width:150px;display: inline-block">
+                <input mdInput class="form-control" style="text-align:center"  placeholder="Başlama Tarihi"
+                                    [(ngModel)]='eklenecek_oyuncu.BaslamaTarihi'>
+    </md-input-container>
+    
+    <md-input-container md-no-float style="width:150px;display: inline-block">
+                <input mdInput class="form-control" style="text-align:center"  placeholder="Ayrılış Tarihi"
+                                    [(ngModel)]='eklenecek_oyuncu.AyrilisTarihi'>
+    </md-input-container>
+
+    <md-input-container md-no-float style="width:150px;display: inline-block">
+                <input mdInput class="form-control" style="text-align:center"  placeholder="Başlama Puan"
+                                    [(ngModel)]='eklenecek_oyuncu.BaslamaPuan'>
+    </md-input-container>
 
     <div>
-        <div>Başlama Tarihi</div>
-        <div><input type="text" [(ngModel)]="eklenecek_oyuncu.BaslamaTarihi"/></div>
+        <button md-raised-button  color="primary" (click)="OyuncuEkle()">Ekle</button>
     </div>
 
-    <div>
-        <div>Ayrılış Tarihi</div>
-        <div><input type="text" [(ngModel)]="eklenecek_oyuncu.AyrilisTarihi"/></div>
-    </div>
-
-    <div>
-        <div>Başlama Puan</div>
-        <div><input type="text"  [(ngModel)]="eklenecek_oyuncu.BaslamaPuan"/></div>
-    </div>
-
-    <div>
-        <button (click)="OyuncuEkle()">Ekle</button>
-    </div>
-
-</div>
+</md-card>
 
 
-<div class="row" id="puanListeContainer">
+<md-card class="row" style="text-align:center" id="puanListeContainer">
 
     <table class="table table-bordered" style="margin-right: 15px" [style.width]="puanTabloGenislik + '%'">
         <thead>
@@ -52,4 +53,4 @@
     </table>
 
   
-</div>
+</md-card>

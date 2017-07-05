@@ -51,7 +51,7 @@ export class OyuncuListComponent implements OnInit {
       var d = new Date();
       var d1=new Date();d1.setFullYear(2020);
 
-      this.eklenecek_oyuncu=new Oyuncu("",1500,d.toLocaleDateString(),d1.toLocaleDateString(),'D',1970)
+      this.eklenecek_oyuncu=new Oyuncu(" ",1500,d.toLocaleDateString(),d1.toLocaleDateString(),'D',1970)
   
   }
 
