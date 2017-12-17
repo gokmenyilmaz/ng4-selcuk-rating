@@ -127,7 +127,7 @@
                     <td>
                         <div>
 
-                            <button style="width:95%;margin:auto" type="button" [mdMenuTriggerFor]="appMenu">
+                            <button style="width:95%;margin:auto" type="button"  [matMenuTriggerFor]="appMenu">
                                 <div style="display:flex;align-items:center;justify-content:space-between">
                                     <label> {{row.OyuncuAdSoyad}}</label>
                                     <mat-icon style="align-self: flex-end" >more_vert</mat-icon>
@@ -137,7 +137,7 @@
                               
                             </button>
 
-                            <mat-menu #appMenu="mdMenu">
+                            <!-- <mat-menu #appMenu="mdMenu">
                                 <button mat-menu-item (click)="MacaGelmedi(row)">
                                     <span *ngIf='row.VarMi==false'>Maça Geldi</span>
                                     <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
@@ -145,7 +145,7 @@
                                 <button (click)="MacSil(row)" mat-menu-item> Listeden Kaldır </button>
                                 <button mat-menu-item (click)="satirKonumDegistir(row,-1)"> Yukarı Hareket </button>
                                 <button mat-menu-item (click)="satirKonumDegistir(row,1)"> Aşağı Hareket </button>
-                            </mat-menu>
+                            </mat-menu> -->
                         </div>
 
                     </td>
