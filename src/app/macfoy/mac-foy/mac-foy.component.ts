@@ -116,18 +116,16 @@ export class MacFoyComponent implements OnInit {
     }
 
     oyunculariYukle() {
-        this.af.list('/Selcuk/Oyuncular').valueChanges().subscribe(x => {
+        this.af.list<Oyuncu>('/Selcuk/Oyuncular').valueChanges().subscribe(x => {
 
             let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
 
-
-            this.oyuncular = new List<any>(x)
+            this.oyuncular = new List<Oyuncu>(x)
                 .Where(o => this.parseDateDMY(o.BaslamaTarihi).getTime() <= macTarihTime)
                 .Where(o => this.parseDateDMY(o.AyrilisTarihi).getTime() > macTarihTime)
                 .ToArray();
 
-            // this.oyuncular = new List<any>(x)
-            //        .ToArray();
+           
 
 
           
