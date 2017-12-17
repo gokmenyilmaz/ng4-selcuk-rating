@@ -15,9 +15,10 @@
 
                 <mat-grid-tile>
 
-                    <mat-input-container mat-no-float>
-                        <input mdInput style="width: 100px" type="text" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
-                    </mat-input-container>
+                    <mat-form-field mat-no-float>
+                        <input matInput style="width: 100px" type="text" placeholder="Mac Tarih"
+                         [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
+                    </mat-form-field>
                 </mat-grid-tile>
 
 
@@ -30,9 +31,9 @@
 
 
                 <mat-grid-tile>
-                    <mat-input-container mat-no-float>
-                        <input mdInput style="width:80px;display: inline-block" type="text" class="form-control" [(ngModel)]='grupElememanSayilari'>
-                    </mat-input-container>
+                    <mat-form-field>
+                        <input matInput style="width:80px;display: inline-block" type="text" class="form-control" [(ngModel)]='grupElememanSayilari'>
+                    </mat-form-field>
                 </mat-grid-tile>
 
 
@@ -62,7 +63,7 @@
                                 </mat-select>
 
                                 <mat-input-container mat-no-float style="width:150px;display: inline-block">
-                                    <input mdInput class="form-control" style="text-align:right"  placeholder="Puan"
+                                    <input matInput class="form-control" style="text-align:right"  placeholder="Puan"
                                         type="number" (keyup.enter)="oyuncuEkle(eklenecekOyuncu)"
                                         [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
                                 </mat-input-container>
@@ -152,7 +153,7 @@
 
                     <td>
                         <mat-input-container>
-                            <input mdInput style="width:100%" type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)"
+                            <input matInput style="width:100%" type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)"
                             />
 
                         </mat-input-container>
@@ -164,7 +165,7 @@
 
                     <td [hidden]='!ciktiModu'>
                         <mat-input-container>
-                            <input mdInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
+                            <input matInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
                         </mat-input-container>
                     </td>
 
@@ -219,7 +220,7 @@
             Tablo Genişliği :
 
             <mat-input-container>
-                <input mdInput style="display:inline-block!important" type="number" [(ngModel)]='puanTabloGenislik' />
+                <input matInput style="display:inline-block!important" type="number" [(ngModel)]='puanTabloGenislik' />
             </mat-input-container>
         </div>
 
