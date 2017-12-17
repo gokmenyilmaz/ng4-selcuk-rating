@@ -121,14 +121,10 @@ export class MacFoyComponent implements OnInit {
             let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
 
             this.oyuncular = new List<Oyuncu>(x)
-                .Where(o => this.parseDateDMY(o.BaslamaTarihi).getTime() <= macTarihTime)
-                .Where(o => this.parseDateDMY(o.AyrilisTarihi).getTime() > macTarihTime)
+                // .Where(o => this.parseDateDMY(o.BaslamaTarihi).getTime() <= macTarihTime)
+                // .Where(o => this.parseDateDMY(o.AyrilisTarihi).getTime() > macTarihTime)
                 .ToArray();
 
-           
-
-
-          
 
             for (let o of this.oyuncular) {
                 if (o[this.hafta - 1] == undefined) {
