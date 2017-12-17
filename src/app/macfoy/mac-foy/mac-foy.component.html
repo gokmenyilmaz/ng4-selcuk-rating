@@ -8,10 +8,7 @@
                     <mat-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
                         <mat-option *ngFor="let number of haftalar" [value]="number">{{number}}</mat-option>
                     </mat-select>
-
-
                 </mat-grid-tile>
-
 
                 <mat-grid-tile>
 
@@ -87,17 +84,10 @@
                 </mat-grid-tile>
           
             </mat-grid-list>
-            
-    
+  
         </mat-tab>
-
-
-      
+  
     </mat-tab-group>
-
-
-
-
 
     <div id="skortablo-container" class="row">
         <table id="skortablo" rules="all" frame="border" class="table table-bordered table-hover table-condensed table-striped">
@@ -122,7 +112,6 @@
 
 
             <tbody>
-
                 <tr *ngFor="let row of mac_rows;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
 
                     <td>
@@ -134,11 +123,9 @@
                                     <mat-icon style="align-self: flex-end" >more_vert</mat-icon>
                                 </div>
                                
-                              
-                              
                             </button>
 
-                            <!-- <mat-menu #appMenu="mdMenu">
+                            <mat-menu #appMenu="matMenu">
                                 <button mat-menu-item (click)="MacaGelmedi(row)">
                                     <span *ngIf='row.VarMi==false'>Maça Geldi</span>
                                     <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
@@ -146,16 +133,16 @@
                                 <button (click)="MacSil(row)" mat-menu-item> Listeden Kaldır </button>
                                 <button mat-menu-item (click)="satirKonumDegistir(row,-1)"> Yukarı Hareket </button>
                                 <button mat-menu-item (click)="satirKonumDegistir(row,1)"> Aşağı Hareket </button>
-                            </mat-menu> -->
+                            </mat-menu>
                         </div>
 
                     </td>
 
                     <td>
                         <mat-input-container>
-                            <input matInput style="width:100%" type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)"
+                            <input matInput style="width:100%" type="number" [(ngModel)]='row.MO_Puan' 
+                            (ngModelChange)="MacOncesiPuanGuncellendi(row)"
                             />
-
                         </mat-input-container>
                     </td>
 
