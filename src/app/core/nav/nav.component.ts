@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSpinner } from '@angular/material';
 
 class MenuItem {
   constructor(public caption: string, public link: any[]) { }

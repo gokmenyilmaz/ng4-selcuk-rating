@@ -1,3 +1,6 @@
+# Kullanilan Paketler
+npm install --save @angular/material @angular/cdk
+
 # Deploy
 npm i -g angular-cli-ghpages  
 ng build --prod  

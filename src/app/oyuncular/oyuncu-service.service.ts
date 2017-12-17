@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 
 import { Oyuncu, MacSatir } from '../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../Models/entityAll';
@@ -11,12 +11,12 @@ export class OyuncuService {
 
     }
 
-    OyunculariGetir(): FirebaseListObservable<Oyuncu[]> {
+    OyunculariGetir(): AngularFireList<Oyuncu[]> {
         return this.af.list('/Selcuk/Oyuncular');
 
     }
 
-    OyuncuGetir(id: number): FirebaseObjectObservable<Oyuncu> {
+    OyuncuGetir(id: number): AngularFireObject<Oyuncu> {
         return this.af.object('/Selcuk/Oyuncular/' + id)
 
             ;

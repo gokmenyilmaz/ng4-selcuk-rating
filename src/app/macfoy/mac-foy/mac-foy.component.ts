@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MacFoyService } from '../macfoy.service';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+
+import { AngularFireDatabase} from 'angularfire2/database';
+
 import { List } from 'linqts/dist/linq';
 import { FormsModule, FormGroup } from '@angular/forms';
 
@@ -9,7 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Oyuncu, MacSatir } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
-import {MdDialog, MdDialogRef,MdSnackBar} from '@angular/material';
+import {MatDialogModule,MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+
 
 //import {Observable} from 'rxjs/Rx' 
 import {Observable} from 'rxjs/Observable'
@@ -18,6 +23,7 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/from';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -57,8 +63,8 @@ export class MacFoyComponent implements OnInit {
         private reytingServis: MacFoyService,
         private af: AngularFireDatabase,
         private _route: ActivatedRoute,
-        private _dialog: MdDialog,
-        private _snackbar: MdSnackBar
+        private _dialog: MatDialog,
+        private _snackbar: MatSnackBar
     ) {
         this.puanTabloGenislik = 100;
 
@@ -87,7 +93,8 @@ export class MacFoyComponent implements OnInit {
 
 
     haftaDegisti() {
-        this.af.object('/Selcuk/Maclar/' + this.hafta + '/' + this.grup).subscribe(m => {
+        this.af.object<any>('/Selcuk/Maclar/' + this.hafta + '/' + this.grup)
+                .valueChanges().subscribe(m => {
 
             let bugun = new Date(Date.now()).toLocaleDateString();
 
@@ -109,9 +116,7 @@ export class MacFoyComponent implements OnInit {
     }
 
     oyunculariYukle() {
-        this.af.list('/Selcuk/Oyuncular').subscribe(x => {
-
-         
+        this.af.list('/Selcuk/Oyuncular').valueChanges().subscribe(x => {
 
             let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
 
@@ -584,5 +589,5 @@ export class MacFoyComponent implements OnInit {
   `,
 })
 export class DialogContent {
-  constructor(public dialogRef: MdDialogRef<DialogContent>) { }
+  constructor(public dialogRef: MatDialogRef<DialogContent>) { }
 }

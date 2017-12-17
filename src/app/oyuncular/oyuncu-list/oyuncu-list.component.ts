@@ -1,7 +1,7 @@
 
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { List } from 'linqts/dist/linq';
 import { FormsModule, FormGroup } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Oyuncu, MacSatir } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
-import {MdDialog, MdDialogRef,MdSnackBar} from '@angular/material';
+import {MatDialog, MatDialogRef,MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -20,7 +20,7 @@ import {MdDialog, MdDialogRef,MdSnackBar} from '@angular/material';
 })
 export class OyuncuListComponent implements OnInit {
 
-   oyuncular: FirebaseListObservable<Oyuncu[]>;
+   oyuncular: AngularFireList<Oyuncu[]>;
    eklenecek_oyuncu:Oyuncu=null;
   
   constructor( private af: AngularFireDatabase) {
