@@ -1,33 +1,32 @@
-<md-card>
+<mat-card>
+    <mat-form-field  style="width:150px;display: inline-block">
+        <input matInput class="form-control" style="text-align:center"  placeholder="Oyuncu Ad Soyad"
+            [(ngModel)]='eklenecek_oyuncu.OyuncuAdSoyad'>
+    </mat-form-field >
 
-    <md-input-container md-no-float style="width:150px;display: inline-block">
-                <input mdInput class="form-control" style="text-align:center"  placeholder="Oyuncu Ad Soyad"
-                                    [(ngModel)]='eklenecek_oyuncu.OyuncuAdSoyad'>
-    </md-input-container>
-
-    <md-input-container md-no-float style="width:150px;display: inline-block">
-                <input mdInput class="form-control" style="text-align:center"  placeholder="Başlama Tarihi"
-                                    [(ngModel)]='eklenecek_oyuncu.BaslamaTarihi'>
-    </md-input-container>
+    <mat-form-field  style="width:150px;display: inline-block">
+        <input matInput class="form-control" style="text-align:center"  placeholder="Başlama Tarihi"
+            [(ngModel)]='eklenecek_oyuncu.BaslamaTarihi'>
+    </mat-form-field >
     
-    <md-input-container md-no-float style="width:150px;display: inline-block">
-                <input mdInput class="form-control" style="text-align:center"  placeholder="Ayrılış Tarihi"
-                                    [(ngModel)]='eklenecek_oyuncu.AyrilisTarihi'>
-    </md-input-container>
+    <mat-form-field  style="width:150px;display: inline-block">
+        <input matInput class="form-control" style="text-align:center"  placeholder="Ayrılış Tarihi"
+            [(ngModel)]='eklenecek_oyuncu.AyrilisTarihi'>
+    </mat-form-field >
 
-    <md-input-container md-no-float style="width:150px;display: inline-block">
-                <input mdInput class="form-control" style="text-align:center"  placeholder="Başlama Puan"
-                                    [(ngModel)]='eklenecek_oyuncu.BaslamaPuan'>
-    </md-input-container>
+    <mat-form-field  style="width:150px;display: inline-block">
+        <input matInput class="form-control" style="text-align:center"  placeholder="Başlama Puan"
+            [(ngModel)]='eklenecek_oyuncu.BaslamaPuan'>
+    </mat-form-field >
 
     <div>
-        <button md-raised-button  color="primary" (click)="OyuncuEkle()">Ekle</button>
+        <button mat-raised-button  color="primary" (click)="OyuncuEkle()">Ekle</button>
     </div>
 
-</md-card>
+</mat-card>
 
 
-<md-card class="row" style="text-align:center" id="puanListeContainer">
+<mat-card class="row" style="text-align:center" id="puanListeContainer">
 
     <table class="table table-bordered" style="margin-right: 15px">
         <thead>
@@ -53,4 +52,4 @@
     </table>
 
   
-</md-card>
+</mat-card>

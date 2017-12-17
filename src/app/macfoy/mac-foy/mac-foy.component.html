@@ -1,4 +1,4 @@
-<md-card>
+<mat-card>
 
     <md-tab-group [attr.disabled]="grupluMu?1:0">
           <md-tab label="Hafta Seçimi">
@@ -37,12 +37,12 @@
 
 
                 <md-grid-tile colspan="2">
-                    <md-card>
+                    <mat-card>
                         <button md-raised-button  color="primary" (click)="oyuncuEkle(eklenecekOyuncu)">
                             <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
                         </button>
                         <button md-raised-button  color="primary" (click)="kaydet()">kaydet</button>
-                    </md-card>
+                    </mat-card>
                 </md-grid-tile>
 
             </md-grid-list>
@@ -72,11 +72,11 @@
                 </md-grid-tile>
                 
                 <md-grid-tile>
-                    <md-card>
+                    <mat-card>
                         
                         <md-slide-toggle [(ngModel)]='ciktiModu' class="example-margin">Gelişmiş</md-slide-toggle>
                         <md-slide-toggle [(ngModel)]='grupluMu'>Grup Modu</md-slide-toggle>
-                    </md-card>
+                    </mat-card>
                 </md-grid-tile>
                 
                 <md-grid-tile>
@@ -262,4 +262,4 @@
 
     </div>
 
-</md-card>
+</mat-card>
