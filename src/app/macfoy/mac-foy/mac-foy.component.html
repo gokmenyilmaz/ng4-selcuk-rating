@@ -1,98 +1,98 @@
 <mat-card>
 
-    <md-tab-group [attr.disabled]="grupluMu?1:0">
-          <md-tab label="Hafta Seçimi">
+    <mat-tab-group [attr.disabled]="grupluMu?1:0">
+          <mat-tab label="Hafta Seçimi">
 
-            <md-grid-list cols="6" rowHeight="2:1">
-                <md-grid-tile>
-                    <md-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
-                        <md-option *ngFor="let number of haftalar" [value]="number">{{number}}</md-option>
-                    </md-select>
-
-
-                </md-grid-tile>
+            <mat-grid-list cols="6" rowHeight="2:1">
+                <mat-grid-tile>
+                    <mat-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
+                        <mat-option *ngFor="let number of haftalar" [value]="number">{{number}}</mat-option>
+                    </mat-select>
 
 
-                <md-grid-tile>
+                </mat-grid-tile>
 
-                    <md-input-container md-no-float>
+
+                <mat-grid-tile>
+
+                    <mat-input-container mat-no-float>
                         <input mdInput style="width: 100px" type="text" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
-                    </md-input-container>
-                </md-grid-tile>
+                    </mat-input-container>
+                </mat-grid-tile>
 
 
-                <md-grid-tile>
-                    <md-select style="width: 70px" [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
-                        <md-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</md-option>
-                    </md-select>
+                <mat-grid-tile>
+                    <mat-select style="width: 70px" [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
+                        <mat-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</mat-option>
+                    </mat-select>
 
-                </md-grid-tile>
+                </mat-grid-tile>
 
 
-                <md-grid-tile>
-                    <md-input-container md-no-float>
+                <mat-grid-tile>
+                    <mat-input-container mat-no-float>
                         <input mdInput style="width:80px;display: inline-block" type="text" class="form-control" [(ngModel)]='grupElememanSayilari'>
-                    </md-input-container>
-                </md-grid-tile>
+                    </mat-input-container>
+                </mat-grid-tile>
 
 
-                <md-grid-tile colspan="2">
+                <mat-grid-tile colspan="2">
                     <mat-card>
-                        <button md-raised-button  color="primary" (click)="oyuncuEkle(eklenecekOyuncu)">
+                        <button mat-raised-button  color="primary" (click)="oyuncuEkle(eklenecekOyuncu)">
                             <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
                         </button>
-                        <button md-raised-button  color="primary" (click)="kaydet()">kaydet</button>
+                        <button mat-raised-button  color="primary" (click)="kaydet()">kaydet</button>
                     </mat-card>
-                </md-grid-tile>
+                </mat-grid-tile>
 
-            </md-grid-list>
+            </mat-grid-list>
 
-        </md-tab>
-        <md-tab label="Grup Ayarı">
+        </mat-tab>
+        <mat-tab label="Grup Ayarı">
           
-            <md-grid-list cols="3" rowHeight="2:1">
-                <md-grid-tile>
+            <mat-grid-list cols="3" rowHeight="2:1">
+                <mat-grid-tile>
                         <fieldset disabled>
                           
-                                <md-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
+                                <mat-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
                                     [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
-                                    <md-option default>Oyuncu Seçiniz</md-option>
-                                    <md-option><span> <button class="btn btn-default">Yeni Ekle</button></span></md-option>
-                                    <md-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</md-option>
-                                </md-select>
+                                    <mat-option default>Oyuncu Seçiniz</mat-option>
+                                    <mat-option><span> <button class="btn btn-default">Yeni Ekle</button></span></mat-option>
+                                    <mat-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</mat-option>
+                                </mat-select>
 
-                                <md-input-container md-no-float style="width:150px;display: inline-block">
+                                <mat-input-container mat-no-float style="width:150px;display: inline-block">
                                     <input mdInput class="form-control" style="text-align:right"  placeholder="Puan"
                                         type="number" (keyup.enter)="oyuncuEkle(eklenecekOyuncu)"
                                         [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
-                                </md-input-container>
+                                </mat-input-container>
                         
                          </fieldset>
 
-                </md-grid-tile>
+                </mat-grid-tile>
                 
-                <md-grid-tile>
+                <mat-grid-tile>
                     <mat-card>
                         
-                        <md-slide-toggle [(ngModel)]='ciktiModu' class="example-margin">Gelişmiş</md-slide-toggle>
-                        <md-slide-toggle [(ngModel)]='grupluMu'>Grup Modu</md-slide-toggle>
+                        <mat-slide-toggle [(ngModel)]='ciktiModu' class="example-margin">Gelişmiş</mat-slide-toggle>
+                        <mat-slide-toggle [(ngModel)]='grupluMu'>Grup Modu</mat-slide-toggle>
                     </mat-card>
-                </md-grid-tile>
+                </mat-grid-tile>
                 
-                <md-grid-tile>
-                    <button md-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
+                <mat-grid-tile>
+                    <button mat-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
                         <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
                     </button>
-                </md-grid-tile>
+                </mat-grid-tile>
           
-            </md-grid-list>
+            </mat-grid-list>
             
     
-        </md-tab>
+        </mat-tab>
 
 
       
-    </md-tab-group>
+    </mat-tab-group>
 
 
 
@@ -130,32 +130,32 @@
                             <button style="width:95%;margin:auto" type="button" [mdMenuTriggerFor]="appMenu">
                                 <div style="display:flex;align-items:center;justify-content:space-between">
                                     <label> {{row.OyuncuAdSoyad}}</label>
-                                    <md-icon style="align-self: flex-end" >more_vert</md-icon>
+                                    <mat-icon style="align-self: flex-end" >more_vert</mat-icon>
                                 </div>
                                
                               
                               
                             </button>
 
-                            <md-menu #appMenu="mdMenu">
-                                <button md-menu-item (click)="MacaGelmedi(row)">
+                            <mat-menu #appMenu="mdMenu">
+                                <button mat-menu-item (click)="MacaGelmedi(row)">
                                     <span *ngIf='row.VarMi==false'>Maça Geldi</span>
                                     <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
                                 </button>
-                                <button (click)="MacSil(row)" md-menu-item> Listeden Kaldır </button>
-                                <button md-menu-item (click)="satirKonumDegistir(row,-1)"> Yukarı Hareket </button>
-                                <button md-menu-item (click)="satirKonumDegistir(row,1)"> Aşağı Hareket </button>
-                            </md-menu>
+                                <button (click)="MacSil(row)" mat-menu-item> Listeden Kaldır </button>
+                                <button mat-menu-item (click)="satirKonumDegistir(row,-1)"> Yukarı Hareket </button>
+                                <button mat-menu-item (click)="satirKonumDegistir(row,1)"> Aşağı Hareket </button>
+                            </mat-menu>
                         </div>
 
                     </td>
 
                     <td>
-                        <md-input-container>
+                        <mat-input-container>
                             <input mdInput style="width:100%" type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)"
                             />
 
-                        </md-input-container>
+                        </mat-input-container>
                     </td>
 
                     <td>
@@ -163,9 +163,9 @@
                     </td>
 
                     <td [hidden]='!ciktiModu'>
-                        <md-input-container>
+                        <mat-input-container>
                             <input mdInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
-                        </md-input-container>
+                        </mat-input-container>
                     </td>
 
                     <td>
@@ -178,17 +178,17 @@
                     <td *ngFor="let oyuncu of eklenenOyuncular;let inx=index" [class.sari]="mac_rows[inx].VarMi!==true">
                         <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
 
-                            <md-select class="no-underline" [(ngModel)]="row['C' + (inx+1)].Skor" 
+                            <mat-select class="no-underline" [(ngModel)]="row['C' + (inx+1)].Skor" 
                             (ngModelChange)='TabloyuGuncelle(row,(inx+1))'>
-                                <md-option value="__">__</md-option>
-                                <md-option value="4-0">4-0</md-option>
-                                <md-option value="3-1">3-1</md-option>
-                                <md-option value="2-2">2-2</md-option>
-                                <md-option value="1-3">1-3</md-option>
-                                <md-option value="0-4">0-4</md-option>
-                                <md-option value="(1-3)">*1-3</md-option>
-                                <md-option value="X-X">X-X</md-option>
-                            </md-select>
+                                <mat-option value="__">__</mat-option>
+                                <mat-option value="4-0">4-0</mat-option>
+                                <mat-option value="3-1">3-1</mat-option>
+                                <mat-option value="2-2">2-2</mat-option>
+                                <mat-option value="1-3">1-3</mat-option>
+                                <mat-option value="0-4">0-4</mat-option>
+                                <mat-option value="(1-3)">*1-3</mat-option>
+                                <mat-option value="X-X">X-X</mat-option>
+                            </mat-select>
 
                             <span class="label pull-right" [ngClass]="{'label-success':row['C' + (inx+1)].Puan>=0,'label-danger':row['C' + (inx+1)].Puan<0 }">{{row['C' + (inx+1)].Puan}}</span>
                             <span class="label label-info pull-left">{{row['C' + (inx+1)].Aciklama}}</span>
@@ -213,14 +213,14 @@
     </div>
 
     <div class="row" id="puanListeUst">
-        <button md-raised-button class="btn btn-default" (click)='PuanTablosunuGuncelle(false)'>Mac Öncesi Sıralama</button>
-        <button md-raised-button class="btn btn-success" (click)='PuanTablosunuGuncelle(true)'>Puan Tablosunu Güncelle</button>
+        <button mat-raised-button class="btn btn-default" (click)='PuanTablosunuGuncelle(false)'>Mac Öncesi Sıralama</button>
+        <button mat-raised-button class="btn btn-success" (click)='PuanTablosunuGuncelle(true)'>Puan Tablosunu Güncelle</button>
         <div style="display:inline-block;width: 250px">
             Tablo Genişliği :
 
-            <md-input-container>
+            <mat-input-container>
                 <input mdInput style="display:inline-block!important" type="number" [(ngModel)]='puanTabloGenislik' />
-            </md-input-container>
+            </mat-input-container>
         </div>
 
     </div>

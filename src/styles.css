@@ -17,7 +17,7 @@ mat-card {
   text-align: center;
 }
 
-md-toolbar-row {
+mat-toolbar-row {
   justify-content: space-between;
 }
 

@@ -580,8 +580,8 @@ export class MacFoyComponent implements OnInit {
         <div style='display:flex;align-items:flex-end;height:98%;'>
             <p style='align-self:flex-start;width:100%'>Kayıt yapılıyor...</p>
             <div style='display:flex;justify-content:flex-end;width:100%'>
-                <button md-button  (click)="dialogRef.close('Cancel')">Vazgeç</button>
-                <button md-raised-button color="primary" (click)="dialogRef.close('Ok')">Kaydet</button>
+                <button mat-button  (click)="dialogRef.close('Cancel')">Vazgeç</button>
+                <button mat-raised-button color="primary" (click)="dialogRef.close('Ok')">Kaydet</button>
             </div>
         </div>
 
