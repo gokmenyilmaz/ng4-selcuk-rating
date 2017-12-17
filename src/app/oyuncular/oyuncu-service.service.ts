@@ -26,13 +26,13 @@ export class OyuncuService {
    oyuncuVarMi(adsoyad:string)
    {
       
-       return this.af.list('/Selcuk/Oyuncular/',
-       {
-           query: {
-                orderByChild: 'OyuncuAdSoyad',
-                equalTo: adsoyad
-            }
-       })
+    //    return this.af.list('/Selcuk/Oyuncular/',
+    //    {
+    //        query: {
+    //             orderByChild: 'OyuncuAdSoyad',
+    //             equalTo: adsoyad
+    //         }
+    //    })
    }
 
     OyuncuKaydet(oyuncu: Oyuncu, key: number) {

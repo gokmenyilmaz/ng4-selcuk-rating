@@ -20,7 +20,7 @@ import {MatDialog, MatDialogRef,MatSnackBar} from '@angular/material';
 })
 export class OyuncuListComponent implements OnInit {
 
-   oyuncular: AngularFireList<Oyuncu[]>;
+   oyuncular: AngularFireList<Oyuncu>;
    eklenecek_oyuncu:Oyuncu=null;
   
   constructor( private af: AngularFireDatabase) {
