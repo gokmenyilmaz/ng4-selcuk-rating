@@ -40,7 +40,7 @@ export class MacFoyComponent implements OnInit {
     eklenenOyuncular: Oyuncu[] = [];
 
     eklenecekOyuncu: Oyuncu = null;
-    hafta: number = 1;
+   
     grup: string = 'A';
     grupMacTarih: string;
 
@@ -59,12 +59,17 @@ export class MacFoyComponent implements OnInit {
     Count: number;
     subscription: any;
 
+    club:string;
+    yil:number;
+    hafta: number;
+
     constructor(
         private reytingServis: MacFoyService,
         private af: AngularFireDatabase,
         private _route: ActivatedRoute,
         private _dialog: MatDialog,
-        private _snackbar: MatSnackBar
+        private _snackbar: MatSnackBar,
+        private activatedRoute: ActivatedRoute
     ) {
         this.puanTabloGenislik = 100;
 
@@ -83,17 +88,23 @@ export class MacFoyComponent implements OnInit {
     }
 
     ngOnInit() {
-        var d = this._route.snapshot.params["dernek"];
 
-        this.hafta = this._route.snapshot.params["hafta"];
-        console.log(this.hafta, this._route.params);
+        this.activatedRoute.params.subscribe((params) => this.club = params.club);
+        this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
+        this.activatedRoute.params.subscribe((params) => this.hafta = params.hafta);
+        this.activatedRoute.params.subscribe((params) => this.hafta = params.grup);
+
+       
         this.haftaDegisti();
     }
 
 
 
     haftaDegisti() {
-        this.af.object<any>('/Selcuk/Maclar/' + this.hafta + '/' + this.grup)
+
+        var yol= `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
+
+        this.af.object<any>(yol)
                 .valueChanges().subscribe(m => {
 
             let bugun = new Date(Date.now()).toLocaleDateString();
@@ -103,7 +114,6 @@ export class MacFoyComponent implements OnInit {
 
             this.oyunculariYukle();
         })
-
 
     }
 
@@ -116,7 +126,9 @@ export class MacFoyComponent implements OnInit {
     }
 
     oyunculariYukle() {
-        this.af.list<Oyuncu>('/Selcuk/Oyuncular').valueChanges().subscribe(x => {
+        var yol= `/${this.club}/${this.yil}/Oyuncular/`;
+
+        this.af.list<Oyuncu>(yol).valueChanges().subscribe(x => {
 
             let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
 
@@ -192,7 +204,9 @@ export class MacFoyComponent implements OnInit {
             i++;
             let oyuncu = this.oyuncular.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
 
-            this.af.object('/Selcuk/Oyuncular/' + oyuncu["$key"] + '/' + this.hafta).update({
+            var yol=`/${this.club}/${this.yil}/Oyuncular/`;
+
+            this.af.object(yol + oyuncu["$key"] + '/' + this.hafta).update({
                 ToplamPuan: mac.MS_Puan,
                 AlinanPuan: mac.AlinanTPuan,
                 Grup: mac.GrupId,
@@ -207,8 +221,9 @@ export class MacFoyComponent implements OnInit {
         })
 
 
+        var mac_yol= `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
 
-        this.af.object('/Selcuk/Maclar/' + this.hafta + '/' + this.grup).
+        this.af.object(yol).
             set({
                 Tarih: this.grupMacTarih,
                 GrupElememanSayilari: this.grupElememanSayilari,
@@ -333,7 +348,7 @@ export class MacFoyComponent implements OnInit {
 
         let macSayisi = this.mac_rows.length + 1;
 
-        let mx: MacSatir = new MacSatir(1, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan,
+        let mx: MacSatir = new MacSatir(this.grup, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan,
             null, null, null, null, null, null, null, null, null, true, 0);
 
         this.mac_rows.push(mx);
@@ -435,7 +450,10 @@ export class MacFoyComponent implements OnInit {
         for (let PuanTabloItem of this.PuanTabloItemList) {
             var _oyuncu = this.oyuncular.find(c => c.OyuncuAdSoyad == PuanTabloItem.OyuncuAdSoyad);
 
-            this.af.object('/Selcuk/Oyuncular/' + _oyuncu["$key"]).update({
+
+            var o_yol=`/${this.club}/${this.yil}/Oyuncular/`;
+
+            this.af.object(o_yol + _oyuncu["$key"]).update({
                 GuncelGrup: PuanTabloItem.Grup
             });
         }

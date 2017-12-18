@@ -22,19 +22,22 @@ export class OyuncuListComponent implements OnInit {
 
    oyuncular: AngularFireList<Oyuncu>;
    eklenecek_oyuncu:Oyuncu=null;
+
+   club:string;
+   yil:number;
   
-  constructor( private af: AngularFireDatabase) {
+  constructor( private af: AngularFireDatabase,private activatedRoute: ActivatedRoute) {
 
-        this.oyuncular=this.af.list('/Selcuk/Oyuncular/');
-
-      this.OyuncuVarsayilanDegerler();
-
-         
 
       };
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe((params) => this.club = params.club);
+    this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
 
+    this.oyuncular=this.af.list(`/${this.club}/${this.yil}/Oyuncular/`);
+
+      this.OyuncuVarsayilanDegerler();
 
   }
 

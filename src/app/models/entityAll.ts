@@ -35,7 +35,7 @@ export class SkorDetay {
 }
 export class MacSatir {
     constructor(
-        public GrupId: number,
+        public GrupId: string,
         public HaftaId: number,
         public OyuncuAdSoyad: string,
         public MO_Puan: number,
