@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MacFoyService } from '../macfoy.service';
 
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 import { List } from 'linqts/dist/linq';
 import { FormsModule, FormGroup } from '@angular/forms';
@@ -37,6 +37,7 @@ export class MacFoyComponent implements OnInit {
     mac_rows: MacSatir[] = [];
 
     oyuncular: Oyuncu[] = [];
+    oyuncularRef: AngularFireList<Oyuncu>;
 
     oyuncularGruplu: Oyuncu[] = [];
     eklenenOyuncular: Oyuncu[] = [];
@@ -454,14 +455,12 @@ export class MacFoyComponent implements OnInit {
         }
 
         for (let PuanTabloItem of this.PuanTabloItemList) {
-            var _oyuncu = this.oyuncular.find(c => c.OyuncuAdSoyad == PuanTabloItem.OyuncuAdSoyad);
+            
+            var _oyuncu= this.af.list<Oyuncu>(this.oyuncularPath,
+                 ref => ref.orderByChild('OyuncuAdSoyad').equalTo(PuanTabloItem.OyuncuAdSoyad))
+                 .valueChanges();
 
-            if(_oyuncu!=undefined || _oyuncu!=null)
-            {
-                this.af.object(this.oyuncularPath + '/' + _oyuncu["$key"]).update({
-                    GuncelGrup: PuanTabloItem.Grup
-                });
-            }
+           _oyuncu[0].update({ GuncelGrup: PuanTabloItem.Grup });
 
         }
 
