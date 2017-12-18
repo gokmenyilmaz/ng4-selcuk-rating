@@ -46,7 +46,7 @@ export class MacFoyComponent implements OnInit {
     grup: string = 'A';
     grupMacTarih: string;
 
-    haftalar: string[] = ["1","2","3","4"];
+    haftalar: number[] = [];
 
     grupluMu: boolean = true;
     gruplar: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
