@@ -5,9 +5,9 @@ import { OyuncuEditComponent } from "./oyuncular/oyuncu-edit/oyuncu-edit.compone
 import { MacFoyComponent } from "./macfoy/mac-foy/mac-foy.component";
 
 const routes: Routes = [
-    {path:"klub/:club/:yil/oyuncular", component:OyuncuListComponent},
+    {path:":club/:yil/oyuncular", component:OyuncuListComponent},
     {path:"edit", component:OyuncuEditComponent},
-    {path:"klub/:club/:yil/macfoy/:hafta/:grup", component:MacFoyComponent}
+    {path:":club/:yil/macfoy/:hafta/:grup", component:MacFoyComponent}
  
 ];
 

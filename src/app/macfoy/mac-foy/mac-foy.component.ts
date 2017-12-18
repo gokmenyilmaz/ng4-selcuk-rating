@@ -66,6 +66,9 @@ export class MacFoyComponent implements OnInit {
 
     hafta: number;
 
+    macfoyPath:string;
+    oyuncularPath:string;
+
     constructor(
         private reytingServis: MacFoyService,
         private af: AngularFireDatabase,
@@ -109,15 +112,16 @@ export class MacFoyComponent implements OnInit {
 
     haftaDegisti() {
 
-        var yol = `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
+        this.macfoyPath = `/${this.club}/${this.yil}/MacFoy/${this.hafta}/${this.grup}`;
+        this.oyuncularPath = `/${this.club}/${this.yil}/Oyuncular`;
 
-        this.af.object<any>(yol)
+        this.af.object<any>(this.macfoyPath)
             .valueChanges().subscribe(m => {
 
                 let bugun = new Date(Date.now()).toLocaleDateString();
 
-                this.mac_rows = m.Foy == undefined ? [] : m.Foy;
-                this.grupMacTarih = m.Foy == undefined ? bugun : m.Tarih;
+                this.mac_rows = m == null ? [] : m.Foy;
+                this.grupMacTarih = m == null ? bugun : m.Tarih;
 
                 this.oyunculariYukle();
             })
@@ -133,9 +137,9 @@ export class MacFoyComponent implements OnInit {
     }
 
     oyunculariYukle() {
-        var yol = `/${this.club}/${this.yil}/Oyuncular/`;
+      
 
-        this.af.list<Oyuncu>(yol).valueChanges().subscribe(x => {
+        this.af.list<Oyuncu>(this.oyuncularPath).valueChanges().subscribe(x => {
 
             let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
 
@@ -211,9 +215,7 @@ export class MacFoyComponent implements OnInit {
             i++;
             let oyuncu = this.oyuncular.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
 
-            var yol = `/${this.club}/${this.yil}/Oyuncular/`;
-
-            this.af.object(yol + oyuncu["$key"] + '/' + this.hafta).update({
+            this.af.object(this.macfoyPath + '/' + oyuncu["$key"] + '/' + this.hafta).update({
                 ToplamPuan: mac.MS_Puan,
                 AlinanPuan: mac.AlinanTPuan,
                 Grup: mac.GrupId,
@@ -227,10 +229,7 @@ export class MacFoyComponent implements OnInit {
 
         })
 
-
-        var mac_yol = `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
-
-        this.af.object(yol).
+        this.af.object(this.macfoyPath).
             set({
                 Tarih: this.grupMacTarih,
                 GrupElememanSayilari: this.grupElememanSayilari,
@@ -457,12 +456,13 @@ export class MacFoyComponent implements OnInit {
         for (let PuanTabloItem of this.PuanTabloItemList) {
             var _oyuncu = this.oyuncular.find(c => c.OyuncuAdSoyad == PuanTabloItem.OyuncuAdSoyad);
 
+            if(_oyuncu!=undefined || _oyuncu!=null)
+            {
+                this.af.object(this.oyuncularPath + '/' + _oyuncu["$key"]).update({
+                    GuncelGrup: PuanTabloItem.Grup
+                });
+            }
 
-            var o_yol = `/${this.club}/${this.yil}/Oyuncular/`;
-
-            this.af.object(o_yol + _oyuncu["$key"]).update({
-                GuncelGrup: PuanTabloItem.Grup
-            });
         }
 
     }
