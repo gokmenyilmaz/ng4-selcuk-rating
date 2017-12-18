@@ -97,13 +97,11 @@ export class MacFoyComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => this.grup = params.grup);
         
         this.activatedRoute.params.subscribe(params => 
-            this.hafta = parseInt(params.hafta)
+            {
+                this.hafta = parseInt(params.hafta);
+                this.haftaDegisti();
+            }
         );
-
-
-       // this.haftaDegisti();
-
-      
 
     }
 
