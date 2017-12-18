@@ -457,9 +457,11 @@ export class MacFoyComponent implements OnInit {
         for (let PuanTabloItem of this.PuanTabloItemList) {
             
             var _oyuncu= this.af.list<Oyuncu>(this.oyuncularPath,
-                 ref => ref.orderByChild('OyuncuAdSoyad').equalTo(PuanTabloItem.OyuncuAdSoyad))
-                 .valueChanges();
-
+                 ref => ref.orderByChild('OyuncuAdSoyad')
+                 .equalTo(PuanTabloItem.OyuncuAdSoyad)
+                .limitToFirst(1)
+                ).snapshotChanges();
+            
            _oyuncu[0].update({ GuncelGrup: PuanTabloItem.Grup });
 
         }
