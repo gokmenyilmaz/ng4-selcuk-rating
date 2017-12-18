@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MacFoyService } from '../macfoy.service';
 
-import { AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 import { List } from 'linqts/dist/linq';
 import { FormsModule, FormGroup } from '@angular/forms';
@@ -11,13 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Oyuncu, MacSatir } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
-import {MatDialogModule,MatDialogRef} from '@angular/material/dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
 //import {Observable} from 'rxjs/Rx' 
-import {Observable} from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable'
 
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/map';
@@ -27,24 +27,26 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 
 
 @Component({
-  selector: 'app-mac-foy',
-  templateUrl: './mac-foy.component.html',
-  styleUrls: ['./mac-foy.component.css']
+    selector: 'app-mac-foy',
+    templateUrl: './mac-foy.component.html',
+    styleUrls: ['./mac-foy.component.css']
 })
 
 export class MacFoyComponent implements OnInit {
 
     mac_rows: MacSatir[] = [];
+
     oyuncular: Oyuncu[] = [];
+
     oyuncularGruplu: Oyuncu[] = [];
     eklenenOyuncular: Oyuncu[] = [];
 
     eklenecekOyuncu: Oyuncu = null;
-   
+
     grup: string = 'A';
     grupMacTarih: string;
 
-    haftalar: number[] = [];
+    haftalar: string[] = ["1","2","3","4"];
 
     grupluMu: boolean = true;
     gruplar: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -59,8 +61,9 @@ export class MacFoyComponent implements OnInit {
     Count: number;
     subscription: any;
 
-    club:string;
-    yil:number;
+    club: string;
+    yil: number;
+
     hafta: number;
 
     constructor(
@@ -71,16 +74,8 @@ export class MacFoyComponent implements OnInit {
         private _snackbar: MatSnackBar,
         private activatedRoute: ActivatedRoute
     ) {
-        this.puanTabloGenislik = 100;
-
-        this.eklenecekOyuncu = new Oyuncu('', 0, null, null);
 
         this.haftalar = Array.from(Array(52).keys());
-
-        this.haftaDegisti();
-
-
-        //  this.oyuncuDuzenleTest();
     }
 
     degisiklikVarMi(): boolean {
@@ -89,31 +84,38 @@ export class MacFoyComponent implements OnInit {
 
     ngOnInit() {
 
+        this.puanTabloGenislik = 100;
+        this.eklenecekOyuncu = new Oyuncu('', 0, null, null);
+     
+
         this.activatedRoute.params.subscribe((params) => this.club = params.club);
         this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
+        this.activatedRoute.params.subscribe((params) => this.grup = params.grup);
         this.activatedRoute.params.subscribe((params) => this.hafta = params.hafta);
-        this.activatedRoute.params.subscribe((params) => this.hafta = params.grup);
 
-       
-        this.haftaDegisti();
+
+        // this.haftaDegisti();
+
+      
+
     }
 
 
 
     haftaDegisti() {
 
-        var yol= `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
+        var yol = `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
 
         this.af.object<any>(yol)
-                .valueChanges().subscribe(m => {
+            .valueChanges().subscribe(m => {
 
-            let bugun = new Date(Date.now()).toLocaleDateString();
+                let bugun = new Date(Date.now()).toLocaleDateString();
 
-            this.mac_rows = m.Foy == undefined ? [] : m.Foy;
-            this.grupMacTarih = m.Foy == undefined ? bugun : m.Tarih;
+                this.mac_rows = m.Foy == undefined ? [] : m.Foy;
+                this.grupMacTarih = m.Foy == undefined ? bugun : m.Tarih;
 
-            this.oyunculariYukle();
-        })
+                this.oyunculariYukle();
+            })
 
     }
 
@@ -126,7 +128,7 @@ export class MacFoyComponent implements OnInit {
     }
 
     oyunculariYukle() {
-        var yol= `/${this.club}/${this.yil}/Oyuncular/`;
+        var yol = `/${this.club}/${this.yil}/Oyuncular/`;
 
         this.af.list<Oyuncu>(yol).valueChanges().subscribe(x => {
 
@@ -204,7 +206,7 @@ export class MacFoyComponent implements OnInit {
             i++;
             let oyuncu = this.oyuncular.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
 
-            var yol=`/${this.club}/${this.yil}/Oyuncular/`;
+            var yol = `/${this.club}/${this.yil}/Oyuncular/`;
 
             this.af.object(yol + oyuncu["$key"] + '/' + this.hafta).update({
                 ToplamPuan: mac.MS_Puan,
@@ -221,7 +223,7 @@ export class MacFoyComponent implements OnInit {
         })
 
 
-        var mac_yol= `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
+        var mac_yol = `/${this.club}/${this.yil}/Maclar/${this.hafta}/${this.grup}`;
 
         this.af.object(yol).
             set({
@@ -230,17 +232,17 @@ export class MacFoyComponent implements OnInit {
                 Foy: this.mac_rows
             });
 
-            return true;
+        return true;
 
     }
 
     kaydet() {
 
-       let dialogRef = this._dialog.open(DialogContent, { width:'400px', height:'200px'} );
-       
+        let dialogRef = this._dialog.open(DialogContent, { width: '400px', height: '200px' });
+
         dialogRef.afterClosed().subscribe(result => {
-             if(result=='Ok'){
-                if(this.kayitEt()) this._snackbar.open('Kayıt işlemi yapıldı', '',{duration:400});
+            if (result == 'Ok') {
+                if (this.kayitEt()) this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
             };
         })
     }
@@ -355,14 +357,14 @@ export class MacFoyComponent implements OnInit {
 
 
         for (var i = 1; i <= macSayisi; i++) {
-            mx["C" + i] = new SkorDetay(_oyuncu.OyuncuAdSoyad, '__', 0, null,'');
+            mx["C" + i] = new SkorDetay(_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
         }
 
         let index: number = 0;
 
         for (let mac of this.mac_rows) {
             index = index + 1;
-            mac["C" + macSayisi] = new SkorDetay(_oyuncu.OyuncuAdSoyad, '__', 0, null,'');
+            mac["C" + macSayisi] = new SkorDetay(_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
 
             if (macSayisi == index) mac["C" + macSayisi].Skor = 'X-X';
         }
@@ -451,7 +453,7 @@ export class MacFoyComponent implements OnInit {
             var _oyuncu = this.oyuncular.find(c => c.OyuncuAdSoyad == PuanTabloItem.OyuncuAdSoyad);
 
 
-            var o_yol=`/${this.club}/${this.yil}/Oyuncular/`;
+            var o_yol = `/${this.club}/${this.yil}/Oyuncular/`;
 
             this.af.object(o_yol + _oyuncu["$key"]).update({
                 GuncelGrup: PuanTabloItem.Grup
@@ -461,41 +463,39 @@ export class MacFoyComponent implements OnInit {
     }
 
     MacaGelmedi(_row: MacSatir) {
-         let inx: number = 0;
-        if(_row.VarMi==false) 
-        {
-              _row.VarMi = true;
+        let inx: number = 0;
+        if (_row.VarMi == false) {
+            _row.VarMi = true;
 
-                for (let _oy of this.eklenenOyuncular) {
-                    inx++;
-                    if (_row['C' + inx].Skor != 'X-X') 
-                    {
-                       _row['C' + inx].Aciklama="";
-                       _row['C' + inx].Skor="__";
-                    }
-
-                     this.TabloyuGuncelle(_row, inx);
-
+            for (let _oy of this.eklenenOyuncular) {
+                inx++;
+                if (_row['C' + inx].Skor != 'X-X') {
+                    _row['C' + inx].Aciklama = "";
+                    _row['C' + inx].Skor = "__";
                 }
 
-              return;
+                this.TabloyuGuncelle(_row, inx);
+
+            }
+
+            return;
         }
 
-       _row.VarMi=false;
+        _row.VarMi = false;
 
         var satirIndex = this.mac_rows.indexOf(_row);
-       
+
         for (let _oy of this.eklenenOyuncular) {
             inx++;
             if (_row['C' + inx].Skor != 'X-X') {
                 _row['C' + inx].Skor = '1-3';
 
-                  if (_row.VarMi == false &&  this.mac_rows[inx-1].VarMi==false) {
-                       _row['C' + (inx)].Skor="(1-3)";
-                       _row['C' + (inx)].Aciklama="K.H.";
+                if (_row.VarMi == false && this.mac_rows[inx - 1].VarMi == false) {
+                    _row['C' + (inx)].Skor = "(1-3)";
+                    _row['C' + (inx)].Aciklama = "K.H.";
 
-                      this.mac_rows[inx-1]["C" +(satirIndex+1)].Aciklama="K.H.";
-                  }
+                    this.mac_rows[inx - 1]["C" + (satirIndex + 1)].Aciklama = "K.H.";
+                }
 
                 this.TabloyuGuncelle(_row, inx);
             }
@@ -503,7 +503,7 @@ export class MacFoyComponent implements OnInit {
 
         _row.VarMi = false;
 
-         
+
 
     }
 
@@ -544,9 +544,9 @@ export class MacFoyComponent implements OnInit {
 
 
         if (karsilikliHukmenMi) {
-            caprazRow[caprazSutun] = new SkorDetay('xx', '(' + skor.toString() + ')', puan_capraz, ' background-color: yellow;',"K.H.");
+            caprazRow[caprazSutun] = new SkorDetay('xx', '(' + skor.toString() + ')', puan_capraz, ' background-color: yellow;', "K.H.");
         } else {
-            caprazRow[caprazSutun] = new SkorDetay('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;',"");
+            caprazRow[caprazSutun] = new SkorDetay('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;', "");
         }
 
 
@@ -587,7 +587,7 @@ export class MacFoyComponent implements OnInit {
 
 
 @Component({
-  template: `
+    template: `
 
         <div style='display:flex;align-items:flex-end;height:98%;'>
             <p style='align-self:flex-start;width:100%'>Kayıt yapılıyor...</p>
@@ -601,5 +601,5 @@ export class MacFoyComponent implements OnInit {
   `,
 })
 export class DialogContent {
-  constructor(public dialogRef: MatDialogRef<DialogContent>) { }
+    constructor(public dialogRef: MatDialogRef<DialogContent>) { }
 }

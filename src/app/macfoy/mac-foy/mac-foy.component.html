@@ -5,8 +5,8 @@
 
             <mat-grid-list cols="6" rowHeight="2:1">
                 <mat-grid-tile>
-                    <mat-select aria-placeholder="hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
-                        <mat-option *ngFor="let number of haftalar" [value]="number">{{number}}</mat-option>
+                    <mat-select aria-placeholder="hafta" [(ngModel)]="haftaStr" (ngModelChange)='haftaDegisti()'>
+                        <mat-option *ngFor="let hafta of haftalar" [value]="hafta">{{hafta}}</mat-option>
                     </mat-select>
                 </mat-grid-tile>
 

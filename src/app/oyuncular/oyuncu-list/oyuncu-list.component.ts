@@ -10,8 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Oyuncu, MacSatir } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
-import {MatDialog, MatDialogRef,MatSnackBar} from '@angular/material';
-
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-oyuncu-list',
@@ -20,42 +20,46 @@ import {MatDialog, MatDialogRef,MatSnackBar} from '@angular/material';
 })
 export class OyuncuListComponent implements OnInit {
 
-   oyuncular: AngularFireList<Oyuncu>;
-   eklenecek_oyuncu:Oyuncu=null;
-
-   club:string;
-   yil:number;
-  
-  constructor( private af: AngularFireDatabase,private activatedRoute: ActivatedRoute) {
+  oyuncularRef: AngularFireList<Oyuncu>;
+  oyuncular: Observable<any[]>;
 
 
-      };
+  eklenecek_oyuncu: Oyuncu = null;
+
+  club: string;
+  yil: number;
+
+  constructor(private af: AngularFireDatabase, private activatedRoute: ActivatedRoute) {
+
+
+  };
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => this.club = params.club);
     this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
 
-    this.oyuncular=this.af.list(`/${this.club}/${this.yil}/Oyuncular/`);
+    this.oyuncularRef = this.af.list<Oyuncu>(`/${this.club}/${this.yil}/Oyuncular/`);
+    this.oyuncular = this.oyuncularRef.valueChanges();
 
-      this.OyuncuVarsayilanDegerler();
+
+    this.OyuncuVarsayilanDegerler();
 
   }
 
-  OyuncuEkle(){
-      this.oyuncular.push(this.eklenecek_oyuncu);
+  OyuncuEkle() {
+    this.oyuncularRef.push(this.eklenecek_oyuncu);
 
-        this.OyuncuVarsayilanDegerler();
-     
+    this.OyuncuVarsayilanDegerler();
+
   }
 
 
-  OyuncuVarsayilanDegerler()
-  {
-      var d = new Date();
-      var d1=new Date();d1.setFullYear(2020);
+  OyuncuVarsayilanDegerler() {
+    var d = new Date();
+    var d1 = new Date(); d1.setFullYear(2020);
 
-      this.eklenecek_oyuncu=new Oyuncu(" ",1500,d.toLocaleDateString(),d1.toLocaleDateString(),'D',1970)
-  
+    this.eklenecek_oyuncu = new Oyuncu(" ", 1500, d.toLocaleDateString(), d1.toLocaleDateString(), 'D', 1970)
+
   }
 
 }
