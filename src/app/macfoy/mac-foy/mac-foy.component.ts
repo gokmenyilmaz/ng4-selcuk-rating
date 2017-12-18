@@ -88,13 +88,19 @@ export class MacFoyComponent implements OnInit {
         this.eklenecekOyuncu = new Oyuncu('', 0, null, null);
      
 
-        this.activatedRoute.params.subscribe((params) => this.club = params.club);
-        this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
-        this.activatedRoute.params.subscribe((params) => this.grup = params.grup);
-        this.activatedRoute.params.subscribe((params) => this.hafta = params.hafta);
+        this.activatedRoute.params.subscribe(params => this.club = params.club);
+        this.activatedRoute.params.subscribe(params => 
+            this.yil = parseInt(params.yil)
+        );
+        
+        this.activatedRoute.params.subscribe(params => this.grup = params.grup);
+        
+        this.activatedRoute.params.subscribe(params => 
+            this.hafta = parseInt(params.hafta)
+        );
 
 
-        // this.haftaDegisti();
+        this.haftaDegisti();
 
       
 
