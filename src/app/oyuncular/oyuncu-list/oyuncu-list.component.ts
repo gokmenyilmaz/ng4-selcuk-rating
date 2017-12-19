@@ -7,6 +7,8 @@ import { FormsModule, FormGroup } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
 
+import {MatIconModule} from '@angular/material/icon';
+
 import { Oyuncu, MacSatir } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
@@ -23,6 +25,7 @@ export class OyuncuListComponent implements OnInit {
   oyuncularRef: AngularFireList<Oyuncu>;
   oyuncular: Observable<any[]>;
 
+  _isEditMode:boolean;
 
   eklenecek_oyuncu: Oyuncu = null;
 
@@ -31,21 +34,18 @@ export class OyuncuListComponent implements OnInit {
 
   constructor(private af: AngularFireDatabase, private activatedRoute: ActivatedRoute) {
 
-
+    this._isEditMode=true;
   };
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => this.club = params.club);
     this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
 
-    const data = this.af.list<Oyuncu>(`/${this.club}/${this.yil}/Oyuncular/`);
-   
-    var items = data.snapshotChanges().map(changes => {
+    this.oyuncularRef = this.af.list<Oyuncu>(`/${this.club}/${this.yil}/Oyuncular/`);
+
+    this.oyuncular = this.oyuncularRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
-
-    this.oyuncularRef = this.af.list<Oyuncu>(`/${this.club}/${this.yil}/Oyuncular/`);
-    this.oyuncular = this.oyuncularRef.valueChanges();
 
 
     this.OyuncuVarsayilanDegerler();
@@ -64,8 +64,19 @@ export class OyuncuListComponent implements OnInit {
     var d = new Date();
     var d1 = new Date(); d1.setFullYear(2020);
 
-    this.eklenecek_oyuncu = new Oyuncu(" ", 1500, d.toLocaleDateString(), d1.toLocaleDateString(), 'D', 1970)
+    this.eklenecek_oyuncu = new Oyuncu(" ", 1500, d.toLocaleDateString(), d1.toLocaleDateString(), 'A', 1970)
 
+  }
+
+  OyuncuSil(key:string)
+  {
+      
+    this.oyuncularRef.remove(key);
+  }
+
+  OyuncuGuncelle(key:string,oyuncu:Oyuncu)
+  {
+    this.oyuncularRef.update(key,oyuncu);
   }
 
 }
