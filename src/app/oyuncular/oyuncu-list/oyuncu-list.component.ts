@@ -34,7 +34,7 @@ export class OyuncuListComponent implements OnInit {
 
   constructor(private af: AngularFireDatabase, private activatedRoute: ActivatedRoute) {
 
-    this._isEditMode=true;
+    this._isEditMode=false;
   };
 
   ngOnInit() {

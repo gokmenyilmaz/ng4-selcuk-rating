@@ -21,6 +21,9 @@
 
     <div>
         <button mat-raised-button  color="primary" (click)="OyuncuEkle()">Ekle</button>
+
+        <mat-checkbox  [(ngModel)]="_isEditMode">Düzenleme Modu</mat-checkbox>
+   
     </div>
 
 </mat-card>
@@ -46,63 +49,101 @@
         </thead>
 
         <tbody>
-    
+
+            <ng-container *ngIf="_isEditMode">
                     <tr  *ngFor="let o of oyuncular | async; let sira=index" class="{{o.Grup}}">
-                        <td style="text-align: center">{{sira+1}}</td>
-                        <td >
-                            <input *ngIf="_isEditMode"  style="text-align:center" 
-                            [(ngModel)]='o.OyuncuAdSoyad'>
-
-                            <span *ngIf="!_isEditMode">{{o.OyuncuAdSoyad}}</span>
-
-                        </td>
-                     
-                       
-                        <td style="text-align: center">
-                                <input *ngIf="_isEditMode"  style="text-align:center;width:100px" 
-                                [(ngModel)]='o.BaslamaTarihi'>
+                            <td style="text-align: center">{{sira+1}}</td>
+                            <td >
+                                <input   style="text-align:center" 
+                                [(ngModel)]='o.OyuncuAdSoyad'>
     
-                                <span *ngIf="!_isEditMode">{{o.BaslamaTarihi}}</span>
+                            </td>
+                         
+                           
+                            <td style="text-align: center">
+                                    <input  style="text-align:center;width:100px" 
+                                    [(ngModel)]='o.BaslamaTarihi'>
+                 
+                            </td>
+                           
+                           
+                            <td style="text-align: center">
+                                <input   style="text-align:center;width:100px" 
+                                [(ngModel)]='o.AyrilisTarihi'>
+    
                             
-                        </td>
-                       
-                       
-                        <td style="text-align: center">
-                            <input *ngIf="_isEditMode"  style="text-align:center;width:100px" 
-                            [(ngModel)]='o.AyrilisTarihi'>
-
-                            <span *ngIf="!_isEditMode">{{o.AyrilisTarihi}}</span>
-                        
-                        </td>
-                        <td style="text-align: center;font-weight: bold;">
-                                <input *ngIf="_isEditMode"  style="text-align:center;width:50px" 
-                                [(ngModel)]='o.BaslamaPuan'>
+                            </td>
+                            <td style="text-align: center;font-weight: bold;">
+                                    <input  style="text-align:center;width:50px" 
+                                    [(ngModel)]='o.BaslamaPuan'>
+        
+                                
+                            </td> 
     
+                            <td style="text-align: center;font-weight: bold;">
+                                    <input   style="text-align:center;width:50px" 
+                                    [(ngModel)]='o.Grup'>
+        
+                                   
+                            </td> 
+    
+                            <td style="text-align: center;font-weight: bold;">
+                                    <input   style="text-align:center;width:50px" 
+                                    [(ngModel)]='o.Dogum_Yili'>
+        
+                            </td> 
+    
+    
+                            <td>
+                                <button mat-raised-button (click)="OyuncuSil(o.key)">Sil</button>
+                                <button mat-raised-button (click)="OyuncuGuncelle(o.key,o)" >Güncelle</button>
+                            
+                            </td>              
+                            
+                        </tr>
+            </ng-container>
+    
+             
+            <ng-container *ngIf="!_isEditMode">
+                    <tr  *ngFor="let o of oyuncular | async; let sira=index" class="{{o.Grup}}">
+                            <td style="text-align: center">{{sira+1}}</td>
+                            <td >
+                                <span *ngIf="!_isEditMode">{{o.OyuncuAdSoyad}}</span>
+    
+                            </td>
+                         
+                           
+                            <td style="text-align: center">
+                                 <span *ngIf="!_isEditMode">{{o.BaslamaTarihi}}</span>
+                                
+                            </td>
+                           
+                           
+                            <td style="text-align: center">
+                                <span *ngIf="!_isEditMode">{{o.AyrilisTarihi}}</span>
+                            
+                            </td>
+                            <td style="text-align: center;font-weight: bold;">
                                 <span *ngIf="!_isEditMode">{{o.BaslamaPuan}}</span>
-                        </td> 
-
-                        <td style="text-align: center;font-weight: bold;">
-                                <input *ngIf="_isEditMode"  style="text-align:center;width:50px" 
-                                [(ngModel)]='o.Grup'>
+                            </td> 
     
+                            <td style="text-align: center;font-weight: bold;">
                                 <span *ngIf="!_isEditMode">{{o.Grup}}</span>
-                        </td> 
-
-                        <td style="text-align: center;font-weight: bold;">
-                                <input *ngIf="_isEditMode"  style="text-align:center;width:50px" 
-                                [(ngModel)]='o.Dogum_Yili'>
+                            </td> 
     
+                            <td style="text-align: center;font-weight: bold;">
                                 <span *ngIf="!_isEditMode">{{o.Dogum_Yili}}</span>
-                        </td> 
-
-
-                        <td>
-                            <button mat-raised-button (click)="OyuncuSil(o.key)">Sil</button>
-                            <button mat-raised-button (click)="OyuncuGuncelle(o.key,o)" >Güncelle</button>
-                        
-                        </td>              
-                        
-                    </tr>
+                            </td> 
+    
+    
+                            <td>
+                                <button mat-raised-button (click)="OyuncuSil(o.key)">Sil</button>
+                                <button mat-raised-button (click)="OyuncuGuncelle(o.key,o)" >Güncelle</button>
+                            
+                            </td>              
+                            
+                        </tr>
+            </ng-container>
 
 
         </tbody>
