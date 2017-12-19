@@ -38,6 +38,12 @@ export class OyuncuListComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => this.club = params.club);
     this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
 
+    const data = this.af.list<Oyuncu>(`/${this.club}/${this.yil}/Oyuncular/`);
+   
+    var items = data.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
+
     this.oyuncularRef = this.af.list<Oyuncu>(`/${this.club}/${this.yil}/Oyuncular/`);
     this.oyuncular = this.oyuncularRef.valueChanges();
 

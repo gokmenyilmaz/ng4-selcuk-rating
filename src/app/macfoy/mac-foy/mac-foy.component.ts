@@ -454,18 +454,34 @@ export class MacFoyComponent implements OnInit {
 
         }
 
+
+        var oyuncuRef= this.af.list<Oyuncu>(this.oyuncularPath).snapshotChanges()
+                .map(changes =>{
+                    return changes.map(c=>({
+                        key:c.payload.key, ...c.payload.val()
+                    }))
+                });
+
+       
+               
         for (let PuanTabloItem of this.PuanTabloItemList) {
             
-            var _oyuncu= this.af.list<Oyuncu>(this.oyuncularPath,
-                 ref => ref.orderByChild('OyuncuAdSoyad')
-                 .equalTo(PuanTabloItem.OyuncuAdSoyad)
-                .limitToFirst(1)
-                ).snapshotChanges();
-            
-           _oyuncu[0].update({ GuncelGrup: PuanTabloItem.Grup });
 
+
+
+            let _oyuncu = this.oyuncular.find(x => x.OyuncuAdSoyad == PuanTabloItem.OyuncuAdSoyad);
+
+            var u=_oyuncu["$key"];
+
+            this.af.object(this.oyuncularPath + '/' + _oyuncu["$key"] + '/' + this.hafta).update({
+                GuncelGrup: PuanTabloItem.Grup
+            });
+    
         }
 
+
+      
+       
     }
 
     MacaGelmedi(_row: MacSatir) {
