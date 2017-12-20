@@ -109,8 +109,6 @@ export class MacFoyComponent implements OnInit {
 
     }
 
-
-
     async haftaDegisti() {
 
         this.macfoyPath = `/${this.club}/${this.yil}/MacFoy/${this.hafta}/${this.grup}`;
