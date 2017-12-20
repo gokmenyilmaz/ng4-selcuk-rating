@@ -118,6 +118,8 @@ export class MacFoyComponent implements OnInit {
 
         await this.OyuncuYukle();
 
+        this.oyuncular = new List<Oyuncu>(this.oyuncular).OrderBy(c=>c.OyuncuAdSoyad).ToArray();
+
         this.af.object<any>(this.macfoyPath)
             .valueChanges().subscribe(m => {
 
@@ -128,7 +130,6 @@ export class MacFoyComponent implements OnInit {
 
                 this.oyunculariYukle();
             })
-
     }
 
     mactarihiDegisti() {
