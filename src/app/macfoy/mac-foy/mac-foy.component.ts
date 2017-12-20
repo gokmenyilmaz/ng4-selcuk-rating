@@ -116,9 +116,7 @@ export class MacFoyComponent implements OnInit {
         this.macfoyPath = `/${this.club}/${this.yil}/MacFoy/${this.hafta}/${this.grup}`;
         this.oyuncularPath = `/${this.club}/${this.yil}/Oyuncular`;
 
-         
         await this.OyuncuYukle();
-    
 
         this.af.object<any>(this.macfoyPath)
             .valueChanges().subscribe(m => {
