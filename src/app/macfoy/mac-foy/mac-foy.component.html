@@ -1,7 +1,11 @@
 <mat-card>
 
-    <mat-tab-group [attr.disabled]="grupluMu?1:0">
-          <mat-tab label="Hafta Seçimi">
+    <mat-tab-group focusChange  ="alert('gruplu')">
+        <mat-tab    label="Otomatik Grup Oluştur">
+         
+                <ng-template mat-tab-label>
+                    <span  (click)="grupluMu=1">Otomatik Grup Oluştur</span>
+                </ng-template>
 
             <mat-grid-list cols="6" rowHeight="2:1">
                 <mat-grid-tile>
@@ -46,43 +50,38 @@
             </mat-grid-list>
 
         </mat-tab>
-        <mat-tab label="Grup Ayarı">
+        <mat-tab (click)="alert('isteğe bağlı')" label="İsteğe Bağlı Oyuncu Ekle">
           
-            <mat-grid-list cols="3" rowHeight="2:1">
-                <mat-grid-tile>
-                        <fieldset disabled>
-                          
-                                <mat-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
-                                    [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
-                                    <mat-option default>Oyuncu Seçiniz</mat-option>
-                                    <mat-option><span> <button class="btn btn-default">Yeni Ekle</button></span></mat-option>
-                                    <mat-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</mat-option>
-                                </mat-select>
+            <ng-template mat-tab-label>
+                <span  (click)="grupluMu=0">İsteğe Bağlı Grup Oluştur</span>
+            </ng-template>
 
-                                <mat-input-container mat-no-float style="width:150px;display: inline-block">
-                                    <input matInput  style="text-align:right"  placeholder="Puan"
-                                        type="number" (keyup.enter)="oyuncuEkle(eklenecekOyuncu)"
-                                        [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
-                                </mat-input-container>
-                        
-                         </fieldset>
 
-                </mat-grid-tile>
-                
-                <mat-grid-tile>
-                    <mat-card>
-                        
+            <mat-grid-list cols="4">
+                  <mat-card>
+
+                    <mat-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
+                        [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
+                        <mat-option default>Oyuncu Seçiniz</mat-option>
+                        <mat-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</mat-option>
+                    </mat-select>
+
+                    <mat-input-container mat-no-float style="width:150px;display: inline-block">
+                        <input matInput  style="text-align:right"  placeholder="Puan"
+                            type="number" (keyup.enter)="oyuncuEkle(eklenecekOyuncu)"
+                            [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
+                    </mat-input-container>
+
+                       
+                        <button mat-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
+                            <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
+                        </button>
+
                         <mat-slide-toggle [(ngModel)]='ciktiModu' class="example-margin">Gelişmiş</mat-slide-toggle>
-                        <mat-slide-toggle [(ngModel)]='grupluMu'>Grup Modu</mat-slide-toggle>
+                   
                     </mat-card>
-                </mat-grid-tile>
-                
-                <mat-grid-tile>
-                    <button mat-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
-                        <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
-                    </button>
-                </mat-grid-tile>
-          
+             
+                        
             </mat-grid-list>
   
         </mat-tab>

@@ -55,7 +55,6 @@ export class MacFoyComponent implements OnInit {
 
     form: FormGroup;
 
-
     ciktiModu: boolean = false;
 
     puanTabloGenislik: number = 100;
@@ -67,8 +66,8 @@ export class MacFoyComponent implements OnInit {
 
     hafta: number;
 
-    macfoyPath:string;
-    oyuncularPath:string;
+    macfoyPath: string;
+    oyuncularPath: string;
 
     constructor(
         private reytingServis: MacFoyService,
@@ -90,21 +89,19 @@ export class MacFoyComponent implements OnInit {
 
         this.puanTabloGenislik = 100;
         this.eklenecekOyuncu = new Oyuncu('', 0, null, null);
-     
 
         this.activatedRoute.params.subscribe(params => this.club = params.club);
-       
-        this.activatedRoute.params.subscribe(params => 
+
+        this.activatedRoute.params.subscribe(params =>
             this.yil = parseInt(params.yil)
         );
-        
+
         this.activatedRoute.params.subscribe(params => this.grup = params.grup);
-        
-        this.activatedRoute.params.subscribe(params => 
-            {
-                this.hafta = parseInt(params.hafta);
-                this.haftaDegisti();
-            }
+
+        this.activatedRoute.params.subscribe(params => {
+            this.hafta = parseInt(params.hafta);
+            this.haftaDegisti();
+        }
         );
 
     }
@@ -115,92 +112,85 @@ export class MacFoyComponent implements OnInit {
         this.oyuncularPath = `/${this.club}/${this.yil}/Oyuncular`;
 
         await this.OyuncuYukle();
+        console.log(this.oyuncular);
 
-        this.oyuncular = new List<Oyuncu>(this.oyuncular).OrderBy(c=>c.OyuncuAdSoyad).ToArray();
+        this.oyuncular = new List<Oyuncu>(this.oyuncular).OrderBy(c => c.OyuncuAdSoyad).ToArray();
+
+        console.log(this.oyuncular);
+
+        // .Where(o => this.parseDateDMY(o.BaslamaTarihi).getTime() <= macTarihTime)
+        // .Where(o => this.parseDateDMY(o.AyrilisTarihi).getTime() > macTarihTime)
 
         this.af.object<any>(this.macfoyPath)
             .valueChanges().subscribe(m => {
 
-                let bugun = new Date(Date.now()).toLocaleDateString();
+                let bugun = new Date(Date.now()).toLocaleDateString("tr-TR");
 
                 this.mac_rows = m == null ? [] : m.Foy;
                 this.grupMacTarih = m == null ? bugun : m.Tarih;
 
-                this.oyunculariYukle();
+                this.oyunculariMacFoyuneYukle();
             })
     }
 
     mactarihiDegisti() {
         if (this.grupMacTarih.length == 10) {
-            this.oyunculariYukle();
+            this.oyunculariMacFoyuneYukle();
         }
     }
 
-
-    async OyuncuYukle():Promise<any>
-    {
+    async OyuncuYukle(): Promise<any> {
         await new Promise(resolve => {
             this.af.list<Oyuncu>(this.oyuncularPath).valueChanges()
-            .subscribe(p => {                                       
-                this.oyuncular = p;
-                resolve();
-            });
+                .subscribe(p => {
+                    this.oyuncular = p;
+                    resolve();
+                });
         });
 
     }
 
 
-    oyunculariYukle() {
-      
+    oyunculariMacFoyuneYukle() {
 
-        this.af.list<Oyuncu>(this.oyuncularPath).valueChanges().subscribe(x => {
+        let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
 
-            let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
-
-            this.oyuncular = new List<Oyuncu>(x)
-                // .Where(o => this.parseDateDMY(o.BaslamaTarihi).getTime() <= macTarihTime)
-                // .Where(o => this.parseDateDMY(o.AyrilisTarihi).getTime() > macTarihTime)
-                .ToArray();
-
-
-            for (let o of this.oyuncular) {
-                if (o[this.hafta - 1] == undefined) {
-                    o[this.hafta - 1] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
-                }
-
-                if (o[this.hafta] == undefined) {
-                    o[this.hafta] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
-                }
+        for (let o of this.oyuncular) {
+            if (o[this.hafta - 1] == undefined) {
+                o[this.hafta - 1] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
             }
 
-            this.oyuncular = new List<any>(this.oyuncular)
-                .OrderByDescending(o => o[this.hafta - 1].ToplamPuan)
-                .ThenBy(o => o.Dogum_Yili)
-                .ToArray();
-
-            this.eklenenOyuncular = [];
-
-            let i: number = -1;
-
-            for (let mac of this.mac_rows) {
-                i++;
-                let oyuncu = this.oyuncular.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
-                this.eklenenOyuncular.push(oyuncu);
+            if (o[this.hafta] == undefined) {
+                o[this.hafta] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
             }
+        }
 
-            this.eklenecekOyuncu = new Oyuncu('', 0);
+        var foyOyunculari = new List<any>(Array.from(this.oyuncular))
+            .OrderByDescending(o => o[this.hafta - 1].ToplamPuan)
+            .ThenBy(o => o.Dogum_Yili)
+            .ToArray();
 
 
 
-        });
+
+        this.eklenenOyuncular = [];
+
+        let i: number = -1;
+
+        for (let mac of this.mac_rows) {
+            i++;
+            let oyuncu = foyOyunculari.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
+            this.eklenenOyuncular.push(oyuncu);
+        }
+
+        this.eklenecekOyuncu = new Oyuncu('', 0);
+
     }
 
     parseDateDMY(input: string): Date {
         var parts = input.split('.');
         return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
     }
-
-
 
     grupDegisti() {
 
@@ -216,7 +206,6 @@ export class MacFoyComponent implements OnInit {
 
         this.haftaDegisti();
         this.eklenecekOyuncu = new Oyuncu('', 0);
-
     }
 
 
@@ -362,8 +351,6 @@ export class MacFoyComponent implements OnInit {
 
     macaOyuncuEkle(_oyuncu: Oyuncu) {
 
-
-
         let macSayisi = this.mac_rows.length + 1;
 
         let mx: MacSatir = new MacSatir(this.grup, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan,
@@ -389,8 +376,6 @@ export class MacFoyComponent implements OnInit {
 
         this.eklenecekOyuncu = new Oyuncu('', 0);
 
-
-
     }
 
     MacSil(_row: MacSatir) {
@@ -414,7 +399,6 @@ export class MacFoyComponent implements OnInit {
         this.mac_rows.splice(colIndex, 1);
 
         this.SolTabloGuncelle();
-
 
     }
 
@@ -465,34 +449,26 @@ export class MacFoyComponent implements OnInit {
 
         }
 
+        var oyuncuRef = this.af.list<Oyuncu>(this.oyuncularPath).snapshotChanges()
+            .map(changes => {
+                return changes.map(c => ({
+                    key: c.payload.key, ...c.payload.val()
+                }))
+            });
 
-        var oyuncuRef= this.af.list<Oyuncu>(this.oyuncularPath).snapshotChanges()
-                .map(changes =>{
-                    return changes.map(c=>({
-                        key:c.payload.key, ...c.payload.val()
-                    }))
-                });
 
-       
-               
         for (let PuanTabloItem of this.PuanTabloItemList) {
-            
-
-
 
             let _oyuncu = this.oyuncular.find(x => x.OyuncuAdSoyad == PuanTabloItem.OyuncuAdSoyad);
 
-            var u=_oyuncu["$key"];
+            var u = _oyuncu["$key"];
 
             this.af.object(this.oyuncularPath + '/' + _oyuncu["$key"] + '/' + this.hafta).update({
                 GuncelGrup: PuanTabloItem.Grup
             });
-    
+
         }
 
-
-      
-       
     }
 
     MacaGelmedi(_row: MacSatir) {
@@ -550,8 +526,6 @@ export class MacFoyComponent implements OnInit {
         }
     }
 
-
-
     TabloyuGuncelle(selectedRow: MacSatir, aktifSutunKey: number) {
 
         let aktifRowIndex = this.mac_rows.indexOf(selectedRow);
@@ -574,17 +548,13 @@ export class MacFoyComponent implements OnInit {
 
         selectedRow[aktifSutun].Puan = puan;
 
-
-
         if (karsilikliHukmenMi) {
             caprazRow[caprazSutun] = new SkorDetay('xx', '(' + skor.toString() + ')', puan_capraz, ' background-color: yellow;', "K.H.");
         } else {
             caprazRow[caprazSutun] = new SkorDetay('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;', "");
         }
 
-
         this.SolTabloGuncelle();
-
 
     }
 
@@ -615,7 +585,6 @@ export class MacFoyComponent implements OnInit {
         return items[1] + '-' + items[0];
 
     }
-
 }
 
 
