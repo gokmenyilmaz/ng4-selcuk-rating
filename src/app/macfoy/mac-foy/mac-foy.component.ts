@@ -111,10 +111,14 @@ export class MacFoyComponent implements OnInit {
 
 
 
-    haftaDegisti() {
+    async haftaDegisti() {
 
         this.macfoyPath = `/${this.club}/${this.yil}/MacFoy/${this.hafta}/${this.grup}`;
         this.oyuncularPath = `/${this.club}/${this.yil}/Oyuncular`;
+
+         
+        await this.OyuncuYukle();
+    
 
         this.af.object<any>(this.macfoyPath)
             .valueChanges().subscribe(m => {
@@ -133,9 +137,21 @@ export class MacFoyComponent implements OnInit {
         if (this.grupMacTarih.length == 10) {
             this.oyunculariYukle();
         }
+    }
 
+
+    async OyuncuYukle():Promise<any>
+    {
+        await new Promise(resolve => {
+            this.af.list<Oyuncu>(this.oyuncularPath).valueChanges()
+            .subscribe(p => {                                       
+                this.oyuncular = p;
+                resolve();
+            });
+        });
 
     }
+
 
     oyunculariYukle() {
       
@@ -159,8 +175,6 @@ export class MacFoyComponent implements OnInit {
                     o[this.hafta] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
                 }
             }
-
-
 
             this.oyuncular = new List<any>(this.oyuncular)
                 .OrderByDescending(o => o[this.hafta - 1].ToplamPuan)
