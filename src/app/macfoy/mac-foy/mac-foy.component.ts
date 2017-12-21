@@ -24,6 +24,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/from';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { isDefined } from '@angular/compiler/src/util';
 
 
 @Component({
@@ -112,12 +113,10 @@ export class MacFoyComponent implements OnInit {
         this.oyuncularPath = `/${this.club}/${this.yil}/Oyuncular`;
 
         await this.OyuncuYukle();
-        console.log(this.oyuncular);
-
+    
         this.oyuncular = new List<Oyuncu>(this.oyuncular).OrderBy(c => c.OyuncuAdSoyad).ToArray();
 
-        console.log(this.oyuncular);
-
+    
         // .Where(o => this.parseDateDMY(o.BaslamaTarihi).getTime() <= macTarihTime)
         // .Where(o => this.parseDateDMY(o.AyrilisTarihi).getTime() > macTarihTime)
 
@@ -127,6 +126,7 @@ export class MacFoyComponent implements OnInit {
                 let bugun = new Date(Date.now()).toLocaleDateString("tr-TR");
 
                 this.mac_rows = m == null ? [] : m.Foy;
+
                 this.grupMacTarih = m == null ? bugun : m.Tarih;
 
                 this.oyunculariMacFoyuneYukle();
@@ -169,9 +169,6 @@ export class MacFoyComponent implements OnInit {
             .OrderByDescending(o => o[this.hafta - 1].ToplamPuan)
             .ThenBy(o => o.Dogum_Yili)
             .ToArray();
-
-
-
 
         this.eklenenOyuncular = [];
 
@@ -216,7 +213,7 @@ export class MacFoyComponent implements OnInit {
             i++;
             let oyuncu = this.oyuncular.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
 
-            this.af.object(this.macfoyPath + '/' + oyuncu["$key"] + '/' + this.hafta).update({
+            this.af.object(this.macfoyPath + '/' + oyuncu["key"] + '/' + this.hafta).update({
                 ToplamPuan: mac.MS_Puan,
                 AlinanPuan: mac.AlinanTPuan,
                 Grup: mac.GrupId,
@@ -224,11 +221,11 @@ export class MacFoyComponent implements OnInit {
             });
         }
 
-        this.mac_rows.map(mac => {
-            delete mac['$key'];
-            delete mac['$exists'];
+        // this.mac_rows.map(mac => {
+        //     delete mac['key'];
+        //     delete mac['exists'];
 
-        })
+        // })
 
         this.af.object(this.macfoyPath).
             set({
