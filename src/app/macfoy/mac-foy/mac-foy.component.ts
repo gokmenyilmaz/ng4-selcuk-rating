@@ -176,6 +176,8 @@ export class MacFoyComponent implements OnInit {
 
         let macSayisi = this.aktifMacFoy.mac_rows.length + 1;
 
+        this.aktifMacFoy.eklenenOyuncular.push(_oyuncu);
+
         let mx: MacSatir = new MacSatir(this.grup, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan,
             null, null, null, null, null, null, null, null, null, true, 0);
 
@@ -195,7 +197,7 @@ export class MacFoyComponent implements OnInit {
             if (macSayisi == index) mac["C" + macSayisi].Skor = 'X-X';
         }
 
-        this.aktifMacFoy.eklenenOyuncular.push(_oyuncu);
+     
 
         this.eklenecekOyuncu = new Oyuncu('', 0);
 
