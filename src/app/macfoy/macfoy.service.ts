@@ -90,7 +90,10 @@ export class MacFoyService {
         return 0;
     }
 
-
+    parseDateDMY(input: string): Date {
+        var parts = input.split('.');
+        return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+    }
 
 
 

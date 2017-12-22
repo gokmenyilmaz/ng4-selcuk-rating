@@ -33,6 +33,20 @@ export class SkorDetay {
         )
     { }
 }
+
+export class MacFoy {
+    constructor(
+        public Tarih: string,
+        public GrupElemanSayilari: string,
+       
+        public Maclar:MacSatir[]=[]
+    )
+    {
+   
+    }
+}
+
+
 export class MacSatir {
     constructor(
         public GrupId: string,
@@ -55,6 +69,8 @@ export class MacSatir {
         public BonusPuan: number
     )
     { }
+
+   
 
 
 }

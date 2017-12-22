@@ -63,7 +63,7 @@
                     <mat-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
                         [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
                         <mat-option default>Oyuncu Seçiniz</mat-option>
-                        <mat-option *ngFor="let o of oyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</mat-option>
+                        <mat-option *ngFor="let o of aktifOyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</mat-option>
                     </mat-select>
 
                     <mat-input-container mat-no-float style="width:150px;display: inline-block">
