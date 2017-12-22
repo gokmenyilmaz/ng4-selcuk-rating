@@ -37,16 +37,12 @@ export class MacFoyComponent implements OnInit {
 
     aktifMacFoy:MacFoy;
 
-
-    mac_rows: MacSatir[] = [];
-
     aktifOyuncular: Oyuncu[] = [];
-    
     
     oyuncularRef: AngularFireList<Oyuncu>;
 
     oyuncularGruplu: Oyuncu[] = [];
-    eklenenOyuncular: Oyuncu[] = [];
+ 
 
     eklenecekOyuncu: Oyuncu = null;
 
@@ -125,36 +121,31 @@ export class MacFoyComponent implements OnInit {
         {
             var macFoyRef=this.af.object(this.macfoyPath);
             var yeniMacFoy=new MacFoy(bugun,this.grupElememanSayilari);
+            yeniMacFoy.eklenenOyuncular=[];
+            yeniMacFoy.mac_rows=[];
+
+            yeniMacFoy.Tarih=bugun;
+            
             macFoyRef.set(yeniMacFoy);
+
+            this.aktifMacFoy=yeniMacFoy;
         }
 
-        var z="11";
-       
-        // this.af.object<any>(this.macfoyPath)
-        //     .valueChanges().subscribe(m => {
+        if(this.aktifMacFoy.eklenenOyuncular===undefined) this.aktifMacFoy.eklenenOyuncular=[];
+        if(this.aktifMacFoy.mac_rows===undefined) this.aktifMacFoy.mac_rows=[];
 
-        //         this.mac_rows = m == null ? [] : m.Foy;
+        
+        var tumOyuncular=await this.TumOyunculariGetir();
 
-        //         this.grupMacTarih = m == null ? bugun : m.Tarih;
+        var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
+        
+        this.aktifOyuncular=new List<Oyuncu>(tumOyuncular)
+                    .OrderBy(o => o.OyuncuAdSoyad)
+                    .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
+                    .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
+                    .ToArray();
 
-        //         this.oyunculariMacFoyuneYukle();
-        // })
-
-
-        // let bugun = new Date(Date.now()).toLocaleDateString("tr-TR");
-
-        // var zamanSayi=this.macFoyServis.parseDateDMY(bugun).getTime() ;
-
-        // var tumOyuncular=await this.TumOyunculariGetir();
-
-    
-        // this.aktifOyuncular=new List<Oyuncu>(tumOyuncular)
-        //                     .OrderBy(o => o.OyuncuAdSoyad)
-        //                     .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
-        //                     .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
-        //                     .ToArray();
-
-        //   var c=23;
+         var c=1000;
 
        
     }
@@ -178,46 +169,34 @@ export class MacFoyComponent implements OnInit {
     }
 
 
-    // mactarihiDegisti() {
-    //     if (this.grupMacTarih.length == 10) {
-    //         this.oyunculariMacFoyuneYukle();
-    //     }
-    // }
+    macFoyeOyuncuEkle(_oyuncu: Oyuncu) {
 
-   
+        let macSayisi = this.aktifMacFoy.mac_rows.length + 1;
 
-    // oyunculariMacFoyuneYukle() {
+        let mx: MacSatir = new MacSatir(this.grup, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan,
+            null, null, null, null, null, null, null, null, null, true, 0);
 
-    //     let macTarihTime = this.macFoyServis.parseDateDMY(this.grupMacTarih).getTime();
+        this.aktifMacFoy.mac_rows.push(mx);
 
-    //     for (let o of this.oyuncular) {
-    //         if (o[this.hafta - 1] == undefined) {
-    //             o[this.hafta - 1] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
-    //         }
 
-    //         if (o[this.hafta] == undefined) {
-    //             o[this.hafta] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
-    //         }
-    //     }
+        for (var i = 1; i <= macSayisi; i++) {
+            mx["C" + i] = new SkorDetay(_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
+        }
 
-    //     var foyOyunculari = new List<any>(Array.from(this.oyuncular))
-    //         .OrderByDescending(o => o[this.hafta - 1].ToplamPuan)
-    //         .ThenBy(o => o.Dogum_Yili)
-    //         .ToArray();
+        let index: number = 0;
 
-    //     this.eklenenOyuncular = [];
+        for (let mac of this.aktifMacFoy.mac_rows) {
+            index = index + 1;
+            mac["C" + macSayisi] = new SkorDetay(_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
 
-    //     let i: number = -1;
+            if (macSayisi == index) mac["C" + macSayisi].Skor = 'X-X';
+        }
 
-    //     for (let mac of this.mac_rows) {
-    //         i++;
-    //         let oyuncu = foyOyunculari.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
-    //         this.eklenenOyuncular.push(oyuncu);
-    //     }
+        this.aktifMacFoy.eklenenOyuncular.push(_oyuncu);
 
-    //     this.eklenecekOyuncu = new Oyuncu('', 0);
+        this.eklenecekOyuncu = new Oyuncu('', 0);
 
-    // }
+    }
 
 }
 

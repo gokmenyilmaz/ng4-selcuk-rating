@@ -39,7 +39,8 @@ export class MacFoy {
         public Tarih: string,
         public GrupElemanSayilari: string,
        
-        public Maclar:MacSatir[]=[]
+        public mac_rows:MacSatir[]=[],
+        public eklenenOyuncular:Oyuncu[]=[]
     )
     {
    

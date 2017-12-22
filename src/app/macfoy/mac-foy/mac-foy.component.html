@@ -40,7 +40,7 @@
 
                 <mat-grid-tile colspan="2">
                     <mat-card>
-                        <button mat-raised-button  color="primary" (click)="oyuncuEkle(eklenecekOyuncu)">
+                        <button mat-raised-button  color="primary" (click)="macFoyeOyuncuEkle(eklenecekOyuncu)">
                             <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
                         </button>
                         <button mat-raised-button  color="primary" (click)="kaydet()">kaydet</button>
@@ -68,12 +68,13 @@
 
                     <mat-input-container mat-no-float style="width:150px;display: inline-block">
                         <input matInput  style="text-align:right"  placeholder="Puan"
-                            type="number" (keyup.enter)="oyuncuEkle(eklenecekOyuncu)"
+                            type="number" (keyup.enter)="macFoyeOyuncuEkle(eklenecekOyuncu)"
                             [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
                     </mat-input-container>
 
                        
-                        <button mat-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="oyuncuEkle(eklenecekOyuncu)">
+                        <button mat-raised-button style="width:100px" color="primary" class="btn btn-success"
+                         (click)="macFoyeOyuncuEkle(eklenecekOyuncu)">
                             <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
                         </button>
 
@@ -89,7 +90,7 @@
     </mat-tab-group>
 
     <div id="skortablo-container" class="row">
-        <table id="skortablo" rules="all" frame="border" class="table table-bordered table-hover table-condensed table-striped">
+        <table id="skortablo" ngModel rules="all" frame="border" class="table table-bordered table-hover table-condensed table-striped">
             <caption>
 
             </caption>
@@ -104,7 +105,7 @@
                     
                     <th style="border-right:6px double black;" class="grup1-mspuan" >Maç S.Puan</th>
 
-                    <th class="skor" *ngFor='let oyuncu of eklenenOyuncular'>
+                    <th class="skor" *ngFor='let oyuncu of aktifMacFoy.eklenenOyuncular'>
                         {{oyuncu.OyuncuAdSoyad}}
                     </th>
 
@@ -113,7 +114,7 @@
 
 
             <tbody>
-                <tr *ngFor="let row of mac_rows;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
+                <tr *ngFor="let row of aktifMacFoy.mac_rows;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
 
                     <td>
                         <div>
@@ -166,7 +167,7 @@
                         </div>
                     </td>
 
-                    <td *ngFor="let oyuncu of eklenenOyuncular;let inx=index" [class.sari]="mac_rows[inx].VarMi!==true">
+                    <td *ngFor="let oyuncu of aktifMacFoy.eklenenOyuncular;let inx=index" [class.sari]="mac_rows[inx].VarMi!==true">
                         <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
 
                           
