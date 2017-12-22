@@ -61,7 +61,7 @@
                   <mat-card>
 
                     <mat-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz"
-                        [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="oyuncuEkleDegisti(eklenecekOyuncu)">
+                        [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)="eklenecekOyuncu_Degisti(eklenecekOyuncu)">
                         <mat-option default>Oyuncu Seçiniz</mat-option>
                         <mat-option *ngFor="let o of aktifOyuncular" value="{{o.OyuncuAdSoyad}}">{{o.OyuncuAdSoyad}}</mat-option>
                     </mat-select>
@@ -105,7 +105,7 @@
                     
                     <th style="border-right:6px double black;" class="grup1-mspuan" >Maç S.Puan</th>
 
-                    <th class="skor" *ngFor='let oyuncu of aktifMacFoy.eklenenOyuncular'>
+                    <th class="skor" *ngFor='let oyuncu of aktifMacFoy.EklenenOyuncuAdlari'>
                         {{oyuncu.OyuncuAdSoyad}}
                     </th>
 
@@ -114,7 +114,7 @@
 
 
             <tbody>
-                <tr *ngFor="let row of aktifMacFoy.mac_rows;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
+                <tr *ngFor="let row of aktifMacFoy.Mac_Satirlari;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
 
                     <td>
                         <div>
@@ -167,12 +167,12 @@
                         </div>
                     </td>
 
-                    <td *ngFor="let oyuncu of aktifMacFoy.eklenenOyuncular;let inx=index" [class.sari]="mac_rows[inx].VarMi!==true">
+                    <td *ngFor="let oyuncu of aktifMacFoy.EklenenOyuncuAdlari;let inx=index">
                         <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
 
                           
                                 <mat-select class="no-underline" [(ngModel)]="row['C' + (inx+1)].Skor" 
-                                (ngModelChange)='TabloyuGuncelle(row,(inx+1))'>
+                                (ngModelChange)='macFoySkorlariGuncelle(row,(inx+1))'>
                                     <mat-option value="__">__</mat-option>
                                     <mat-option value="4-0">4-0</mat-option>
                                     <mat-option value="3-1">3-1</mat-option>

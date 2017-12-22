@@ -121,8 +121,8 @@ export class MacFoyComponent implements OnInit {
         {
             var macFoyRef=this.af.object(this.macfoyPath);
             var yeniMacFoy=new MacFoy(bugun,this.grupElememanSayilari);
-            yeniMacFoy.eklenenOyuncular=[];
-            yeniMacFoy.mac_rows=[];
+            yeniMacFoy.EklenenOyuncuAdlari=[];
+            yeniMacFoy.Mac_Satirlari=[];
 
             yeniMacFoy.Tarih=bugun;
             
@@ -132,8 +132,8 @@ export class MacFoyComponent implements OnInit {
         }
         else{
 
-            if(_aktifMacFoy.eklenenOyuncular===undefined) _aktifMacFoy.eklenenOyuncular=[];
-            if(_aktifMacFoy.mac_rows===undefined) _aktifMacFoy.mac_rows=[];
+            if(_aktifMacFoy.EklenenOyuncuAdlari===undefined) _aktifMacFoy.EklenenOyuncuAdlari=[];
+            if(_aktifMacFoy.Mac_Satirlari===undefined) _aktifMacFoy.Mac_Satirlari=[];
 
             this.aktifMacFoy=_aktifMacFoy;
         }
@@ -174,14 +174,14 @@ export class MacFoyComponent implements OnInit {
 
     macFoyeOyuncuEkle(_oyuncu: Oyuncu) {
 
-        let macSayisi = this.aktifMacFoy.mac_rows.length + 1;
+        let macSayisi = this.aktifMacFoy.Mac_Satirlari.length + 1;
 
-        this.aktifMacFoy.eklenenOyuncular.push(_oyuncu);
+        this.aktifMacFoy.EklenenOyuncuAdlari.push(_oyuncu.OyuncuAdSoyad);
 
         let mx: MacSatir = new MacSatir(this.grup, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan,
             null, null, null, null, null, null, null, null, null, true, 0);
 
-        this.aktifMacFoy.mac_rows.push(mx);
+        this.aktifMacFoy.Mac_Satirlari.push(mx);
 
 
         for (var i = 1; i <= macSayisi; i++) {
@@ -190,20 +190,129 @@ export class MacFoyComponent implements OnInit {
 
         let index: number = 0;
 
-        for (let mac of this.aktifMacFoy.mac_rows) {
+        for (let mac of this.aktifMacFoy.Mac_Satirlari) {
             index = index + 1;
             mac["C" + macSayisi] = new SkorDetay(_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
 
             if (macSayisi == index) mac["C" + macSayisi].Skor = 'X-X';
         }
 
-     
-
         this.eklenecekOyuncu = new Oyuncu('', 0);
 
     }
 
-}
+    macFoySkorlariGuncelle(selectedRow: MacSatir, aktifSutunKey: number) {
+
+        let aktifRowIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(selectedRow);
+        let caprazRow =  this.aktifMacFoy.Mac_Satirlari[aktifSutunKey - 1];
+
+        let caprazRowIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(caprazRow);
+
+
+        let caprazSutun = 'C' + (aktifRowIndex + 1).toString();
+        let aktifSutun = 'C' + aktifSutunKey.toString();
+
+        let skor = selectedRow[aktifSutun].Skor;
+
+        let karsilikliHukmenMi: boolean = skor.indexOf('(') >= 0;
+
+        skor = skor.replace('(', '').replace(')', '');
+
+        let puan = this.macFoyServis.hesapla(selectedRow.MO_Puan, caprazRow.MO_Puan, skor);
+        let puan_capraz = this.macFoyServis.hesapla(caprazRow.MO_Puan, selectedRow.MO_Puan, skor);
+
+        selectedRow[aktifSutun].Puan = puan;
+
+        if (karsilikliHukmenMi) {
+            caprazRow[caprazSutun] = new SkorDetay('xx', '(' + skor.toString() + ')', puan_capraz, ' background-color: yellow;', "K.H.");
+        } else {
+            caprazRow[caprazSutun] = new SkorDetay('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;', "");
+        }
+
+        this.macFoySolGuncelle();
+
+    }
+
+    macFoySolGuncelle(): void {
+
+        let alinanPuan: number = 0;
+        let oyuncuInx: number = 0;
+
+        for (let _row of this.aktifMacFoy.Mac_Satirlari) {
+            let alinanPuan = 0;
+
+            oyuncuInx = 0;
+            for (let _col of this.aktifMacFoy.EklenenOyuncuAdlari) {
+                oyuncuInx++;
+                alinanPuan = alinanPuan + _row['C' + oyuncuInx].Puan;
+            }
+
+            _row.AlinanTPuan = alinanPuan;
+            _row.MS_Puan = _row.MO_Puan + alinanPuan;
+        }
+    }
+
+    SonucuTersCevir(s: string) {
+
+        if (s === '__') { return s; };
+
+        let items = s.split('-');
+        return items[1] + '-' + items[0];
+    }
+
+
+    kaydet() {
+
+        let dialogRef = this._dialog.open(DialogContent, { width: '400px', height: '200px' });
+
+        var _macFoyPath=this.macfoyPath;
+        var _aktifMacFoy= this.aktifMacFoy;
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result == 'Ok') {
+               
+                this.af.object(_macFoyPath).set(_aktifMacFoy);
+                this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
+            };
+        })
+    }
+
+
+
+    kayitEt() {
+
+        // let i: number = -1;
+        // for (let mac of this.aktifMacFoy.Mac_Satirlari) {
+        //     i++;
+        //     let oyuncu = this.aktifOyuncular.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
+
+        //     this.af.object(this.macfoyPath + '/' + oyuncu["key"] + '/' + this.hafta).update({
+        //         ToplamPuan: mac.MS_Puan,
+        //         AlinanPuan: mac.AlinanTPuan,
+        //         Grup: mac.GrupId,
+        //         BonusPuan: mac.BonusPuan
+        //     });
+        // }
+
+        // this.af.object(this.macfoyPath).set(this.aktifMacFoy);
+
+        // return true;
+
+    }
+
+
+    eklenecekOyuncu_Degisti(_oyuncu: Oyuncu) {
+        let ek_oyuncu = this.aktifOyuncular.find(x => x.OyuncuAdSoyad == _oyuncu.OyuncuAdSoyad);
+        var oncekiHafta = ek_oyuncu[(this.hafta - 1).toString()];
+        if (oncekiHafta == undefined || ek_oyuncu[(this.hafta - 1).toString()] == undefined) {
+            this.eklenecekOyuncu.BaslamaPuan = ek_oyuncu.BaslamaPuan;
+        }
+        else {
+            this.eklenecekOyuncu.BaslamaPuan = ek_oyuncu[(this.hafta - 1).toString()].ToplamPuan;
+        }
+    }}
+
+    
 
 
 @Component({
