@@ -21,10 +21,10 @@
                          [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
                     </mat-form-field>
                 </mat-grid-tile>
-
+                
 
                 <mat-grid-tile>
-                    <mat-select style="width: 70px" [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
+                    <mat-select style="width: 70px" [(ngModel)]="grup" (ngModelChange)='grupDegisti($event)'>
                         <mat-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</mat-option>
                     </mat-select>
 

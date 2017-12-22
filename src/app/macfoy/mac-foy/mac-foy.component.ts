@@ -6,7 +6,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { List } from 'linqts/dist/linq';
 import { FormsModule, FormGroup } from '@angular/forms';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Oyuncu, MacSatir, MacFoy } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
@@ -25,6 +25,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/from';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { isDefined } from '@angular/compiler/src/util';
+import { Route } from '@angular/router/src/config';
 
 
 @Component({
@@ -71,13 +72,16 @@ export class MacFoyComponent implements OnInit {
     macfoyPath: string;
     oyuncularPath: string;
 
+    pageBaseRooting:string;
+
     constructor(
         private macFoyServis: MacFoyService,
         private af: AngularFireDatabase,
         private _route: ActivatedRoute,
         private _dialog: MatDialog,
         private _snackbar: MatSnackBar,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private _router:Router
     ) {
 
         this.haftalar = Array.from(Array(52).keys());
@@ -103,6 +107,7 @@ export class MacFoyComponent implements OnInit {
 
         this.activatedRoute.params.subscribe(params => {
             this.hafta = parseInt(params.hafta);
+            
             this.macFoyuYukle();
         }
         );
@@ -111,8 +116,10 @@ export class MacFoyComponent implements OnInit {
 
     async macFoyuYukle() {
 
-        this.macfoyPath = `/${this.klup}/${this.yil}/MacFoy/${this.hafta}/${this.grup}`;
+        this.pageBaseRooting=`/${this.klup}/${this.yil}/macfoy`;
+        this.macfoyPath = this.pageBaseRooting + `/${this.hafta}/${this.grup}`;
         this.oyuncularPath = `/${this.klup}/${this.yil}/Oyuncular`;
+
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
 
         var _aktifMacFoy=await this.MacFoyuGetir();
@@ -277,29 +284,18 @@ export class MacFoyComponent implements OnInit {
         })
     }
 
+    grupDegisti(grupAd:string) {
 
-
-    kayitEt() {
-
-        // let i: number = -1;
-        // for (let mac of this.aktifMacFoy.Mac_Satirlari) {
-        //     i++;
-        //     let oyuncu = this.aktifOyuncular.find(x => x.OyuncuAdSoyad == mac.OyuncuAdSoyad);
-
-        //     this.af.object(this.macfoyPath + '/' + oyuncu["key"] + '/' + this.hafta).update({
-        //         ToplamPuan: mac.MS_Puan,
-        //         AlinanPuan: mac.AlinanTPuan,
-        //         Grup: mac.GrupId,
-        //         BonusPuan: mac.BonusPuan
-        //     });
-        // }
-
-        // this.af.object(this.macfoyPath).set(this.aktifMacFoy);
-
-        // return true;
-
+        this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
     }
 
+    haftaDegisti(haftaAd:number) {
+
+        this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
+    }
+
+
+  
 
     eklenecekOyuncu_Degisti(_oyuncu: Oyuncu) {
         let ek_oyuncu = this.aktifOyuncular.find(x => x.OyuncuAdSoyad == _oyuncu.OyuncuAdSoyad);
