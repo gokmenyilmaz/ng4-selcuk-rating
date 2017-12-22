@@ -121,6 +121,8 @@ export class MacFoyComponent implements OnInit {
         this.oyuncularPath = `/${this.klup}/${this.yil}/Oyuncular`;
 
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
+      
+
 
         var _aktifMacFoy=await this.MacFoyuGetir();
 
@@ -136,6 +138,7 @@ export class MacFoyComponent implements OnInit {
             macFoyRef.set(yeniMacFoy);
 
             this.aktifMacFoy=yeniMacFoy;
+            this.grupMacTarih=bugun;
         }
         else{
 
@@ -143,6 +146,7 @@ export class MacFoyComponent implements OnInit {
             if(_aktifMacFoy.Mac_Satirlari===undefined) _aktifMacFoy.Mac_Satirlari=[];
 
             this.aktifMacFoy=_aktifMacFoy;
+            this.grupMacTarih=_aktifMacFoy.Tarih;
         }
         
         var tumOyuncular=await this.TumOyunculariGetir();
@@ -294,8 +298,29 @@ export class MacFoyComponent implements OnInit {
         this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
     }
 
+    MacSil(_row: MacSatir) {
 
-  
+        var colIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(_row);
+        var colCount =  this.aktifMacFoy.Mac_Satirlari.length;
+
+
+        for (let row of  this.aktifMacFoy.Mac_Satirlari) {
+            for (let i = colIndex + 1; i < colCount; i++) {
+                row["C" + i] = row["C" + (i + 1)];
+            }
+
+            row['C' + colCount] = null;
+
+        }
+
+        this.aktifMacFoy.EklenenOyuncuAdlari.splice(colIndex, 1);
+        let _inx: number = 0;
+
+        this.aktifMacFoy.Mac_Satirlari.splice(colIndex, 1);
+
+    }
+
+   
 
     eklenecekOyuncu_Degisti(_oyuncu: Oyuncu) {
         let ek_oyuncu = this.aktifOyuncular.find(x => x.OyuncuAdSoyad == _oyuncu.OyuncuAdSoyad);

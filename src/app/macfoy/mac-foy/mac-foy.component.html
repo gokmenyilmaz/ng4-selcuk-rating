@@ -24,7 +24,7 @@
                 
 
                 <mat-grid-tile>
-                    <mat-select style="width: 70px" [(ngModel)]="grup" (ngModelChange)='grupDegisti($event)'>
+                    <mat-select style="width: 70px" [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
                         <mat-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</mat-option>
                     </mat-select>
 
