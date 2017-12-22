@@ -115,9 +115,9 @@ export class MacFoyComponent implements OnInit {
         this.oyuncularPath = `/${this.klup}/${this.yil}/Oyuncular`;
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
 
-        this.aktifMacFoy=await this.MacFoyuGetir();
+        var _aktifMacFoy=await this.MacFoyuGetir();
 
-        if(this.aktifMacFoy==null)
+        if(_aktifMacFoy==null)
         {
             var macFoyRef=this.af.object(this.macfoyPath);
             var yeniMacFoy=new MacFoy(bugun,this.grupElememanSayilari);
@@ -130,10 +130,13 @@ export class MacFoyComponent implements OnInit {
 
             this.aktifMacFoy=yeniMacFoy;
         }
+        else{
 
-        if(this.aktifMacFoy.eklenenOyuncular===undefined) this.aktifMacFoy.eklenenOyuncular=[];
-        if(this.aktifMacFoy.mac_rows===undefined) this.aktifMacFoy.mac_rows=[];
+            if(_aktifMacFoy.eklenenOyuncular===undefined) _aktifMacFoy.eklenenOyuncular=[];
+            if(_aktifMacFoy.mac_rows===undefined) _aktifMacFoy.mac_rows=[];
 
+            this.aktifMacFoy=_aktifMacFoy;
+        }
         
         var tumOyuncular=await this.TumOyunculariGetir();
 
