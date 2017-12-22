@@ -153,7 +153,7 @@ export class MacFoyComponent implements OnInit {
 
     oyunculariMacFoyuneYukle() {
 
-        let macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
+        let macTarihTime = this.reytingServis.parseDateDMY(this.grupMacTarih).getTime();
 
         for (let o of this.oyuncular) {
             if (o[this.hafta - 1] == undefined) {
