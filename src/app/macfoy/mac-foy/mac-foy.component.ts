@@ -26,6 +26,7 @@ import 'rxjs/add/observable/from';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { isDefined } from '@angular/compiler/src/util';
 import { Route } from '@angular/router/src/config';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -185,7 +186,7 @@ export class MacFoyComponent implements OnInit {
     }
 
 
-    PuanSiraliOyunculariGetirHaftadan(hafta:number, Tarih:Date): Promise<Oyuncu[]> {
+    PuanSiraliOyunculariGetirHaftadan(hafta:number, Tarih:string): Promise<Oyuncu[]> {
 
         var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
 
@@ -194,13 +195,15 @@ export class MacFoyComponent implements OnInit {
                    .valueChanges()
                    .subscribe(p =>{ 
 
-                    var sonuc =  new List<Oyuncu>()
+                   var sonuc =  new List<Oyuncu>(p)
                         .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
                         .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
-                        .OrderByDescending(c => c.Haftalar[hafta].ToplamPuan)
-                        .ThenBy(c => parseInt(c.Dogum_Yili.toString()))
+                        .Select(o=>{o.Haftalar=o.Haftalar==undefined?
+                            [ new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan)]:o.Haftalar;return o})
+                        .OrderByDescending(o=>o.Haftalar[hafta])
+                        .ThenBy(o=>o.Dogum_Yili)
                         .ToArray();
-                    
+                  
                    return resolve(sonuc)
            
                 });
@@ -229,21 +232,12 @@ export class MacFoyComponent implements OnInit {
             let baslangicIndex: number = grup_inx == 0 ? 0 : listeBirikimli[grup_inx - 1];
 
 
-            var tumOyuncular=await this.TumOyunculariGetir();
-            var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
-            
-            this.PuanTabloItemList =new List<Oyuncu>(tumOyuncular)
-                        .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
-                        .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
-                        .Select(o => new PuanTabloItem(o.OyuncuAdSoyad, o[this.hafta - 1].ToplamPuan,
-                            o[this.hafta].AlinanPuan, o[this.hafta].ToplamPuan, o.GuncelGrup, o.Dogum_Yili))
-                            .OrderByDescending(c => c.MO_Puan)
-                            .ThenBy(c => parseInt(c.Dogum_Yili.toString()))
-                            .ToArray();
-              
+            var puanSirali=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta,this.aktifMacFoy.Tarih)
+         
+
 
             for (var i = baslangicIndex; i < listeBirikimli[grup_inx]; i++) {
-                var o = this.aktifOyuncular[i]
+                var o = puanSirali[i]
 
                 var oncekiHaftaDurum = o[(this.hafta - 1).toString()];
                 if (oncekiHaftaDurum == undefined) oncekiHaftaDurum = { ToplamPuan: o.BaslamaPuan };
