@@ -8,7 +8,7 @@ import { FormsModule, FormGroup } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Oyuncu, MacSatir, MacFoy } from '../../Models/entityAll';
+import { Oyuncu, MacSatir, MacFoy, HaftaPuan } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -73,6 +73,8 @@ export class MacFoyComponent implements OnInit {
     oyuncularPath: string;
 
     pageBaseRooting:string;
+
+    PuanTabloItemList:PuanTabloItem[];
 
     constructor(
         private macFoyServis: MacFoyService,
@@ -183,7 +185,82 @@ export class MacFoyComponent implements OnInit {
     }
 
 
-    macFoyeOyuncuEkle(_oyuncu: Oyuncu) {
+    PuanSiraliOyunculariGetirHaftadan(hafta:number, Tarih:Date): Promise<Oyuncu[]> {
+
+        var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
+
+        return new Promise<Oyuncu[]>(resolve=> {
+            this.af.list<Oyuncu>(this.oyuncularPath)
+                   .valueChanges()
+                   .subscribe(p =>{ 
+
+                    var sonuc =  new List<Oyuncu>()
+                        .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
+                        .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
+                        .OrderByDescending(c => c.Haftalar[hafta].ToplamPuan)
+                        .ThenBy(c => parseInt(c.Dogum_Yili.toString()))
+                        .ToArray();
+                    
+                   return resolve(sonuc)
+           
+                });
+
+        });
+    }
+
+
+  
+
+
+    async macFoyeOyuncuEkle(_oyuncu: Oyuncu) {
+
+        if (this.grupluMu == true) {
+            let liste: number[] = this.grupElememanSayilari.split(',').map(x => { return parseInt(x) });
+
+            let listeBirikimli: number[] = [];
+
+            var grup_inx = this.gruplar.indexOf(this.grup);
+
+            Observable.from(liste)
+                .scan((x, y) => x + y)
+                .subscribe(c => listeBirikimli.push(c));
+
+
+            let baslangicIndex: number = grup_inx == 0 ? 0 : listeBirikimli[grup_inx - 1];
+
+
+            var tumOyuncular=await this.TumOyunculariGetir();
+            var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
+            
+            this.PuanTabloItemList =new List<Oyuncu>(tumOyuncular)
+                        .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
+                        .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
+                        .Select(o => new PuanTabloItem(o.OyuncuAdSoyad, o[this.hafta - 1].ToplamPuan,
+                            o[this.hafta].AlinanPuan, o[this.hafta].ToplamPuan, o.GuncelGrup, o.Dogum_Yili))
+                            .OrderByDescending(c => c.MO_Puan)
+                            .ThenBy(c => parseInt(c.Dogum_Yili.toString()))
+                            .ToArray();
+              
+
+            for (var i = baslangicIndex; i < listeBirikimli[grup_inx]; i++) {
+                var o = this.aktifOyuncular[i]
+
+                var oncekiHaftaDurum = o[(this.hafta - 1).toString()];
+                if (oncekiHaftaDurum == undefined) oncekiHaftaDurum = { ToplamPuan: o.BaslamaPuan };
+
+                o.BaslamaPuan = oncekiHaftaDurum.ToplamPuan;
+
+                this.macFoyeTekOyuncuEkle(o);
+            }
+        }
+        else {
+
+            this.macFoyeTekOyuncuEkle(_oyuncu);
+        }
+
+    }
+
+    macFoyeTekOyuncuEkle(_oyuncu: Oyuncu) {
 
         let macSayisi = this.aktifMacFoy.Mac_Satirlari.length + 1;
 
@@ -211,6 +288,8 @@ export class MacFoyComponent implements OnInit {
         this.eklenecekOyuncu = new Oyuncu('', 0);
 
     }
+
+
 
     macFoySkorlariGuncelle(selectedRow: MacSatir, aktifSutunKey: number) {
 
@@ -283,6 +362,23 @@ export class MacFoyComponent implements OnInit {
             if (result == 'Ok') {
                
                 this.af.object(_macFoyPath).set(_aktifMacFoy);
+
+                var listOyuncu= new List<Oyuncu>(this.aktifOyuncular);
+                var oyuncularHaftaRef =  this.af.list<Oyuncu>(this.oyuncularPath);
+
+                for (let row of  this.aktifMacFoy.Mac_Satirlari) {
+                {
+                    var oyuncu= listOyuncu.Where(c=>c.OyuncuAdSoyad==row.OyuncuAdSoyad).First();
+                 
+                    if( oyuncu.Haftalar===undefined) oyuncu.Haftalar=[];
+                
+                    oyuncu.Haftalar[this.hafta]=new HaftaPuan(row.MO_Puan,row.AlinanTPuan,row.MS_Puan);
+                    oyuncularHaftaRef.update(oyuncu["key"],oyuncu);
+                }
+    
+            }
+
+
                 this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
             };
         })
