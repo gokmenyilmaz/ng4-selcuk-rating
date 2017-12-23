@@ -167,7 +167,7 @@
                         </div>
                     </td>
 
-                    <td *ngFor="let oyuncu of aktifMacFoy.EklenenOyuncuAdlari;let inx=index">
+                    <td *ngFor="let oyuncu of aktifMacFoy.EklenenOyuncuAdlari;let inx=index" [class.sari]="aktifMacFoy.Mac_Satirlari[inx].VarMi!==true">
                         <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
 
                           

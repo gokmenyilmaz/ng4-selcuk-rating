@@ -455,7 +455,7 @@ export class MacFoyComponent implements OnInit {
         }
 
 
-        this.aktifMacFoy.EklenenOyuncuAdlari.forEach(m => {
+        this.aktifMacFoy.Mac_Satirlari.forEach(m => {
             var temp = m['C' + sutunIndex1].Skor;
 
             m['C' + (sutunIndex1)].Skor = m['C' + (sutunIndex2)].Skor;
@@ -463,11 +463,59 @@ export class MacFoyComponent implements OnInit {
 
         })
 
-        // for (let mac of this.aktifMacFoy.Mac_Satirlari) {
-        //     this.MacOncesiPuanGuncellendi(mac);
-        // }
+        for (let mac of this.aktifMacFoy.Mac_Satirlari) {
+            this.MacOncesiPuanGuncellendi(mac);
+        }
 
     }
+
+
+    MacaGelmedi(_row: MacSatir) {
+        let inx: number = 0;
+        if (_row.VarMi == false) {
+            _row.VarMi = true;
+
+            for (let _oy of this.aktifMacFoy.EklenenOyuncuAdlari) {
+                inx++;
+                if (_row['C' + inx].Skor != 'X-X') {
+                    _row['C' + inx].Aciklama = "";
+                    _row['C' + inx].Skor = "__";
+                }
+
+                this.macFoySkorlariGuncelle(_row, inx);
+
+            }
+
+            return;
+        }
+
+        _row.VarMi = false;
+
+        var satirIndex =this.aktifMacFoy.Mac_Satirlari.indexOf(_row);
+
+        for (let _oy of this.aktifMacFoy.EklenenOyuncuAdlari) {
+            inx++;
+            if (_row['C' + inx].Skor != 'X-X') {
+                _row['C' + inx].Skor = '1-3';
+
+                if (_row.VarMi == false && this.aktifMacFoy.Mac_Satirlari[inx - 1].VarMi == false) {
+                    _row['C' + (inx)].Skor = "(1-3)";
+                    _row['C' + (inx)].Aciklama = "K.H.";
+
+                    this.aktifMacFoy.Mac_Satirlari[inx - 1]["C" + (satirIndex + 1)].Aciklama = "K.H.";
+                }
+
+                this.macFoySkorlariGuncelle(_row, inx);
+            }
+        }
+
+        _row.VarMi = false;
+
+
+
+    }
+
+
 
     MacOncesiPuanGuncellendi(selectedRow: MacSatir) {
         let aktifRowIndex = this.aktifMacFoy.Mac_Satirlari.indexOf(selectedRow);
