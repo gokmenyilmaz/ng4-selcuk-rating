@@ -29,7 +29,7 @@ export class OyuncuListComponent implements OnInit {
 
   eklenecek_oyuncu: Oyuncu = null;
 
-  club: string;
+  klup: string;
   yil: number;
 
   constructor(private af: AngularFireDatabase, private activatedRoute: ActivatedRoute) {
@@ -38,10 +38,10 @@ export class OyuncuListComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => this.club = params.club);
+    this.activatedRoute.params.subscribe((params) => this.klup = params.klup);
     this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
 
-    this.oyuncularRef = this.af.list<Oyuncu>(`/${this.club}/${this.yil}/Oyuncular/`);
+    this.oyuncularRef = this.af.list<Oyuncu>(`/${this.klup}/${this.yil}/Oyuncular/`);
 
     this.oyuncular = this.oyuncularRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));

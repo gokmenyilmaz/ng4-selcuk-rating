@@ -151,36 +151,47 @@ export class MacFoyComponent implements OnInit {
             this.aktifMacFoy=_aktifMacFoy;
             this.grupMacTarih=_aktifMacFoy.Tarih;
         }
-        
-        var tumOyuncular=await this.TumOyunculariGetir();
+ 
+        this.aktifOyuncular=await this. AdSoyadSirali_AktifOyunculariGetir();
 
-        var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
-        
-        this.aktifOyuncular=new List<Oyuncu>(tumOyuncular)
-                    .OrderBy(o => o.OyuncuAdSoyad)
-                    .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
-                    .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
-                    .ToArray();
-
-         var c=1000;
-
-       
     }
 
     MacFoyuGetir(): Promise<MacFoy> {
         return new Promise<MacFoy>(resolve=> {
             this.af.object<MacFoy>(this.macfoyPath)
                    .valueChanges()
-                   .subscribe(p => resolve(p));
+                   .subscribe(p =>{ 
+                    
+                    // p.EklenenOyuncuAdlari=p.EklenenOyuncuAdlari===undefined?[]:p.EklenenOyuncuAdlari;
+                    // p.Mac_Satirlari=p.Mac_Satirlari===undefined?[]:p.Mac_Satirlari;
+                    
+                    return resolve(p) }
+ 
+                );
         });
     }
 
 
-    TumOyunculariGetir(): Promise<Oyuncu[]> {
+    AdSoyadSirali_AktifOyunculariGetir(): Promise<Oyuncu[]> {
+       
+        var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
+
         return new Promise<Oyuncu[]>(resolve=> {
             this.af.list<Oyuncu>(this.oyuncularPath)
                    .valueChanges()
-                   .subscribe(p => resolve(p));
+                   .subscribe(p =>{ 
+
+                   var sonuc =  new List<Oyuncu>(p)
+                        .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi &&
+                                    this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
+                        .Select(o=>{o.Haftalar=o.Haftalar==undefined?
+                            [ new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan)]:o.Haftalar;return o})
+                        .OrderBy(c=>c.OyuncuAdSoyad)
+                        .ToArray();
+                  
+                   return resolve(sonuc)
+           
+                });
 
         });
     }
@@ -196,12 +207,12 @@ export class MacFoyComponent implements OnInit {
                    .subscribe(p =>{ 
 
                    var sonuc =  new List<Oyuncu>(p)
-                        .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi)
-                        .Where(o => this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
+                        .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi &&
+                                    this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
                         .Select(o=>{o.Haftalar=o.Haftalar==undefined?
                             [ new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan)]:o.Haftalar;return o})
                         .OrderByDescending(o=>o.Haftalar[hafta])
-                        .ThenBy(o=>o.Dogum_Yili)
+                        .ThenBy(o=>this.padLeft( o.Dogum_Yili.toString(),4))
                         .ToArray();
                   
                    return resolve(sonuc)
@@ -212,7 +223,10 @@ export class MacFoyComponent implements OnInit {
     }
 
 
-  
+    padLeft(num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length-size);
+    }
 
 
     async macFoyeOyuncuEkle(_oyuncu: Oyuncu) {
