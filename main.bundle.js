@@ -21,20 +21,32 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_lazy_route_resource lazy re
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Oyuncu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return PuanTabloItem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return SkorDetay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MacSatir; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Oyuncu; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HaftaPuan; });
+/* unused harmony export PuanTabloItem */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return SkorDetay; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return MacFoy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return MacSatir; });
 var Oyuncu = (function () {
-    function Oyuncu(OyuncuAdSoyad, BaslamaPuan, BaslamaTarihi, AyrilisTarihi, GuncelGrup, Dogum_Yili) {
+    function Oyuncu(OyuncuAdSoyad, BaslamaPuan, BaslamaTarihi, AyrilisTarihi, GuncelGrup, Dogum_Yili, Haftalar) {
         this.OyuncuAdSoyad = OyuncuAdSoyad;
         this.BaslamaPuan = BaslamaPuan;
         this.BaslamaTarihi = BaslamaTarihi;
         this.AyrilisTarihi = AyrilisTarihi;
         this.GuncelGrup = GuncelGrup;
         this.Dogum_Yili = Dogum_Yili;
+        this.Haftalar = Haftalar;
     }
     return Oyuncu;
+}());
+
+var HaftaPuan = (function () {
+    function HaftaPuan(MacOncesiPuan, AlinanTPuan, ToplamPuan) {
+        this.MacOncesiPuan = MacOncesiPuan;
+        this.AlinanTPuan = AlinanTPuan;
+        this.ToplamPuan = ToplamPuan;
+    }
+    return HaftaPuan;
 }());
 
 var PuanTabloItem = (function () {
@@ -58,6 +70,18 @@ var SkorDetay = (function () {
         this.Aciklama = Aciklama;
     }
     return SkorDetay;
+}());
+
+var MacFoy = (function () {
+    function MacFoy(Tarih, GrupElemanSayilari, Mac_Satirlari, EklenenOyuncuAdlari) {
+        if (Mac_Satirlari === void 0) { Mac_Satirlari = []; }
+        if (EklenenOyuncuAdlari === void 0) { EklenenOyuncuAdlari = []; }
+        this.Tarih = Tarih;
+        this.GrupElemanSayilari = GrupElemanSayilari;
+        this.Mac_Satirlari = Mac_Satirlari;
+        this.EklenenOyuncuAdlari = EklenenOyuncuAdlari;
+    }
+    return MacFoy;
 }());
 
 var MacSatir = (function () {
@@ -206,17 +230,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 var routes = [
-    { path: ":club/:yil/oyuncular", component: __WEBPACK_IMPORTED_MODULE_2__oyuncular_oyuncu_list_oyuncu_list_component__["a" /* OyuncuListComponent */] },
+    { path: ":klup/:yil/oyuncular", component: __WEBPACK_IMPORTED_MODULE_2__oyuncular_oyuncu_list_oyuncu_list_component__["a" /* OyuncuListComponent */] },
     { path: "edit", component: __WEBPACK_IMPORTED_MODULE_3__oyuncular_oyuncu_edit_oyuncu_edit_component__["a" /* OyuncuEditComponent */] },
-    { path: ":club/:yil/macfoy/:hafta/:grup", component: __WEBPACK_IMPORTED_MODULE_4__macfoy_mac_foy_mac_foy_component__["b" /* MacFoyComponent */] }
+    { path: ":klup/:yil/macfoy/:hafta/:grup", component: __WEBPACK_IMPORTED_MODULE_4__macfoy_mac_foy_mac_foy_component__["b" /* MacFoyComponent */] }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
     }
     AppRoutingModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */].forRoot(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */]]
+            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(routes)],
+            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
         })
     ], AppRoutingModule);
     return AppRoutingModule;
@@ -371,7 +395,7 @@ var CoreModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1_app_shared_shared_module__["a" /* SharedModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* RouterModule */]
+                __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* RouterModule */]
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_2__nav_nav_component__["a" /* NavComponent */]
@@ -486,7 +510,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/macfoy/mac-foy/mac-foy.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card>\r\n\r\n    <mat-tab-group focusChange  =\"alert('gruplu')\">\r\n        <mat-tab    label=\"Otomatik Grup Oluştur\">\r\n         \r\n                <ng-template mat-tab-label>\r\n                    <span  (click)=\"grupluMu=1\">Otomatik Grup Oluştur</span>\r\n                </ng-template>\r\n\r\n            <mat-grid-list cols=\"6\" rowHeight=\"2:1\">\r\n                <mat-grid-tile>\r\n                    <mat-select aria-placeholder=\"hafta\" [(ngModel)]=\"hafta\" (ngModelChange)='haftaDegisti()'>\r\n                        <mat-option *ngFor=\"let hafta of haftalar\" [value]=\"hafta\">{{hafta}}</mat-option>\r\n                    </mat-select>\r\n                </mat-grid-tile>\r\n\r\n                <mat-grid-tile>\r\n\r\n                    <mat-form-field >\r\n                        <input matInput style=\"width: 100px\" type=\"text\" placeholder=\"Mac Tarih\"\r\n                         [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>\r\n                    </mat-form-field>\r\n                </mat-grid-tile>\r\n\r\n\r\n                <mat-grid-tile>\r\n                    <mat-select style=\"width: 70px\" [(ngModel)]=\"grup\" (ngModelChange)='grupDegisti()'>\r\n                        <mat-option *ngFor=\"let grup of gruplar\" [value]=\"grup\">{{grup}}</mat-option>\r\n                    </mat-select>\r\n\r\n                </mat-grid-tile>\r\n\r\n\r\n                <mat-grid-tile>\r\n                    <mat-form-field>\r\n                        <input matInput style=\"width:80px;display: inline-block\" type=\"text\" class=\"form-control\" [(ngModel)]='grupElememanSayilari'>\r\n                    </mat-form-field>\r\n                </mat-grid-tile>\r\n\r\n\r\n                <mat-grid-tile colspan=\"2\">\r\n                    <mat-card>\r\n                        <button mat-raised-button  color=\"primary\" (click)=\"oyuncuEkle(eklenecekOyuncu)\">\r\n                            <span *ngIf=\"grupluMu\">{{grup}}'yı </span> Ekle\r\n                        </button>\r\n                        <button mat-raised-button  color=\"primary\" (click)=\"kaydet()\">kaydet</button>\r\n                    </mat-card>\r\n                </mat-grid-tile>\r\n\r\n            </mat-grid-list>\r\n\r\n        </mat-tab>\r\n        <mat-tab (click)=\"alert('isteğe bağlı')\" label=\"İsteğe Bağlı Oyuncu Ekle\">\r\n          \r\n            <ng-template mat-tab-label>\r\n                <span  (click)=\"grupluMu=0\">İsteğe Bağlı Grup Oluştur</span>\r\n            </ng-template>\r\n\r\n\r\n            <mat-grid-list cols=\"4\">\r\n                  <mat-card>\r\n\r\n                    <mat-select style=\"width:150px;display: inline-block\" placeholder=\"Oyuncu Seçiniz\"\r\n                        [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)=\"oyuncuEkleDegisti(eklenecekOyuncu)\">\r\n                        <mat-option default>Oyuncu Seçiniz</mat-option>\r\n                        <mat-option *ngFor=\"let o of oyuncular\" value=\"{{o.OyuncuAdSoyad}}\">{{o.OyuncuAdSoyad}}</mat-option>\r\n                    </mat-select>\r\n\r\n                    <mat-input-container mat-no-float style=\"width:150px;display: inline-block\">\r\n                        <input matInput  style=\"text-align:right\"  placeholder=\"Puan\"\r\n                            type=\"number\" (keyup.enter)=\"oyuncuEkle(eklenecekOyuncu)\"\r\n                            [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>\r\n                    </mat-input-container>\r\n\r\n                       \r\n                        <button mat-raised-button style=\"width:100px\" color=\"primary\" class=\"btn btn-success\" (click)=\"oyuncuEkle(eklenecekOyuncu)\">\r\n                            <span *ngIf=\"grupluMu\">{{grup}}'yı </span> Ekle\r\n                        </button>\r\n\r\n                        <mat-slide-toggle [(ngModel)]='ciktiModu' class=\"example-margin\">Gelişmiş</mat-slide-toggle>\r\n                   \r\n                    </mat-card>\r\n             \r\n                        \r\n            </mat-grid-list>\r\n  \r\n        </mat-tab>\r\n  \r\n    </mat-tab-group>\r\n\r\n    <div id=\"skortablo-container\" class=\"row\">\r\n        <table id=\"skortablo\" rules=\"all\" frame=\"border\" class=\"table table-bordered table-hover table-condensed table-striped\">\r\n            <caption>\r\n\r\n            </caption>\r\n\r\n            <thead>\r\n                <tr>\r\n                    <th class=\"grup1-oyuncu\">{{grup}} Grubu <br>{{grupMacTarih}}-{{hafta}} </th>\r\n                    <th class=\"grup1-mopuan\">Maç Ö.Puan</th>\r\n                    <th class=\"grup1-apuan\">Alınan TPuan</th>\r\n                    <th class=\"grup1-bonus\" [hidden]='!ciktiModu'>Bonus Puan</th>\r\n                    \r\n                    \r\n                    <th style=\"border-right:6px double black;\" class=\"grup1-mspuan\" >Maç S.Puan</th>\r\n\r\n                    <th class=\"skor\" *ngFor='let oyuncu of eklenenOyuncular'>\r\n                        {{oyuncu.OyuncuAdSoyad}}\r\n                    </th>\r\n\r\n                </tr>\r\n            </thead>\r\n\r\n\r\n            <tbody>\r\n                <tr *ngFor=\"let row of mac_rows;let row_inx:index\" [ngClass]=\"{'sari': row.VarMi!==true}\">\r\n\r\n                    <td>\r\n                        <div>\r\n\r\n                            <button style=\"width:95%;margin:auto\" type=\"button\"  [matMenuTriggerFor]=\"appMenu\">\r\n                                <div style=\"display:flex;align-items:center;justify-content:space-between\">\r\n                                    <label> {{row.OyuncuAdSoyad}}</label>\r\n                                    <mat-icon style=\"align-self: flex-end\" >more_vert</mat-icon>\r\n                                </div>\r\n                               \r\n                            </button>\r\n\r\n                            <mat-menu #appMenu=\"matMenu\">\r\n                                <button mat-menu-item (click)=\"MacaGelmedi(row)\">\r\n                                    <span *ngIf='row.VarMi==false'>Maça Geldi</span>\r\n                                    <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>\r\n                                </button>\r\n                                <button (click)=\"MacSil(row)\" mat-menu-item> Listeden Kaldır </button>\r\n                                <button mat-menu-item (click)=\"satirKonumDegistir(row,-1)\"> Yukarı Hareket </button>\r\n                                <button mat-menu-item (click)=\"satirKonumDegistir(row,1)\"> Aşağı Hareket </button>\r\n                            </mat-menu>\r\n                        </div>\r\n\r\n                    </td>\r\n\r\n                    <td>\r\n                        <mat-input-container>\r\n                            <input matInput  type=\"number\" [(ngModel)]='row.MO_Puan' \r\n                            (ngModelChange)=\"MacOncesiPuanGuncellendi(row)\"\r\n                            />\r\n                       </mat-input-container>\r\n\r\n                     \r\n                    </td>\r\n\r\n                    <td>\r\n                        <div>{{row.AlinanTPuan}}</div>\r\n                    </td>\r\n\r\n                    <td [hidden]='!ciktiModu'>\r\n                        <mat-input-container>\r\n                            <input matInput style=\"width:100%\" type=\"number\" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />\r\n                        </mat-input-container>\r\n                    </td>\r\n\r\n                    <td style=\"border-right:6px double black;\">\r\n                        <span type=\"number\">{{row.MS_Puan}}</span>\r\n                        <div class=\"glyphicon\" [ngClass]=\"{'glyphicon-arrow-up text-success': row.AlinanTPuan > 0,'glyphicon-arrow-down text-danger':row.AlinanTPuan < 0,'glyphicon-option-horizontal text-muted': row.AlinanTPuan == 0}\">\r\n\r\n                        </div>\r\n                    </td>\r\n\r\n                    <td *ngFor=\"let oyuncu of eklenenOyuncular;let inx=index\" [class.sari]=\"mac_rows[inx].VarMi!==true\">\r\n                        <div *ngIf=\"row['C' + (inx+1)].Skor!='X-X'\">\r\n\r\n                          \r\n                                <mat-select class=\"no-underline\" [(ngModel)]=\"row['C' + (inx+1)].Skor\" \r\n                                (ngModelChange)='TabloyuGuncelle(row,(inx+1))'>\r\n                                    <mat-option value=\"__\">__</mat-option>\r\n                                    <mat-option value=\"4-0\">4-0</mat-option>\r\n                                    <mat-option value=\"3-1\">3-1</mat-option>\r\n                                    <mat-option value=\"2-2\">2-2</mat-option>\r\n                                    <mat-option value=\"1-3\">1-3</mat-option>\r\n                                    <mat-option value=\"0-4\">0-4</mat-option>\r\n                                    <mat-option value=\"(1-3)\">*1-3</mat-option>\r\n                                    <mat-option value=\"X-X\">X-X</mat-option>\r\n                                </mat-select>\r\n                         \r\n                           \r\n\r\n                            <span class=\"label pull-right\" [ngClass]=\"{'label-success':row['C' + (inx+1)].Puan>=0,'label-danger':row['C' + (inx+1)].Puan<0 }\">{{row['C' + (inx+1)].Puan}}</span>\r\n                            <span class=\"label label-info pull-left\">{{row['C' + (inx+1)].Aciklama}}</span>\r\n\r\n\r\n                        </div>\r\n\r\n                        <div *ngIf=\"row['C' + (inx+1)].Skor=='X-X'\">\r\n                            <div class=\"siyah-zemin\"></div>\r\n                        </div>\r\n                    </td>\r\n\r\n                </tr>\r\n\r\n            </tbody>\r\n        </table>\r\n\r\n\r\n        <br>\r\n\r\n\r\n    </div>\r\n\r\n    <div class=\"row\" id=\"puanListeUst\">\r\n        <button mat-raised-button class=\"btn btn-default\" (click)='PuanTablosunuGuncelle(false)'>Mac Öncesi Sıralama</button>\r\n        <button mat-raised-button class=\"btn btn-success\" (click)='PuanTablosunuGuncelle(true)'>Puan Tablosunu Güncelle</button>\r\n        <div style=\"display:inline-block;width: 250px\">\r\n            Tablo Genişliği :\r\n\r\n            <mat-input-container>\r\n                <input matInput style=\"display:inline-block!important\" type=\"number\" [(ngModel)]='puanTabloGenislik' />\r\n            </mat-input-container>\r\n        </div>\r\n\r\n    </div>\r\n\r\n\r\n    <div class=\"row\" id=\"puanListeContainer\">\r\n\r\n        <table class=\"table table-bordered\" style=\"margin-right: 15px\" [style.width]=\"puanTabloGenislik + '%'\">\r\n            <thead>\r\n                <tr>\r\n                    <th style=\"text-align: center\">Sıra No</th>\r\n                    <th style=\"text-align: center;min-width: 160px\">Oyuncu Ad Soyad</th>\r\n                    <th style=\"text-align: center\">Maç Öncesi Puan</th>\r\n                    <th style=\"text-align: center\">Alınan Puan</th>\r\n                    <th style=\"text-align: center\">Maç Sonu Puan</th>\r\n                    <th style=\"text-align: center\" *ngIf='ciktiModu'>Guncel Grup</th>\r\n                </tr>\r\n            </thead>\r\n\r\n            <tbody>\r\n                <tr *ngFor=\"let o of PuanTabloItemList; let sira=index\" class=\"{{o.Grup}}\">\r\n                    <td style=\"text-align: center\">{{sira+1}}</td>\r\n                    <td style=\"font-weight:bold\">{{o.OyuncuAdSoyad}}</td>\r\n                    <td style=\"text-align: center\">{{o.MO_Puan}}</td>\r\n                    <td style=\"text-align: center\">{{o.AlinanPuan}}</td>\r\n                    <td style=\"text-align: center;font-weight: bold\">{{o.MS_Puan}}\r\n                        <div class=\"glyphicon\" [ngClass]=\"{'glyphicon-arrow-up text-success': o.AlinanPuan > 0,'glyphicon-arrow-down text-danger':o.AlinanPuan < 0,'glyphicon-option-horizontal text-muted': o.AlinanPuan == 0}\">\r\n\r\n                        </div>\r\n\r\n\r\n                    </td>\r\n                    <td *ngIf='ciktiModu'>{{o.Grup}}</td>\r\n                    <td *ngIf='ciktiModu'>{{o.Dogum_Yili}}</td>\r\n\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n\r\n    </div>\r\n\r\n</mat-card>"
+module.exports = "<mat-card>\r\n\r\n    <mat-tab-group focusChange  =\"alert('gruplu')\">\r\n        <mat-tab    label=\"Otomatik Grup Oluştur\">\r\n         \r\n                <ng-template mat-tab-label>\r\n                    <span  (click)=\"grupluMu=1\">Otomatik Grup Oluştur</span>\r\n                </ng-template>\r\n\r\n            <mat-grid-list cols=\"6\" rowHeight=\"2:1\">\r\n                <mat-grid-tile>\r\n                    <mat-select aria-placeholder=\"hafta\" [(ngModel)]=\"hafta\" (ngModelChange)='haftaDegisti()'>\r\n                        <mat-option *ngFor=\"let hafta of haftalar\" [value]=\"hafta\">{{hafta}}</mat-option>\r\n                    </mat-select>\r\n                </mat-grid-tile>\r\n\r\n                <mat-grid-tile>\r\n\r\n                    <mat-form-field >\r\n                        <input matInput style=\"width: 100px\" type=\"text\" placeholder=\"Mac Tarih\"\r\n                         [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>\r\n                    </mat-form-field>\r\n                </mat-grid-tile>\r\n                \r\n\r\n                <mat-grid-tile>\r\n                    <mat-select style=\"width: 70px\" [(ngModel)]=\"grup\" (ngModelChange)='grupDegisti()'>\r\n                        <mat-option *ngFor=\"let grup of gruplar\" [value]=\"grup\">{{grup}}</mat-option>\r\n                    </mat-select>\r\n\r\n                </mat-grid-tile>\r\n\r\n\r\n                <mat-grid-tile>\r\n                    <mat-form-field>\r\n                        <input matInput style=\"width:80px;display: inline-block\" type=\"text\" class=\"form-control\" [(ngModel)]='grupElememanSayilari'>\r\n                    </mat-form-field>\r\n                </mat-grid-tile>\r\n\r\n\r\n                <mat-grid-tile colspan=\"2\">\r\n                    <mat-card>\r\n                        <button mat-raised-button  color=\"primary\" (click)=\"macFoyeOyuncuEkle(eklenecekOyuncu)\">\r\n                            <span *ngIf=\"grupluMu\">{{grup}}'yı </span> Ekle\r\n                        </button>\r\n                        <button mat-raised-button  color=\"primary\" (click)=\"kaydet()\">kaydet</button>\r\n                    </mat-card>\r\n                </mat-grid-tile>\r\n\r\n            </mat-grid-list>\r\n\r\n        </mat-tab>\r\n        <mat-tab (click)=\"alert('isteğe bağlı')\" label=\"İsteğe Bağlı Oyuncu Ekle\">\r\n          \r\n            <ng-template mat-tab-label>\r\n                <span  (click)=\"grupluMu=0\">İsteğe Bağlı Grup Oluştur</span>\r\n            </ng-template>\r\n\r\n\r\n            <mat-grid-list cols=\"4\">\r\n                  <mat-card>\r\n\r\n                    <mat-select style=\"width:150px;display: inline-block\" placeholder=\"Oyuncu Seçiniz\"\r\n                        [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad' (change)=\"eklenecekOyuncu_Degisti(eklenecekOyuncu)\">\r\n                        <mat-option default>Oyuncu Seçiniz</mat-option>\r\n                        <mat-option *ngFor=\"let o of aktifOyuncular\" value=\"{{o.OyuncuAdSoyad}}\">{{o.OyuncuAdSoyad}}</mat-option>\r\n                    </mat-select>\r\n\r\n                    <mat-input-container mat-no-float style=\"width:150px;display: inline-block\">\r\n                        <input matInput  style=\"text-align:right\"  placeholder=\"Puan\"\r\n                            type=\"number\" (keyup.enter)=\"macFoyeOyuncuEkle(eklenecekOyuncu)\"\r\n                            [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>\r\n                    </mat-input-container>\r\n\r\n                       \r\n                        <button mat-raised-button style=\"width:100px\" color=\"primary\" class=\"btn btn-success\"\r\n                         (click)=\"macFoyeOyuncuEkle(eklenecekOyuncu)\">\r\n                            <span *ngIf=\"grupluMu\">{{grup}}'yı </span> Ekle\r\n                        </button>\r\n\r\n                        <mat-slide-toggle [(ngModel)]='ciktiModu' class=\"example-margin\">Gelişmiş</mat-slide-toggle>\r\n                   \r\n                    </mat-card>\r\n             \r\n                        \r\n            </mat-grid-list>\r\n  \r\n        </mat-tab>\r\n  \r\n    </mat-tab-group>\r\n\r\n    <div id=\"skortablo-container\" class=\"row\">\r\n        <table id=\"skortablo\"  rules=\"all\" frame=\"border\" class=\"table table-bordered table-hover table-condensed table-striped\">\r\n            <caption>\r\n\r\n            </caption>\r\n\r\n            <thead>\r\n                <tr>\r\n                    <th class=\"grup1-oyuncu\">{{grup}} Grubu <br>{{grupMacTarih}}-{{hafta}} </th>\r\n                    <th class=\"grup1-mopuan\">Maç Ö.Puan</th>\r\n                    <th class=\"grup1-apuan\">Alınan TPuan</th>\r\n                    <th class=\"grup1-bonus\" [hidden]='!ciktiModu'>Bonus Puan</th>\r\n                    \r\n                    \r\n                    <th style=\"border-right:6px double black;\" class=\"grup1-mspuan\" >Maç S.Puan</th>\r\n\r\n                    <th class=\"skor\" *ngFor='let oyuncuAdSoyad of aktifMacFoy.EklenenOyuncuAdlari'>\r\n                        {{oyuncuAdSoyad }}\r\n                    </th>\r\n\r\n                </tr>\r\n            </thead>\r\n\r\n\r\n            <tbody>\r\n                <tr *ngFor=\"let row of aktifMacFoy.Mac_Satirlari;let row_inx:index\" [ngClass]=\"{'sari': row.VarMi!==true}\">\r\n\r\n                    <td>\r\n                        <div>\r\n\r\n                            <button style=\"width:95%;margin:auto\" type=\"button\"  [matMenuTriggerFor]=\"appMenu\">\r\n                                <div style=\"display:flex;align-items:center;justify-content:space-between\">\r\n                                    <label> {{row.OyuncuAdSoyad}}</label>\r\n                                    <mat-icon style=\"align-self: flex-end\" >more_vert</mat-icon>\r\n                                </div>\r\n                               \r\n                            </button>\r\n\r\n                            <mat-menu #appMenu=\"matMenu\">\r\n                                <button mat-menu-item (click)=\"MacaGelmedi(row)\">\r\n                                    <span *ngIf='row.VarMi==false'>Maça Geldi</span>\r\n                                    <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>\r\n                                </button>\r\n                                <button (click)=\"MacSil(row)\" mat-menu-item> Listeden Kaldır </button>\r\n                                <button mat-menu-item (click)=\"satirKonumDegistir(row,-1)\"> Yukarı Hareket </button>\r\n                                <button mat-menu-item (click)=\"satirKonumDegistir(row,1)\"> Aşağı Hareket </button>\r\n                            </mat-menu>\r\n                        </div>\r\n\r\n                    </td>\r\n\r\n                    <td>\r\n                        <mat-input-container>\r\n                            <input matInput  type=\"number\" [(ngModel)]='row.MO_Puan' \r\n                            (ngModelChange)=\"MacOncesiPuanGuncellendi(row)\"\r\n                            />\r\n                       </mat-input-container>\r\n\r\n                     \r\n                    </td>\r\n\r\n                    <td>\r\n                        <div>{{row.AlinanTPuan}}</div>\r\n                    </td>\r\n\r\n                    <td [hidden]='!ciktiModu'>\r\n                        <mat-input-container>\r\n                            <input matInput style=\"width:100%\" type=\"number\" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />\r\n                        </mat-input-container>\r\n                    </td>\r\n\r\n                    <td style=\"border-right:6px double black;\">\r\n                        <span type=\"number\">{{row.MS_Puan}}</span>\r\n                        <div class=\"glyphicon\" [ngClass]=\"{'glyphicon-arrow-up text-success': row.AlinanTPuan > 0,'glyphicon-arrow-down text-danger':row.AlinanTPuan < 0,'glyphicon-option-horizontal text-muted': row.AlinanTPuan == 0}\">\r\n\r\n                        </div>\r\n                    </td>\r\n\r\n                    <td *ngFor=\"let oyuncu of aktifMacFoy.EklenenOyuncuAdlari;let inx=index\">\r\n                        <div *ngIf=\"row['C' + (inx+1)].Skor!='X-X'\">\r\n\r\n                          \r\n                                <mat-select class=\"no-underline\" [(ngModel)]=\"row['C' + (inx+1)].Skor\" \r\n                                (ngModelChange)='macFoySkorlariGuncelle(row,(inx+1))'>\r\n                                    <mat-option value=\"__\">__</mat-option>\r\n                                    <mat-option value=\"4-0\">4-0</mat-option>\r\n                                    <mat-option value=\"3-1\">3-1</mat-option>\r\n                                    <mat-option value=\"2-2\">2-2</mat-option>\r\n                                    <mat-option value=\"1-3\">1-3</mat-option>\r\n                                    <mat-option value=\"0-4\">0-4</mat-option>\r\n                                    <mat-option value=\"(1-3)\">*1-3</mat-option>\r\n                                    <mat-option value=\"X-X\">X-X</mat-option>\r\n                                </mat-select>\r\n                            <span class=\"label pull-right\" [ngClass]=\"{'label-success':row['C' + (inx+1)].Puan>=0,'label-danger':row['C' + (inx+1)].Puan<0 }\">{{row['C' + (inx+1)].Puan}}</span>\r\n                            <span class=\"label label-info pull-left\">{{row['C' + (inx+1)].Aciklama}}</span>\r\n\r\n\r\n                        </div>\r\n\r\n                        <div *ngIf=\"row['C' + (inx+1)].Skor=='X-X'\">\r\n                            <div class=\"siyah-zemin\"></div>\r\n                        </div>\r\n                    </td>\r\n\r\n                </tr>\r\n\r\n            </tbody>\r\n        </table>\r\n\r\n\r\n        <br>\r\n\r\n\r\n    </div>\r\n\r\n    <div class=\"row\" id=\"puanListeUst\">\r\n        <button mat-raised-button class=\"btn btn-default\" (click)='PuanTablosunuGuncelle(false)'>Mac Öncesi Sıralama</button>\r\n        <button mat-raised-button class=\"btn btn-success\" (click)='PuanTablosunuGuncelle(true)'>Puan Tablosunu Güncelle</button>\r\n        <div style=\"display:inline-block;width: 250px\">\r\n            Tablo Genişliği :\r\n\r\n            <mat-input-container>\r\n                <input matInput style=\"display:inline-block!important\" type=\"number\" [(ngModel)]='puanTabloGenislik' />\r\n            </mat-input-container>\r\n        </div>\r\n\r\n    </div>\r\n\r\n\r\n    <div class=\"row\" id=\"puanListeContainer\">\r\n\r\n        <table class=\"table table-bordered\" style=\"margin-right: 15px\" [style.width]=\"puanTabloGenislik + '%'\">\r\n            <thead>\r\n                <tr>\r\n                    <th style=\"text-align: center\">Sıra No</th>\r\n                    <th style=\"text-align: center;min-width: 160px\">Oyuncu Ad Soyad</th>\r\n                    <th style=\"text-align: center\">Maç Öncesi Puan</th>\r\n                    <th style=\"text-align: center\">Alınan Puan</th>\r\n                    <th style=\"text-align: center\">Maç Sonu Puan</th>\r\n                    <th style=\"text-align: center\" *ngIf='ciktiModu'>Guncel Grup</th>\r\n                </tr>\r\n            </thead>\r\n\r\n            <tbody>\r\n                <tr *ngFor=\"let o of PuanTabloItemList; let sira=index\" class=\"{{o.Grup}}\">\r\n                    <td style=\"text-align: center\">{{sira+1}}</td>\r\n                    <td style=\"font-weight:bold\">{{o.OyuncuAdSoyad}}</td>\r\n                    <td style=\"text-align: center\">{{o.MO_Puan}}</td>\r\n                    <td style=\"text-align: center\">{{o.AlinanPuan}}</td>\r\n                    <td style=\"text-align: center;font-weight: bold\">{{o.MS_Puan}}\r\n                        <div class=\"glyphicon\" [ngClass]=\"{'glyphicon-arrow-up text-success': o.AlinanPuan > 0,'glyphicon-arrow-down text-danger':o.AlinanPuan < 0,'glyphicon-option-horizontal text-muted': o.AlinanPuan == 0}\">\r\n\r\n                        </div>\r\n\r\n\r\n                    </td>\r\n                    <td *ngIf='ciktiModu'>{{o.Grup}}</td>\r\n                    <td *ngIf='ciktiModu'>{{o.Dogum_Yili}}</td>\r\n\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n\r\n    </div>\r\n\r\n</mat-card>"
 
 /***/ }),
 
@@ -511,14 +535,6 @@ module.exports = "<mat-card>\r\n\r\n    <mat-tab-group focusChange  =\"alert('gr
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_rxjs_add_operator_toPromise__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rxjs_add_observable_from__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/from.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -579,17 +595,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 var MacFoyComponent = (function () {
-    function MacFoyComponent(reytingServis, af, _route, _dialog, _snackbar, activatedRoute) {
-        this.reytingServis = reytingServis;
+    function MacFoyComponent(macFoyServis, af, _route, _dialog, _snackbar, activatedRoute, _router) {
+        this.macFoyServis = macFoyServis;
         this.af = af;
         this._route = _route;
         this._dialog = _dialog;
         this._snackbar = _snackbar;
         this.activatedRoute = activatedRoute;
-        this.mac_rows = [];
-        this.oyuncular = [];
+        this._router = _router;
+        this.aktifOyuncular = [];
         this.oyuncularGruplu = [];
-        this.eklenenOyuncular = [];
         this.eklenecekOyuncu = null;
         this.grup = 'A';
         this.haftalar = [];
@@ -598,7 +613,6 @@ var MacFoyComponent = (function () {
         this.grupElememanSayilari = "6,6,6,6";
         this.ciktiModu = false;
         this.puanTabloGenislik = 100;
-        this.PuanTabloItemList = [];
         this.haftalar = Array.from(Array(52).keys());
     }
     MacFoyComponent.prototype.degisiklikVarMi = function () {
@@ -607,371 +621,196 @@ var MacFoyComponent = (function () {
     MacFoyComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.puanTabloGenislik = 100;
-        this.eklenecekOyuncu = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["b" /* Oyuncu */]('', 0, null, null);
-        this.activatedRoute.params.subscribe(function (params) { return _this.club = params.club; });
+        this.eklenecekOyuncu = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["d" /* Oyuncu */]('', 0, null, null);
+        this.activatedRoute.params.subscribe(function (params) { return _this.klup = params.klup; });
         this.activatedRoute.params.subscribe(function (params) {
             return _this.yil = parseInt(params.yil);
         });
         this.activatedRoute.params.subscribe(function (params) { return _this.grup = params.grup; });
         this.activatedRoute.params.subscribe(function (params) {
             _this.hafta = parseInt(params.hafta);
-            _this.haftaDegisti();
+            _this.macFoyuYukle();
         });
     };
-    MacFoyComponent.prototype.haftaDegisti = function () {
+    MacFoyComponent.prototype.macFoyuYukle = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
+            var bugun, _aktifMacFoy, macFoyRef, yeniMacFoy, _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        this.pageBaseRooting = "/" + this.klup + "/" + this.yil + "/macfoy";
+                        this.macfoyPath = this.pageBaseRooting + ("/" + this.hafta + "/" + this.grup);
+                        this.oyuncularPath = "/" + this.klup + "/" + this.yil + "/Oyuncular";
+                        bugun = new Date(Date.now()).toLocaleDateString("tr-TR");
+                        return [4 /*yield*/, this.MacFoyuGetir()];
+                    case 1:
+                        _aktifMacFoy = _b.sent();
+                        if (_aktifMacFoy == null) {
+                            macFoyRef = this.af.object(this.macfoyPath);
+                            yeniMacFoy = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["b" /* MacFoy */](bugun, this.grupElememanSayilari);
+                            yeniMacFoy.EklenenOyuncuAdlari = [];
+                            yeniMacFoy.Mac_Satirlari = [];
+                            yeniMacFoy.Tarih = bugun;
+                            macFoyRef.set(yeniMacFoy);
+                            this.aktifMacFoy = yeniMacFoy;
+                            this.grupMacTarih = bugun;
+                        }
+                        else {
+                            if (_aktifMacFoy.EklenenOyuncuAdlari === undefined)
+                                _aktifMacFoy.EklenenOyuncuAdlari = [];
+                            if (_aktifMacFoy.Mac_Satirlari === undefined)
+                                _aktifMacFoy.Mac_Satirlari = [];
+                            this.aktifMacFoy = _aktifMacFoy;
+                            this.grupMacTarih = _aktifMacFoy.Tarih;
+                        }
+                        _a = this;
+                        return [4 /*yield*/, this.AdSoyadSirali_AktifOyunculariGetir()];
+                    case 2:
+                        _a.aktifOyuncular = _b.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    MacFoyComponent.prototype.MacFoyuGetir = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.af.object(_this.macfoyPath)
+                .valueChanges()
+                .subscribe(function (p) {
+                // p.EklenenOyuncuAdlari=p.EklenenOyuncuAdlari===undefined?[]:p.EklenenOyuncuAdlari;
+                // p.Mac_Satirlari=p.Mac_Satirlari===undefined?[]:p.Mac_Satirlari;
+                return resolve(p);
+            });
+        });
+    };
+    MacFoyComponent.prototype.AdSoyadSirali_AktifOyunculariGetir = function () {
+        var _this = this;
+        var zamanSayi = this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime();
+        return new Promise(function (resolve) {
+            _this.af.list(_this.oyuncularPath)
+                .valueChanges()
+                .subscribe(function (p) {
+                var sonuc = new __WEBPACK_IMPORTED_MODULE_3_linqts_dist_linq__["List"](p)
+                    .Where(function (o) { return _this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi &&
+                    _this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi; })
+                    .Select(function (o) {
+                    o.Haftalar = o.Haftalar == undefined ?
+                        [new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["a" /* HaftaPuan */](o.BaslamaPuan, 0, o.BaslamaPuan)] : o.Haftalar;
+                    return o;
+                })
+                    .OrderBy(function (c) { return c.OyuncuAdSoyad; })
+                    .ToArray();
+                return resolve(sonuc);
+            });
+        });
+    };
+    MacFoyComponent.prototype.PuanSiraliOyunculariGetirHaftadan = function (hafta, Tarih) {
+        var _this = this;
+        var zamanSayi = this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime();
+        return new Promise(function (resolve) {
+            _this.af.list(_this.oyuncularPath)
+                .valueChanges()
+                .subscribe(function (p) {
+                var sonuc = new __WEBPACK_IMPORTED_MODULE_3_linqts_dist_linq__["List"](p)
+                    .Where(function (o) { return _this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi &&
+                    _this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi; })
+                    .Select(function (o) {
+                    o.Haftalar = o.Haftalar == undefined ?
+                        [new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["a" /* HaftaPuan */](o.BaslamaPuan, 0, o.BaslamaPuan)] : o.Haftalar;
+                    return o;
+                })
+                    .OrderByDescending(function (o) { return o.Haftalar[hafta]; })
+                    .ThenBy(function (o) { return _this.padLeft(o.Dogum_Yili.toString(), 4); })
+                    .ToArray();
+                return resolve(sonuc);
+            });
+        });
+    };
+    MacFoyComponent.prototype.padLeft = function (num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length - size);
+    };
+    MacFoyComponent.prototype.macFoyeOyuncuEkle = function (_oyuncu) {
+        return __awaiter(this, void 0, void 0, function () {
+            var liste, listeBirikimli_1, grup_inx, baslangicIndex, puanSirali, i, o, oncekiHaftaDurum;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.macfoyPath = "/" + this.club + "/" + this.yil + "/MacFoy/" + this.hafta + "/" + this.grup;
-                        this.oyuncularPath = "/" + this.club + "/" + this.yil + "/Oyuncular";
-                        return [4 /*yield*/, this.OyuncuYukle()];
+                        if (!(this.grupluMu == true)) return [3 /*break*/, 2];
+                        liste = this.grupElememanSayilari.split(',').map(function (x) { return parseInt(x); });
+                        listeBirikimli_1 = [];
+                        grup_inx = this.gruplar.indexOf(this.grup);
+                        __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["a" /* Observable */].from(liste)
+                            .scan(function (x, y) { return x + y; })
+                            .subscribe(function (c) { return listeBirikimli_1.push(c); });
+                        baslangicIndex = grup_inx == 0 ? 0 : listeBirikimli_1[grup_inx - 1];
+                        return [4 /*yield*/, this.PuanSiraliOyunculariGetirHaftadan(this.hafta, this.aktifMacFoy.Tarih)];
                     case 1:
-                        _a.sent();
-                        this.oyuncular = new __WEBPACK_IMPORTED_MODULE_3_linqts_dist_linq__["List"](this.oyuncular).OrderBy(function (c) { return c.OyuncuAdSoyad; }).ToArray();
-                        // .Where(o => this.parseDateDMY(o.BaslamaTarihi).getTime() <= macTarihTime)
-                        // .Where(o => this.parseDateDMY(o.AyrilisTarihi).getTime() > macTarihTime)
-                        this.af.object(this.macfoyPath)
-                            .valueChanges().subscribe(function (m) {
-                            var bugun = new Date(Date.now()).toLocaleDateString("tr-TR");
-                            _this.mac_rows = m == null ? [] : m.Foy;
-                            _this.grupMacTarih = m == null ? bugun : m.Tarih;
-                            _this.oyunculariMacFoyuneYukle();
-                        });
-                        return [2 /*return*/];
+                        puanSirali = _a.sent();
+                        for (i = baslangicIndex; i < listeBirikimli_1[grup_inx]; i++) {
+                            o = puanSirali[i];
+                            oncekiHaftaDurum = o[(this.hafta - 1).toString()];
+                            if (oncekiHaftaDurum == undefined)
+                                oncekiHaftaDurum = { ToplamPuan: o.BaslamaPuan };
+                            o.BaslamaPuan = oncekiHaftaDurum.ToplamPuan;
+                            this.macFoyeTekOyuncuEkle(o);
+                        }
+                        return [3 /*break*/, 3];
+                    case 2:
+                        this.macFoyeTekOyuncuEkle(_oyuncu);
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    MacFoyComponent.prototype.mactarihiDegisti = function () {
-        if (this.grupMacTarih.length == 10) {
-            this.oyunculariMacFoyuneYukle();
-        }
-    };
-    MacFoyComponent.prototype.OyuncuYukle = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, new Promise(function (resolve) {
-                            _this.af.list(_this.oyuncularPath).valueChanges()
-                                .subscribe(function (p) {
-                                _this.oyuncular = p;
-                                resolve();
-                            });
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    MacFoyComponent.prototype.oyunculariMacFoyuneYukle = function () {
-        var _this = this;
-        var macTarihTime = this.parseDateDMY(this.grupMacTarih).getTime();
-        for (var _i = 0, _a = this.oyuncular; _i < _a.length; _i++) {
-            var o = _a[_i];
-            if (o[this.hafta - 1] == undefined) {
-                o[this.hafta - 1] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
-            }
-            if (o[this.hafta] == undefined) {
-                o[this.hafta] = { AlinanPuan: 0, Grup: 1, ToplamPuan: o.BaslamaPuan };
-            }
-        }
-        var foyOyunculari = new __WEBPACK_IMPORTED_MODULE_3_linqts_dist_linq__["List"](Array.from(this.oyuncular))
-            .OrderByDescending(function (o) { return o[_this.hafta - 1].ToplamPuan; })
-            .ThenBy(function (o) { return o.Dogum_Yili; })
-            .ToArray();
-        this.eklenenOyuncular = [];
-        var i = -1;
-        var _loop_1 = function (mac) {
-            i++;
-            var oyuncu = foyOyunculari.find(function (x) { return x.OyuncuAdSoyad == mac.OyuncuAdSoyad; });
-            this_1.eklenenOyuncular.push(oyuncu);
-        };
-        var this_1 = this;
-        for (var _b = 0, _c = this.mac_rows; _b < _c.length; _b++) {
-            var mac = _c[_b];
-            _loop_1(mac);
-        }
-        this.eklenecekOyuncu = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["b" /* Oyuncu */]('', 0);
-    };
-    MacFoyComponent.prototype.parseDateDMY = function (input) {
-        var parts = input.split('.');
-        return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-    };
-    MacFoyComponent.prototype.grupDegisti = function () {
-        var _this = this;
-        var liste = this.oyuncular.filter(function (x) {
-            x.GuncelGrup == _this.grup;
-        });
-        this.eklenenOyuncular = [];
-        for (var _i = 0, liste_1 = liste; _i < liste_1.length; _i++) {
-            var o = liste_1[_i];
-            this.eklenenOyuncular.push(o);
-            this.macaOyuncuEkle(o);
-        }
-        this.haftaDegisti();
-        this.eklenecekOyuncu = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["b" /* Oyuncu */]('', 0);
-    };
-    MacFoyComponent.prototype.kayitEt = function () {
-        var i = -1;
-        var _loop_2 = function (mac) {
-            i++;
-            var oyuncu = this_2.oyuncular.find(function (x) { return x.OyuncuAdSoyad == mac.OyuncuAdSoyad; });
-            this_2.af.object(this_2.macfoyPath + '/' + oyuncu["key"] + '/' + this_2.hafta).update({
-                ToplamPuan: mac.MS_Puan,
-                AlinanPuan: mac.AlinanTPuan,
-                Grup: mac.GrupId,
-                BonusPuan: mac.BonusPuan
-            });
-        };
-        var this_2 = this;
-        for (var _i = 0, _a = this.mac_rows; _i < _a.length; _i++) {
-            var mac = _a[_i];
-            _loop_2(mac);
-        }
-        // this.mac_rows.map(mac => {
-        //     delete mac['key'];
-        //     delete mac['exists'];
-        // })
-        this.af.object(this.macfoyPath).
-            set({
-            Tarih: this.grupMacTarih,
-            GrupElememanSayilari: this.grupElememanSayilari,
-            Foy: this.mac_rows
-        });
-        return true;
-    };
-    MacFoyComponent.prototype.kaydet = function () {
-        var _this = this;
-        var dialogRef = this._dialog.open(DialogContent, { width: '400px', height: '200px' });
-        dialogRef.afterClosed().subscribe(function (result) {
-            if (result == 'Ok') {
-                if (_this.kayitEt())
-                    _this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
-            }
-            ;
-        });
-    };
-    MacFoyComponent.prototype.satirKonumDegistir = function (row, indexYon) {
-        var index = this.mac_rows.indexOf(row);
-        var eskiRowIndex = index;
-        var aktifRowIndex = index + indexYon;
-        if (aktifRowIndex >= this.mac_rows.length || aktifRowIndex == -1) {
-            alert("Bu işlemi gerçekleştiremezsiniz");
-            return;
-        }
-        var element = this.mac_rows[eskiRowIndex];
-        this.mac_rows.splice(index, 1);
-        this.mac_rows.splice(index + indexYon, 0, element);
-        var elementy = this.eklenenOyuncular[index];
-        this.eklenenOyuncular.splice(index, 1);
-        this.eklenenOyuncular.splice(index + indexYon, 0, elementy);
-        var sutunIndex1 = aktifRowIndex;
-        var sutunIndex2 = aktifRowIndex + 1;
-        if (indexYon == -1) {
-            sutunIndex1 = aktifRowIndex + 1 + 1;
-            sutunIndex2 = aktifRowIndex + 1;
-        }
-        this.mac_rows.forEach(function (m) {
-            var temp = m['C' + sutunIndex1].Skor;
-            m['C' + (sutunIndex1)].Skor = m['C' + (sutunIndex2)].Skor;
-            m['C' + (sutunIndex2)].Skor = temp;
-        });
-        for (var _i = 0, _a = this.mac_rows; _i < _a.length; _i++) {
-            var mac = _a[_i];
-            this.MacOncesiPuanGuncellendi(mac);
-        }
-    };
-    MacFoyComponent.prototype.BonusDegisti = function (_row) {
-        _row.MS_Puan = _row.MO_Puan + _row.AlinanTPuan + _row.BonusPuan;
-    };
-    MacFoyComponent.prototype.oyuncuEkleDegisti = function (_oyuncu) {
-        var ek_oyuncu = this.oyuncular.find(function (x) { return x.OyuncuAdSoyad == _oyuncu.OyuncuAdSoyad; });
-        var oncekiHafta = ek_oyuncu[(this.hafta - 1).toString()];
-        if (oncekiHafta == undefined || ek_oyuncu[(this.hafta - 1).toString()] == undefined) {
-            this.eklenecekOyuncu.BaslamaPuan = ek_oyuncu.BaslamaPuan;
-        }
-        else {
-            this.eklenecekOyuncu.BaslamaPuan = ek_oyuncu[(this.hafta - 1).toString()].ToplamPuan;
-        }
-    };
-    MacFoyComponent.prototype.oyuncuEkle = function (_oyuncu) {
-        if (this.grupluMu == true) {
-            var liste = this.grupElememanSayilari.split(',').map(function (x) { return parseInt(x); });
-            var listeBirikimli_1 = [];
-            var grup_inx = this.gruplar.indexOf(this.grup);
-            __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["a" /* Observable */].from(liste)
-                .scan(function (x, y) { return x + y; })
-                .subscribe(function (c) { return listeBirikimli_1.push(c); });
-            var baslangicIndex = grup_inx == 0 ? 0 : listeBirikimli_1[grup_inx - 1];
-            for (var i = baslangicIndex; i < listeBirikimli_1[grup_inx]; i++) {
-                var o = this.oyuncular[i];
-                var oncekiHaftaDurum = o[(this.hafta - 1).toString()];
-                if (oncekiHaftaDurum == undefined)
-                    oncekiHaftaDurum = { ToplamPuan: o.BaslamaPuan };
-                o.BaslamaPuan = oncekiHaftaDurum.ToplamPuan;
-                this.macaOyuncuEkle(o);
-            }
-        }
-        else {
-            this.macaOyuncuEkle(_oyuncu);
-        }
-    };
-    MacFoyComponent.prototype.macaOyuncuEkle = function (_oyuncu) {
-        var macSayisi = this.mac_rows.length + 1;
-        var mx = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["a" /* MacSatir */](this.grup, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan, null, null, null, null, null, null, null, null, null, true, 0);
-        this.mac_rows.push(mx);
+    MacFoyComponent.prototype.macFoyeTekOyuncuEkle = function (_oyuncu) {
+        var macSayisi = this.aktifMacFoy.Mac_Satirlari.length + 1;
+        this.aktifMacFoy.EklenenOyuncuAdlari.push(_oyuncu.OyuncuAdSoyad);
+        var mx = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["c" /* MacSatir */](this.grup, 1, _oyuncu.OyuncuAdSoyad, _oyuncu.BaslamaPuan, 0, _oyuncu.BaslamaPuan, null, null, null, null, null, null, null, null, null, true, 0);
+        this.aktifMacFoy.Mac_Satirlari.push(mx);
         for (var i = 1; i <= macSayisi; i++) {
-            mx["C" + i] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["d" /* SkorDetay */](_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
+            mx["C" + i] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["e" /* SkorDetay */](_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
         }
         var index = 0;
-        for (var _i = 0, _a = this.mac_rows; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.aktifMacFoy.Mac_Satirlari; _i < _a.length; _i++) {
             var mac = _a[_i];
             index = index + 1;
-            mac["C" + macSayisi] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["d" /* SkorDetay */](_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
+            mac["C" + macSayisi] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["e" /* SkorDetay */](_oyuncu.OyuncuAdSoyad, '__', 0, null, '');
             if (macSayisi == index)
                 mac["C" + macSayisi].Skor = 'X-X';
         }
-        this.eklenenOyuncular.push(_oyuncu);
-        this.eklenecekOyuncu = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["b" /* Oyuncu */]('', 0);
+        this.eklenecekOyuncu = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["d" /* Oyuncu */]('', 0);
     };
-    MacFoyComponent.prototype.MacSil = function (_row) {
-        var colIndex = this.mac_rows.indexOf(_row);
-        var colCount = this.mac_rows.length;
-        for (var _i = 0, _a = this.mac_rows; _i < _a.length; _i++) {
-            var row = _a[_i];
-            for (var i = colIndex + 1; i < colCount; i++) {
-                row["C" + i] = row["C" + (i + 1)];
-            }
-            row['C' + colCount] = null;
-        }
-        this.eklenenOyuncular.splice(colIndex, 1);
-        var _inx = 0;
-        this.mac_rows.splice(colIndex, 1);
-        this.SolTabloGuncelle();
-    };
-    MacFoyComponent.prototype.PuanTablosunuGuncelle = function (guncelDurumMu) {
-        var _this = this;
-        if (guncelDurumMu == false) {
-            this.PuanTabloItemList = new __WEBPACK_IMPORTED_MODULE_3_linqts_dist_linq__["List"](this.oyuncular)
-                .Select(function (o) { return new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["c" /* PuanTabloItem */](o.OyuncuAdSoyad, o[_this.hafta - 1].ToplamPuan, o[_this.hafta].AlinanPuan, o[_this.hafta].ToplamPuan, o.Grup, o.Dogum_Yili); })
-                .OrderByDescending(function (c) { return c.MO_Puan; })
-                .ThenBy(function (c) { return parseInt(c.Dogum_Yili.toString()); })
-                .ToArray();
-            return;
-        }
-        var GrupElemanSayilari = this.grupElememanSayilari.split(',')
-            .map(function (c) { return parseInt(c); });
-        var GrupElemanSayilariBirikimli = [];
-        var toplam = 0;
-        GrupElemanSayilari.forEach(function (x) {
-            toplam += x;
-            GrupElemanSayilariBirikimli.push(toplam);
-        });
-        this.PuanTabloItemList = new __WEBPACK_IMPORTED_MODULE_3_linqts_dist_linq__["List"](this.oyuncular)
-            .Select(function (o) { return new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["c" /* PuanTabloItem */](o.OyuncuAdSoyad, o[_this.hafta - 1].ToplamPuan, o[_this.hafta].AlinanPuan, o[_this.hafta].ToplamPuan, o.GuncelGrup, o.Dogum_Yili); })
-            .OrderByDescending(function (c) { return c.MS_Puan; })
-            .ThenBy(function (c) { return parseInt(c.Dogum_Yili.toString()); })
-            .ToArray();
-        console.log(this.PuanTabloItemList);
-        var sayi = 0;
-        for (var i = 0; i < this.PuanTabloItemList.length; i++) {
-            for (var j = 0; j < GrupElemanSayilariBirikimli.length; j++) {
-                if (i < GrupElemanSayilariBirikimli[j]) {
-                    this.PuanTabloItemList[i].Grup = this.gruplar[j];
-                    break;
-                }
-            }
-        }
-        var oyuncuRef = this.af.list(this.oyuncularPath).snapshotChanges()
-            .map(function (changes) {
-            return changes.map(function (c) { return (__assign({ key: c.payload.key }, c.payload.val())); });
-        });
-        var _loop_3 = function (PuanTabloItem_1) {
-            var _oyuncu = this_3.oyuncular.find(function (x) { return x.OyuncuAdSoyad == PuanTabloItem_1.OyuncuAdSoyad; });
-            u = _oyuncu["$key"];
-            this_3.af.object(this_3.oyuncularPath + '/' + _oyuncu["$key"] + '/' + this_3.hafta).update({
-                GuncelGrup: PuanTabloItem_1.Grup
-            });
-        };
-        var this_3 = this, u;
-        for (var _i = 0, _a = this.PuanTabloItemList; _i < _a.length; _i++) {
-            var PuanTabloItem_1 = _a[_i];
-            _loop_3(PuanTabloItem_1);
-        }
-    };
-    MacFoyComponent.prototype.MacaGelmedi = function (_row) {
-        var inx = 0;
-        if (_row.VarMi == false) {
-            _row.VarMi = true;
-            for (var _i = 0, _a = this.eklenenOyuncular; _i < _a.length; _i++) {
-                var _oy = _a[_i];
-                inx++;
-                if (_row['C' + inx].Skor != 'X-X') {
-                    _row['C' + inx].Aciklama = "";
-                    _row['C' + inx].Skor = "__";
-                }
-                this.TabloyuGuncelle(_row, inx);
-            }
-            return;
-        }
-        _row.VarMi = false;
-        var satirIndex = this.mac_rows.indexOf(_row);
-        for (var _b = 0, _c = this.eklenenOyuncular; _b < _c.length; _b++) {
-            var _oy = _c[_b];
-            inx++;
-            if (_row['C' + inx].Skor != 'X-X') {
-                _row['C' + inx].Skor = '1-3';
-                if (_row.VarMi == false && this.mac_rows[inx - 1].VarMi == false) {
-                    _row['C' + (inx)].Skor = "(1-3)";
-                    _row['C' + (inx)].Aciklama = "K.H.";
-                    this.mac_rows[inx - 1]["C" + (satirIndex + 1)].Aciklama = "K.H.";
-                }
-                this.TabloyuGuncelle(_row, inx);
-            }
-        }
-        _row.VarMi = false;
-    };
-    MacFoyComponent.prototype.MacOncesiPuanGuncellendi = function (selectedRow) {
-        var aktifRowIndex = this.mac_rows.indexOf(selectedRow);
-        var caprazSutun = 'C' + (aktifRowIndex + 1).toString();
-        for (var _i = 0, _a = this.mac_rows; _i < _a.length; _i++) {
-            var _row = _a[_i];
-            this.TabloyuGuncelle(_row, aktifRowIndex + 1);
-        }
-    };
-    MacFoyComponent.prototype.TabloyuGuncelle = function (selectedRow, aktifSutunKey) {
-        var aktifRowIndex = this.mac_rows.indexOf(selectedRow);
-        var caprazRow = this.mac_rows[aktifSutunKey - 1];
-        var caprazRowIndex = this.mac_rows.indexOf(caprazRow);
+    MacFoyComponent.prototype.macFoySkorlariGuncelle = function (selectedRow, aktifSutunKey) {
+        var aktifRowIndex = this.aktifMacFoy.Mac_Satirlari.indexOf(selectedRow);
+        var caprazRow = this.aktifMacFoy.Mac_Satirlari[aktifSutunKey - 1];
+        var caprazRowIndex = this.aktifMacFoy.Mac_Satirlari.indexOf(caprazRow);
         var caprazSutun = 'C' + (aktifRowIndex + 1).toString();
         var aktifSutun = 'C' + aktifSutunKey.toString();
         var skor = selectedRow[aktifSutun].Skor;
         var karsilikliHukmenMi = skor.indexOf('(') >= 0;
         skor = skor.replace('(', '').replace(')', '');
-        var puan = this.reytingServis.hesapla(selectedRow.MO_Puan, caprazRow.MO_Puan, skor);
-        var puan_capraz = this.reytingServis.hesapla(caprazRow.MO_Puan, selectedRow.MO_Puan, skor);
+        var puan = this.macFoyServis.hesapla(selectedRow.MO_Puan, caprazRow.MO_Puan, skor);
+        var puan_capraz = this.macFoyServis.hesapla(caprazRow.MO_Puan, selectedRow.MO_Puan, skor);
         selectedRow[aktifSutun].Puan = puan;
         if (karsilikliHukmenMi) {
-            caprazRow[caprazSutun] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["d" /* SkorDetay */]('xx', '(' + skor.toString() + ')', puan_capraz, ' background-color: yellow;', "K.H.");
+            caprazRow[caprazSutun] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["e" /* SkorDetay */]('xx', '(' + skor.toString() + ')', puan_capraz, ' background-color: yellow;', "K.H.");
         }
         else {
-            caprazRow[caprazSutun] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["d" /* SkorDetay */]('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;', "");
+            caprazRow[caprazSutun] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["e" /* SkorDetay */]('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;', "");
         }
-        this.SolTabloGuncelle();
+        this.macFoySolGuncelle();
     };
-    MacFoyComponent.prototype.SolTabloGuncelle = function () {
+    MacFoyComponent.prototype.macFoySolGuncelle = function () {
         var alinanPuan = 0;
         var oyuncuInx = 0;
-        for (var _i = 0, _a = this.mac_rows; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.aktifMacFoy.Mac_Satirlari; _i < _a.length; _i++) {
             var _row = _a[_i];
             var alinanPuan_1 = 0;
             oyuncuInx = 0;
-            for (var _b = 0, _c = this.eklenenOyuncular; _b < _c.length; _b++) {
+            for (var _b = 0, _c = this.aktifMacFoy.EklenenOyuncuAdlari; _b < _c.length; _b++) {
                 var _col = _c[_b];
                 oyuncuInx++;
                 alinanPuan_1 = alinanPuan_1 + _row['C' + oyuncuInx].Puan;
@@ -988,6 +827,103 @@ var MacFoyComponent = (function () {
         var items = s.split('-');
         return items[1] + '-' + items[0];
     };
+    MacFoyComponent.prototype.kaydet = function () {
+        var _this = this;
+        var dialogRef = this._dialog.open(DialogContent, { width: '400px', height: '200px' });
+        var _macFoyPath = this.macfoyPath;
+        var _aktifMacFoy = this.aktifMacFoy;
+        dialogRef.afterClosed().subscribe(function (result) {
+            if (result == 'Ok') {
+                _this.af.object(_macFoyPath).set(_aktifMacFoy);
+                var listOyuncu = new __WEBPACK_IMPORTED_MODULE_3_linqts_dist_linq__["List"](_this.aktifOyuncular);
+                var oyuncularHaftaRef = _this.af.list(_this.oyuncularPath);
+                var _loop_1 = function (row) {
+                    {
+                        oyuncu = listOyuncu.Where(function (c) { return c.OyuncuAdSoyad == row.OyuncuAdSoyad; }).First();
+                        if (oyuncu.Haftalar === undefined)
+                            oyuncu.Haftalar = [];
+                        oyuncu.Haftalar[_this.hafta] = new __WEBPACK_IMPORTED_MODULE_5__Models_entityAll__["a" /* HaftaPuan */](row.MO_Puan, row.AlinanTPuan, row.MS_Puan);
+                        oyuncularHaftaRef.update(oyuncu["key"], oyuncu);
+                    }
+                };
+                var oyuncu;
+                for (var _i = 0, _a = _this.aktifMacFoy.Mac_Satirlari; _i < _a.length; _i++) {
+                    var row = _a[_i];
+                    _loop_1(row);
+                }
+                _this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
+            }
+            ;
+        });
+    };
+    MacFoyComponent.prototype.grupDegisti = function (grupAd) {
+        this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
+    };
+    MacFoyComponent.prototype.haftaDegisti = function (haftaAd) {
+        this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
+    };
+    MacFoyComponent.prototype.MacSil = function (_row) {
+        var colIndex = this.aktifMacFoy.Mac_Satirlari.indexOf(_row);
+        var colCount = this.aktifMacFoy.Mac_Satirlari.length;
+        for (var _i = 0, _a = this.aktifMacFoy.Mac_Satirlari; _i < _a.length; _i++) {
+            var row = _a[_i];
+            for (var i = colIndex + 1; i < colCount; i++) {
+                row["C" + i] = row["C" + (i + 1)];
+            }
+            row['C' + colCount] = null;
+        }
+        this.aktifMacFoy.EklenenOyuncuAdlari.splice(colIndex, 1);
+        var _inx = 0;
+        this.aktifMacFoy.Mac_Satirlari.splice(colIndex, 1);
+    };
+    MacFoyComponent.prototype.satirKonumDegistir = function (row, indexYon) {
+        var index = this.aktifMacFoy.Mac_Satirlari.indexOf(row);
+        var eskiRowIndex = index;
+        var aktifRowIndex = index + indexYon;
+        if (aktifRowIndex >= this.aktifMacFoy.Mac_Satirlari.length || aktifRowIndex == -1) {
+            alert("Bu işlemi gerçekleştiremezsiniz");
+            return;
+        }
+        var element = this.aktifMacFoy.Mac_Satirlari[eskiRowIndex];
+        this.aktifMacFoy.Mac_Satirlari.splice(index, 1);
+        this.aktifMacFoy.Mac_Satirlari.splice(index + indexYon, 0, element);
+        var elementy = this.aktifMacFoy.EklenenOyuncuAdlari[index];
+        this.aktifMacFoy.EklenenOyuncuAdlari.splice(index, 1);
+        this.aktifMacFoy.EklenenOyuncuAdlari.splice(index + indexYon, 0, elementy);
+        var sutunIndex1 = aktifRowIndex;
+        var sutunIndex2 = aktifRowIndex + 1;
+        if (indexYon == -1) {
+            sutunIndex1 = aktifRowIndex + 1 + 1;
+            sutunIndex2 = aktifRowIndex + 1;
+        }
+        this.aktifMacFoy.EklenenOyuncuAdlari.forEach(function (m) {
+            var temp = m['C' + sutunIndex1].Skor;
+            m['C' + (sutunIndex1)].Skor = m['C' + (sutunIndex2)].Skor;
+            m['C' + (sutunIndex2)].Skor = temp;
+        });
+        for (var _i = 0, _a = this.aktifMacFoy.Mac_Satirlari; _i < _a.length; _i++) {
+            var mac = _a[_i];
+            this.MacOncesiPuanGuncellendi(mac);
+        }
+    };
+    MacFoyComponent.prototype.MacOncesiPuanGuncellendi = function (selectedRow) {
+        var aktifRowIndex = this.aktifMacFoy.Mac_Satirlari.indexOf(selectedRow);
+        var caprazSutun = 'C' + (aktifRowIndex + 1).toString();
+        for (var _i = 0, _a = this.aktifMacFoy.Mac_Satirlari; _i < _a.length; _i++) {
+            var _row = _a[_i];
+            this.macFoySkorlariGuncelle(_row, aktifRowIndex + 1);
+        }
+    };
+    MacFoyComponent.prototype.eklenecekOyuncu_Degisti = function (_oyuncu) {
+        var ek_oyuncu = this.aktifOyuncular.find(function (x) { return x.OyuncuAdSoyad == _oyuncu.OyuncuAdSoyad; });
+        var oncekiHafta = ek_oyuncu[(this.hafta - 1).toString()];
+        if (oncekiHafta == undefined || ek_oyuncu[(this.hafta - 1).toString()] == undefined) {
+            this.eklenecekOyuncu.BaslamaPuan = ek_oyuncu.BaslamaPuan;
+        }
+        else {
+            this.eklenecekOyuncu.BaslamaPuan = ek_oyuncu[(this.hafta - 1).toString()].ToplamPuan;
+        }
+    };
     MacFoyComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-mac-foy',
@@ -999,7 +935,8 @@ var MacFoyComponent = (function () {
             __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_12__angular_material__["h" /* MatDialog */],
             __WEBPACK_IMPORTED_MODULE_12__angular_material__["z" /* MatSnackBar */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */]])
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]])
     ], MacFoyComponent);
     return MacFoyComponent;
 }());
@@ -1190,6 +1127,10 @@ var MacFoyService = (function () {
         }
         return 0;
     };
+    MacFoyService.prototype.parseDateDMY = function (input) {
+        var parts = input.split('.');
+        return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+    };
     MacFoyService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
         __metadata("design:paramtypes", [])
@@ -1327,9 +1268,9 @@ var OyuncuListComponent = (function () {
     ;
     OyuncuListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.activatedRoute.params.subscribe(function (params) { return _this.club = params.club; });
+        this.activatedRoute.params.subscribe(function (params) { return _this.klup = params.klup; });
         this.activatedRoute.params.subscribe(function (params) { return _this.yil = params.yil; });
-        this.oyuncularRef = this.af.list("/" + this.club + "/" + this.yil + "/Oyuncular/");
+        this.oyuncularRef = this.af.list("/" + this.klup + "/" + this.yil + "/Oyuncular/");
         this.oyuncular = this.oyuncularRef.snapshotChanges().map(function (changes) {
             return changes.map(function (c) { return (__assign({ key: c.payload.key }, c.payload.val())); });
         });
@@ -1343,7 +1284,7 @@ var OyuncuListComponent = (function () {
         var d = new Date();
         var d1 = new Date();
         d1.setFullYear(2020);
-        this.eklenecek_oyuncu = new __WEBPACK_IMPORTED_MODULE_3__Models_entityAll__["b" /* Oyuncu */](" ", 1500, d.toLocaleDateString(), d1.toLocaleDateString(), 'A', 1970);
+        this.eklenecek_oyuncu = new __WEBPACK_IMPORTED_MODULE_3__Models_entityAll__["d" /* Oyuncu */](" ", 1500, d.toLocaleDateString(), d1.toLocaleDateString(), 'A', 1970);
     };
     OyuncuListComponent.prototype.OyuncuSil = function (key) {
         this.oyuncularRef.remove(key);
