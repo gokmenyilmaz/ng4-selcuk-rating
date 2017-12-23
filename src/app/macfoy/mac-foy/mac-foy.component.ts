@@ -463,9 +463,9 @@ export class MacFoyComponent implements OnInit {
 
         })
 
-        for (let mac of this.aktifMacFoy.Mac_Satirlari) {
-            this.MacOncesiPuanGuncellendi(mac);
-        }
+        // for (let mac of this.aktifMacFoy.Mac_Satirlari) {
+        //     this.MacOncesiPuanGuncellendi(mac);
+        // }
 
     }
 
