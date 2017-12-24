@@ -66,7 +66,7 @@ export class MacFoyComponent implements OnInit {
     subscription: any;
 
     klup: string;
-    yil: number;
+    donem: string;
 
     hafta: number;
 
@@ -103,7 +103,7 @@ export class MacFoyComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => this.klup = params.klup);
 
         this.activatedRoute.params.subscribe(params =>
-            this.yil = parseInt(params.yil)
+            this.donem = params.donem
         );
 
         this.activatedRoute.params.subscribe(params => this.grup = params.grup);
@@ -119,9 +119,9 @@ export class MacFoyComponent implements OnInit {
 
     async macFoyuYukle() {
 
-        this.pageBaseRooting=`/${this.klup}/${this.yil}/macfoy`;
+        this.pageBaseRooting=`/${this.klup}/${this.donem}/macfoy`;
         this.macfoyPath = this.pageBaseRooting + `/${this.hafta}/${this.grup}`;
-        this.oyuncularPath = `/${this.klup}/${this.yil}/Oyuncular`;
+        this.oyuncularPath = `/${this.klup}/${this.donem}/Oyuncular`;
 
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
       

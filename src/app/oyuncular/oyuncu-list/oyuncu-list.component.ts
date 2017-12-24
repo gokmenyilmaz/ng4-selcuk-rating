@@ -30,7 +30,7 @@ export class OyuncuListComponent implements OnInit {
   eklenecek_oyuncu: Oyuncu = null;
 
   klup: string;
-  yil: number;
+  donem: string;
 
   constructor(private af: AngularFireDatabase, private activatedRoute: ActivatedRoute) {
 
@@ -39,9 +39,9 @@ export class OyuncuListComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => this.klup = params.klup);
-    this.activatedRoute.params.subscribe((params) => this.yil = params.yil);
+    this.activatedRoute.params.subscribe((params) => this.donem = params.donem);
 
-    this.oyuncularRef = this.af.list<Oyuncu>(`/${this.klup}/${this.yil}/Oyuncular/`);
+    this.oyuncularRef = this.af.list<Oyuncu>(`/${this.klup}/${this.donem}/Oyuncular/`);
 
     this.oyuncular = this.oyuncularRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
@@ -69,9 +69,9 @@ export class OyuncuListComponent implements OnInit {
     var d = new Date();
     var d1 = new Date(); d1.setFullYear(2020);
 
-    this.eklenecek_oyuncu = new Oyuncu(" ",this.eklenecek_oyuncu.BaslamaPuan, 
+    this.eklenecek_oyuncu = new Oyuncu(" ",1500, 
                           d.toLocaleDateString(), d1.toLocaleDateString(), 'A', 1970,
-                          [ new HaftaPuan(this.eklenecek_oyuncu.BaslamaPuan,0,this.eklenecek_oyuncu.BaslamaPuan)])
+                          [ new HaftaPuan(1500,0,1500)])
 
   }
 
