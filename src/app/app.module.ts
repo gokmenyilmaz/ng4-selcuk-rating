@@ -27,6 +27,7 @@ import { MacfoyModule } from "./macfoy/macfoy.module";
     HttpModule,
     CoreModule,
     AppRoutingModule,
+  
 
     SharedModule,
    

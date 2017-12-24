@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
+
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -44,6 +45,7 @@ import {
   imports: [
     CommonModule,
     FormsModule,
+    FlexLayoutModule,
 
   MatAutocompleteModule,
   MatButtonModule,
@@ -82,6 +84,7 @@ import {
   exports:[
     CommonModule,
     FormsModule,
+    FlexLayoutModule,
   
   MatAutocompleteModule,
   MatButtonModule,
