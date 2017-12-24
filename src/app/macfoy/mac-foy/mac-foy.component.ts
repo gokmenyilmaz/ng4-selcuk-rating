@@ -210,8 +210,8 @@ export class MacFoyComponent implements OnInit {
                         .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi &&
                                     this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
                         .Select(o=>{o.Haftalar=o.Haftalar==undefined?
-                            [ new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan)]:o.Haftalar;return o})
-                        .OrderByDescending(o=>o.Haftalar[hafta])
+                            [ new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan)]:o.Haftalar;  return o})
+                        .OrderByDescending(o=>o.Haftalar[hafta].ToplamPuan)
                         .ThenBy(o=>this.padLeft( o.Dogum_Yili.toString(),4))
                         .ToArray();
                   
@@ -248,12 +248,10 @@ export class MacFoyComponent implements OnInit {
 
             var puanSirali=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta,this.aktifMacFoy.Tarih)
          
-
-
             for (var i = baslangicIndex; i < listeBirikimli[grup_inx]; i++) {
                 var o = puanSirali[i]
 
-                var oncekiHaftaDurum = o[(this.hafta - 1).toString()];
+                var oncekiHaftaDurum = o.Haftalar[(this.hafta - 1).toString()];
                 if (oncekiHaftaDurum == undefined) oncekiHaftaDurum = { ToplamPuan: o.BaslamaPuan };
 
                 o.BaslamaPuan = oncekiHaftaDurum.ToplamPuan;
