@@ -8,7 +8,9 @@ export class Oyuncu {
         public Dogum_Yili?: number,
         public Haftalar?:HaftaPuan[]
     )
-    { }
+    { 
+       
+    }
 }
 
 export class HaftaPuan {
