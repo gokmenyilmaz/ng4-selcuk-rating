@@ -48,24 +48,30 @@ export class OyuncuListComponent implements OnInit {
     });
 
 
-    this.OyuncuVarsayilanDegerler();
+    this.YeniOyuncuOlustur();
 
   }
 
   OyuncuEkle() {
+
+    this.eklenecek_oyuncu.Haftalar[0].AlinanTPuan=0;
+    this.eklenecek_oyuncu.Haftalar[0].MacOncesiPuan=this.eklenecek_oyuncu.BaslamaPuan;
+    this.eklenecek_oyuncu.Haftalar[0].ToplamPuan=this.eklenecek_oyuncu.BaslamaPuan;
+
     this.oyuncularRef.push(this.eklenecek_oyuncu);
 
-    this.OyuncuVarsayilanDegerler();
+    this.YeniOyuncuOlustur();
 
   }
 
 
-  OyuncuVarsayilanDegerler() {
+  YeniOyuncuOlustur() {
     var d = new Date();
     var d1 = new Date(); d1.setFullYear(2020);
 
-    this.eklenecek_oyuncu = new Oyuncu(" ", 1500, d.toLocaleDateString(), d1.toLocaleDateString(), 'A', 1970,
-     [ new HaftaPuan(0,0,0)])
+    this.eklenecek_oyuncu = new Oyuncu(" ",this.eklenecek_oyuncu.BaslamaPuan, 
+                          d.toLocaleDateString(), d1.toLocaleDateString(), 'A', 1970,
+                          [ new HaftaPuan(this.eklenecek_oyuncu.BaslamaPuan,0,this.eklenecek_oyuncu.BaslamaPuan)])
 
   }
 
@@ -77,6 +83,7 @@ export class OyuncuListComponent implements OnInit {
 
   OyuncuGuncelle(key:string,oyuncu:Oyuncu)
   {
+    
     this.oyuncularRef.update(key,oyuncu);
   }
 
