@@ -535,7 +535,52 @@ export class MacFoyComponent implements OnInit {
         else {
             this.eklenecekOyuncu.BaslamaPuan = ek_oyuncu[(this.hafta - 1).toString()].ToplamPuan;
         }
-    }}
+    }
+
+    BonusDegisti(_row: MacSatir) {
+
+        _row.MS_Puan = _row.MO_Puan + _row.AlinanTPuan + _row.BonusPuan;
+    }
+
+
+    async PuanTablosunuGuncelle(guncelDurumMu: boolean) {
+
+        
+        var puanSiraliListe=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta,this.grupMacTarih);
+
+
+        let GrupElemanSayilari: number[] = this.grupElememanSayilari.split(',')
+            .map(c => { return parseInt(c) })
+
+        let GrupElemanSayilariBirikimli: number[] = []
+
+        let toplam: number = 0;
+        GrupElemanSayilari.forEach(x => {
+            toplam += x;
+            GrupElemanSayilariBirikimli.push(toplam);
+        })
+
+        this.PuanTabloItemList = new List<any>(puanSiraliListe)
+            .Select(o => new PuanTabloItem(o.OyuncuAdSoyad, o.Haftalar[this.hafta-1].MacOncesiPuan,
+                o.Haftalar[this.hafta].AlinanTPuan, o.Haftalar[this.hafta].ToplamPuan, o.GuncelGrup, o.Dogum_Yili))
+                .OrderByDescending(c=>c.MS_Puan)
+             .ToArray();
+
+      
+        var sayi = 0;
+        for (var i = 0; i < this.PuanTabloItemList.length; i++) {
+
+            for (var j = 0; j < GrupElemanSayilariBirikimli.length; j++) {
+                if (i < GrupElemanSayilariBirikimli[j]) {
+                    this.PuanTabloItemList[i].Grup = this.gruplar[j];
+                    break;
+                }
+            }
+
+        }
+    }
+
+}
 
     
 
