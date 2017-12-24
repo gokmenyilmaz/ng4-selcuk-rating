@@ -397,7 +397,7 @@ export class MacFoyComponent implements OnInit {
         this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
     }
 
-    haftaDegisti(haftaAd:number) {
+    haftaDegisti() {
 
         this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
     }
@@ -542,6 +542,12 @@ export class MacFoyComponent implements OnInit {
         _row.MS_Puan = _row.MO_Puan + _row.AlinanTPuan + _row.BonusPuan;
     }
 
+
+    async mactarihiDegisti() {
+        if (this.grupMacTarih.length == 10) {
+            this.aktifOyuncular=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta,this.grupMacTarih);
+        }
+    }
 
     async PuanTablosunuGuncelle(guncelDurumMu: boolean) {
 
