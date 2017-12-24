@@ -15,6 +15,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
+import {OyuncuListComponent } from '../../oyuncular/oyuncu-list/oyuncu-list.component'
+
 
 //import {Observable} from 'rxjs/Rx' 
 import { Observable } from 'rxjs/Observable'
@@ -53,13 +55,12 @@ export class MacFoyComponent implements OnInit {
 
     haftalar: number[] = [];
 
-    grupluMu: boolean = true;
     gruplar: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
     grupElememanSayilari = "6,6,6,6";
 
     form: FormGroup;
 
-    ciktiModu: boolean = false;
+    gelismisMod: boolean = false;
 
     puanTabloGenislik: number = 100;
     Count: number;
@@ -73,7 +74,7 @@ export class MacFoyComponent implements OnInit {
     macfoyPath: string;
     oyuncularPath: string;
 
-    pageBaseRooting:string;
+    macfoyBasePath:string;
 
     PuanTabloItemList:PuanTabloItem[];
 
@@ -92,41 +93,46 @@ export class MacFoyComponent implements OnInit {
 
     degisiklikVarMi(): boolean {
         return true;
+
+       
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+
+       
 
         this.puanTabloGenislik = 100;
 
         this.eklenecekOyuncu = new Oyuncu('', 0, null, null);
 
-        this.activatedRoute.params.subscribe(params => this.klup = params.klup);
-
-        this.activatedRoute.params.subscribe(params =>
-            this.donem = params.donem
-        );
-
-        this.activatedRoute.params.subscribe(params => this.grup = params.grup);
+      
 
         this.activatedRoute.params.subscribe(params => {
+            this.klup = params.klup;
+            this.donem = params.donem;
+
+            this.grup = params.grup
             this.hafta = parseInt(params.hafta);
-            
+
+            if(params["hafta"]===undefined)
+            {
+                this.hafta=1;
+                this.grup="A";
+            }
+
+            this.macfoyBasePath=`/${this.klup}/${this.donem}/macfoy`;
+            this.macfoyPath = this.macfoyBasePath + `/${this.hafta}/${this.grup}`;
+            this.oyuncularPath = `/${this.klup}/${this.donem}/Oyuncular`;
+
             this.macFoyuYukle();
-        }
-        );
+        });
 
     }
 
     async macFoyuYukle() {
 
-        this.pageBaseRooting=`/${this.klup}/${this.donem}/macfoy`;
-        this.macfoyPath = this.pageBaseRooting + `/${this.hafta}/${this.grup}`;
-        this.oyuncularPath = `/${this.klup}/${this.donem}/Oyuncular`;
-
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
       
-
-
         var _aktifMacFoy=await this.MacFoyuGetir();
 
         if(_aktifMacFoy==null)
@@ -196,6 +202,19 @@ export class MacFoyComponent implements OnInit {
         });
     }
 
+    async MacFoySonHaftaGetir()
+    {
+        return new Promise<number>(resolve=> {
+            this.af.list<MacFoy>(this.macfoyBasePath)
+                   .snapshotChanges()
+                   .subscribe(p =>{ 
+                     
+                   return resolve(p.length-1)
+           
+                });
+
+        });
+    }
 
     PuanSiraliOyunculariGetirHaftadan(hafta:number, Tarih:string): Promise<Oyuncu[]> {
 
@@ -231,9 +250,9 @@ export class MacFoyComponent implements OnInit {
     }
 
 
-    async macFoyeOyuncuEkle(_oyuncu: Oyuncu) {
+    async macFoyeOyuncuEkle(_oyuncu: Oyuncu, _grupMu:boolean) {
 
-        if (this.grupluMu == true) {
+        if (_grupMu == true) {
             let liste: number[] = this.grupElememanSayilari.split(',').map(x => { return parseInt(x) });
 
             let listeBirikimli: number[] = [];
@@ -394,12 +413,12 @@ export class MacFoyComponent implements OnInit {
 
     grupDegisti() {
 
-        this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
+        this._router.navigateByUrl(this.macfoyBasePath + "/" + this.hafta + "/" + this.grup);
     }
 
     haftaDegisti() {
 
-        this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
+        this._router.navigateByUrl(this.macfoyBasePath + "/" + this.hafta + "/" + this.grup);
     }
 
     MacSil(_row: MacSatir) {

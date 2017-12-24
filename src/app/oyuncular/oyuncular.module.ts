@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from "app/shared/shared.module";
 import { CommonModule } from '@angular/common';
 import { OyuncuListComponent } from "app/oyuncular/oyuncu-list/oyuncu-list.component";
-import { OyuncuEditComponent } from './oyuncu-edit/oyuncu-edit.component';
 import { OyuncuService } from "./oyuncu-service.service";
 
 
@@ -10,8 +9,8 @@ import { OyuncuService } from "./oyuncu-service.service";
   imports: [
     CommonModule,SharedModule 
   ],
-  declarations: [OyuncuListComponent, OyuncuEditComponent],
-  exports:[OyuncuListComponent,OyuncuEditComponent],
+  declarations: [OyuncuListComponent],
+  exports:[OyuncuListComponent],
   providers:[OyuncuService]
 })
 export class OyuncularModule { }

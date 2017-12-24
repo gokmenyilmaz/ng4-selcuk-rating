@@ -3,8 +3,9 @@ import { SharedModule } from "app/shared/shared.module";
 import { CommonModule } from '@angular/common';
 import { MacFoyComponent,DialogContent } from './mac-foy/mac-foy.component';
 import { MacFoyService } from "./macfoy.service";
+import {OyuncuListComponent } from '../oyuncular/oyuncu-list/oyuncu-list.component'
 
-
+import {OyuncularModule} from '../oyuncular/oyuncular.module'
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
@@ -22,6 +23,7 @@ export const config = {
   imports: [
     CommonModule,
     SharedModule,
+    OyuncularModule,
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
   ],

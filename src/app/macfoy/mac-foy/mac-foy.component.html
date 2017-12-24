@@ -1,10 +1,10 @@
 <mat-card>
 
     <mat-tab-group focusChange="alert('gruplu')">
-        <mat-tab label="Otomatik Grup Oluştur">
+        <mat-tab>
 
             <ng-template mat-tab-label>
-                <span (click)="grupluMu=1">Otomatik Grup Oluştur</span>
+                <span (click)="grupluMu=1">Gruplar</span>
             </ng-template>
 
             <mat-grid-list cols="6" rowHeight="2:1">
@@ -39,24 +39,18 @@
 
                 <mat-grid-tile colspan="2">
                     <mat-card>
-                        <button mat-raised-button color="primary" (click)="macFoyeOyuncuEkle(eklenecekOyuncu)">
-                            <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
+                        <mat-slide-toggle [(ngModel)]='gelismisMod' class="example-margin">Gelişmiş</mat-slide-toggle>
+                        <button mat-raised-button color="primary" (click)="macFoyeOyuncuEkle(eklenecekOyuncu,true)">
+                            <span >{{grup}}'yı </span> Ekle
                         </button>
                         <button mat-raised-button color="primary" (click)="kaydet()">kaydet</button>
+                       
                     </mat-card>
                 </mat-grid-tile>
 
             </mat-grid-list>
 
-        </mat-tab>
-        <mat-tab label="İsteğe Bağlı Oyuncu Ekle">
-
-            <ng-template mat-tab-label>
-                <span (click)="grupluMu=0">İsteğe Bağlı Grup Oluştur</span>
-            </ng-template>
-
-
-            <mat-grid-list cols="4">
+            <mat-grid-list *ngIf="gelismisMod" cols="4">
                 <mat-card>
 
                     <mat-select style="width:150px;display: inline-block" placeholder="Oyuncu Seçiniz" [(ngModel)]='eklenecekOyuncu.OyuncuAdSoyad'
@@ -66,23 +60,136 @@
                     </mat-select>
 
                     <mat-input-container mat-no-float style="width:150px;display: inline-block">
-                        <input matInput style="text-align:right" placeholder="Puan" type="number" (keyup.enter)="macFoyeOyuncuEkle(eklenecekOyuncu)"
+                        <input matInput style="text-align:right" placeholder="Puan" type="number" (keyup.enter)="grupluMu=false;macFoyeOyuncuEkle(eklenecekOyuncu,false)"
                             [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
                     </mat-input-container>
 
-
-                    <button mat-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="macFoyeOyuncuEkle(eklenecekOyuncu)">
-                        <span *ngIf="grupluMu">{{grup}}'yı </span> Ekle
+                    <button mat-raised-button style="width:100px" color="primary" class="btn btn-success" (click)="macFoyeOyuncuEkle(eklenecekOyuncu,false)">
+                        Ekle
                     </button>
 
-                    <mat-slide-toggle [(ngModel)]='ciktiModu' class="example-margin">Gelişmiş</mat-slide-toggle>
 
                 </mat-card>
 
 
             </mat-grid-list>
 
+            <div id="skortablo-container" class="row">
+                    <table id="skortablo" rules="all" frame="border" class="table table-bordered table-hover table-condensed table-striped">
+                        <caption>
+            
+                        </caption>
+            
+                        <thead>
+                            <tr>
+                                <th class="grup1-oyuncu">{{grup}} Grubu
+                                    <br>{{grupMacTarih}}-{{hafta}} </th>
+                                <th class="grup1-mopuan">Maç Ö.Puan</th>
+                                <th class="grup1-apuan">Alınan TPuan</th>
+                                <th class="grup1-bonus" [hidden]='!gelismisMod'>Bonus Puan</th>
+            
+            
+                                <th style="border-right:6px double black;" class="grup1-mspuan">Maç S.Puan</th>
+            
+                                <th class="skor" *ngFor='let oyuncuAdSoyad of aktifMacFoy?.EklenenOyuncuAdlari'>
+                                    {{oyuncuAdSoyad }}
+                                </th>
+            
+                            </tr>
+                        </thead>
+            
+            
+                        <tbody>
+                            <tr *ngFor="let row of aktifMacFoy?.Mac_Satirlari;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
+            
+                                <td>
+                                    <div>
+            
+                                        <button style="width:95%;margin:auto" type="button" [matMenuTriggerFor]="appMenu">
+                                            <div style="display:flex;align-items:center;justify-content:space-between">
+                                                <label> {{row.OyuncuAdSoyad}}</label>
+                                                <mat-icon style="align-self: flex-end">more_vert</mat-icon>
+                                            </div>
+            
+                                        </button>
+            
+                                        <mat-menu #appMenu="matMenu">
+                                            <button mat-menu-item (click)="MacaGelmedi(row)">
+                                                <span *ngIf='row.VarMi==false'>Maça Geldi</span>
+                                                <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
+                                            </button>
+                                            <button (click)="MacSil(row)" mat-menu-item> Listeden Kaldır </button>
+                                            <button mat-menu-item (click)="satirKonumDegistir(row,-1)"> Yukarı Hareket </button>
+                                            <button mat-menu-item (click)="satirKonumDegistir(row,1)"> Aşağı Hareket </button>
+                                        </mat-menu>
+                                    </div>
+            
+                                </td>
+            
+                                <td>
+                                    <mat-input-container>
+                                        <input matInput type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)" />
+                                    </mat-input-container>
+            
+            
+                                </td>
+            
+                                <td>
+                                    <div>{{row.AlinanTPuan}}</div>
+                                </td>
+            
+                                <td [hidden]='!gelismisMod'>
+                                    <mat-input-container>
+                                        <input matInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
+                                    </mat-input-container>
+                                </td>
+            
+                                <td style="border-right:6px double black;">
+                                    <span type="number">{{row.MS_Puan}}</span>
+                                    <div class="glyphicon" [ngClass]="{'glyphicon-arrow-up text-success': row.AlinanTPuan > 0,'glyphicon-arrow-down text-danger':row.AlinanTPuan < 0,'glyphicon-option-horizontal text-muted': row.AlinanTPuan == 0}">
+            
+                                    </div>
+                                </td>
+            
+                                <td *ngFor="let oyuncu of aktifMacFoy?.EklenenOyuncuAdlari;let inx=index" [class.sari]="aktifMacFoy?.Mac_Satirlari[inx].VarMi!==true">
+                                    <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
+            
+            
+                                        <mat-select class="no-underline" [(ngModel)]="row['C' + (inx+1)].Skor" (ngModelChange)='macFoySkorlariGuncelle(row,(inx+1))'>
+                                            <mat-option value="__">__</mat-option>
+                                            <mat-option value="4-0">4-0</mat-option>
+                                            <mat-option value="3-1">3-1</mat-option>
+                                            <mat-option value="2-2">2-2</mat-option>
+                                            <mat-option value="1-3">1-3</mat-option>
+                                            <mat-option value="0-4">0-4</mat-option>
+                                            <mat-option value="(1-3)">*1-3</mat-option>
+                                            <mat-option value="X-X">X-X</mat-option>
+                                        </mat-select>
+                                        <span class="label pull-right" [ngClass]="{'label-success':row['C' + (inx+1)].Puan>=0,'label-danger':row['C' + (inx+1)].Puan<0 }">{{row['C' + (inx+1)].Puan}}</span>
+                                        <span class="label label-info pull-left">{{row['C' + (inx+1)].Aciklama}}</span>
+            
+            
+                                    </div>
+            
+                                    <div *ngIf="row['C' + (inx+1)].Skor=='X-X'">
+                                        <div class="siyah-zemin"></div>
+                                    </div>
+                                </td>
+            
+                            </tr>
+            
+                        </tbody>
+                    </table>
+            
+            
+                    <br>
+            
+            
+                </div>
+            
+
         </mat-tab>
+       
 
         <mat-tab label="Puan Durumu">
             <ng-template mat-tab-label>
@@ -99,7 +206,7 @@
                             <th style="text-align: center">Maç Öncesi Puan</th>
                             <th style="text-align: center">Alınan Puan</th>
                             <th style="text-align: center">Maç Sonu Puan</th>
-                            <th style="text-align: center" *ngIf='ciktiModu'>Guncel Grup</th>
+                            <th style="text-align: center" *ngIf='gelismisMod'>Guncel Grup</th>
                         </tr>
                     </thead>
 
@@ -116,8 +223,8 @@
 
 
                             </td>
-                            <td *ngIf='ciktiModu'>{{o.Grup}}</td>
-                            <td *ngIf='ciktiModu'>{{o.Dogum_Yili}}</td>
+                            <td *ngIf='gelismisMod'>{{o.Grup}}</td>
+                            <td *ngIf='gelismisMod'>{{o.Dogum_Yili}}</td>
 
                         </tr>
                     </tbody>
@@ -128,119 +235,13 @@
 
         </mat-tab>
 
+
+        <mat-tab label="Oyuncular">
+            <app-oyuncu-list></app-oyuncu-list>
+        </mat-tab>
+
+
     </mat-tab-group>
 
-    <div id="skortablo-container" class="row">
-        <table id="skortablo" rules="all" frame="border" class="table table-bordered table-hover table-condensed table-striped">
-            <caption>
-
-            </caption>
-
-            <thead>
-                <tr>
-                    <th class="grup1-oyuncu">{{grup}} Grubu
-                        <br>{{grupMacTarih}}-{{hafta}} </th>
-                    <th class="grup1-mopuan">Maç Ö.Puan</th>
-                    <th class="grup1-apuan">Alınan TPuan</th>
-                    <th class="grup1-bonus" [hidden]='!ciktiModu'>Bonus Puan</th>
-
-
-                    <th style="border-right:6px double black;" class="grup1-mspuan">Maç S.Puan</th>
-
-                    <th class="skor" *ngFor='let oyuncuAdSoyad of aktifMacFoy.EklenenOyuncuAdlari'>
-                        {{oyuncuAdSoyad }}
-                    </th>
-
-                </tr>
-            </thead>
-
-
-            <tbody>
-                <tr *ngFor="let row of aktifMacFoy.Mac_Satirlari;let row_inx:index" [ngClass]="{'sari': row.VarMi!==true}">
-
-                    <td>
-                        <div>
-
-                            <button style="width:95%;margin:auto" type="button" [matMenuTriggerFor]="appMenu">
-                                <div style="display:flex;align-items:center;justify-content:space-between">
-                                    <label> {{row.OyuncuAdSoyad}}</label>
-                                    <mat-icon style="align-self: flex-end">more_vert</mat-icon>
-                                </div>
-
-                            </button>
-
-                            <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="MacaGelmedi(row)">
-                                    <span *ngIf='row.VarMi==false'>Maça Geldi</span>
-                                    <span *ngIf='row.VarMi==true'>Maça Gelmedi</span>
-                                </button>
-                                <button (click)="MacSil(row)" mat-menu-item> Listeden Kaldır </button>
-                                <button mat-menu-item (click)="satirKonumDegistir(row,-1)"> Yukarı Hareket </button>
-                                <button mat-menu-item (click)="satirKonumDegistir(row,1)"> Aşağı Hareket </button>
-                            </mat-menu>
-                        </div>
-
-                    </td>
-
-                    <td>
-                        <mat-input-container>
-                            <input matInput type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)" />
-                        </mat-input-container>
-
-
-                    </td>
-
-                    <td>
-                        <div>{{row.AlinanTPuan}}</div>
-                    </td>
-
-                    <td [hidden]='!ciktiModu'>
-                        <mat-input-container>
-                            <input matInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
-                        </mat-input-container>
-                    </td>
-
-                    <td style="border-right:6px double black;">
-                        <span type="number">{{row.MS_Puan}}</span>
-                        <div class="glyphicon" [ngClass]="{'glyphicon-arrow-up text-success': row.AlinanTPuan > 0,'glyphicon-arrow-down text-danger':row.AlinanTPuan < 0,'glyphicon-option-horizontal text-muted': row.AlinanTPuan == 0}">
-
-                        </div>
-                    </td>
-
-                    <td *ngFor="let oyuncu of aktifMacFoy.EklenenOyuncuAdlari;let inx=index" [class.sari]="aktifMacFoy.Mac_Satirlari[inx].VarMi!==true">
-                        <div *ngIf="row['C' + (inx+1)].Skor!='X-X'">
-
-
-                            <mat-select class="no-underline" [(ngModel)]="row['C' + (inx+1)].Skor" (ngModelChange)='macFoySkorlariGuncelle(row,(inx+1))'>
-                                <mat-option value="__">__</mat-option>
-                                <mat-option value="4-0">4-0</mat-option>
-                                <mat-option value="3-1">3-1</mat-option>
-                                <mat-option value="2-2">2-2</mat-option>
-                                <mat-option value="1-3">1-3</mat-option>
-                                <mat-option value="0-4">0-4</mat-option>
-                                <mat-option value="(1-3)">*1-3</mat-option>
-                                <mat-option value="X-X">X-X</mat-option>
-                            </mat-select>
-                            <span class="label pull-right" [ngClass]="{'label-success':row['C' + (inx+1)].Puan>=0,'label-danger':row['C' + (inx+1)].Puan<0 }">{{row['C' + (inx+1)].Puan}}</span>
-                            <span class="label label-info pull-left">{{row['C' + (inx+1)].Aciklama}}</span>
-
-
-                        </div>
-
-                        <div *ngIf="row['C' + (inx+1)].Skor=='X-X'">
-                            <div class="siyah-zemin"></div>
-                        </div>
-                    </td>
-
-                </tr>
-
-            </tbody>
-        </table>
-
-
-        <br>
-
-
-    </div>
-
+    
 </mat-card>

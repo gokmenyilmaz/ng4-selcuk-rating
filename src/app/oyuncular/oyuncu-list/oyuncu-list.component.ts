@@ -12,6 +12,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { Oyuncu, MacSatir, HaftaPuan } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
+
+
 import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
@@ -70,7 +72,7 @@ export class OyuncuListComponent implements OnInit {
     var d1 = new Date(); d1.setFullYear(2020);
 
     this.eklenecek_oyuncu = new Oyuncu(" ",1500, 
-                          d.toLocaleDateString(), d1.toLocaleDateString(), 'A', 1970,
+                          d.toLocaleDateString("tr-TR"), d1.toLocaleDateString("tr-TR"), 'A', 1970,
                           [ new HaftaPuan(1500,0,1500)])
 
   }
