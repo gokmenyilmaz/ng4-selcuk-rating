@@ -392,7 +392,7 @@ export class MacFoyComponent implements OnInit {
         })
     }
 
-    grupDegisti(grupAd:string) {
+    grupDegisti() {
 
         this._router.navigateByUrl(this.pageBaseRooting + "/" + this.hafta + "/" + this.grup);
     }
