@@ -211,11 +211,13 @@ export class MacFoyComponent implements OnInit {
                                     this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
                         .Select(o=>{o.Haftalar=o.Haftalar==undefined?
                             [ new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan)]:o.Haftalar;  return o})
-                        .OrderByDescending(o=>o.Haftalar[hafta].ToplamPuan)
-                        .ThenBy(o=>this.padLeft( o.Dogum_Yili.toString(),4))
-                        .ToArray();
-                  
-                   return resolve(sonuc)
+                        
+                   var sonuc1= sonuc.OrderByDescending(o=>o.Haftalar[hafta].ToplamPuan)
+                            .ThenByDescending(o=>o.Haftalar[hafta].AlinanTPuan)
+                            .ThenBy(o=>this.padLeft( o.Dogum_Yili.toString(),4))
+                            .ToArray();
+                      
+                   return resolve(sonuc1)
            
                 });
 
@@ -246,10 +248,10 @@ export class MacFoyComponent implements OnInit {
             let baslangicIndex: number = grup_inx == 0 ? 0 : listeBirikimli[grup_inx - 1];
 
 
-            var puanSirali=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta,this.aktifMacFoy.Tarih)
+            var puanSiraliOncekiHafta=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta-1,this.aktifMacFoy.Tarih)
          
             for (var i = baslangicIndex; i < listeBirikimli[grup_inx]; i++) {
-                var o = puanSirali[i]
+                var o = puanSiraliOncekiHafta[i]
 
                 var oncekiHaftaDurum = o.Haftalar[(this.hafta - 1).toString()];
                 if (oncekiHaftaDurum == undefined) oncekiHaftaDurum = { ToplamPuan: o.BaslamaPuan };
@@ -565,9 +567,8 @@ export class MacFoyComponent implements OnInit {
         })
 
         this.PuanTabloItemList = new List<any>(puanSiraliListe)
-            .Select(o => new PuanTabloItem(o.OyuncuAdSoyad, o.Haftalar[this.hafta-1].MacOncesiPuan,
+            .Select(o => new PuanTabloItem(o.OyuncuAdSoyad, o.Haftalar[this.hafta].MacOncesiPuan,
                 o.Haftalar[this.hafta].AlinanTPuan, o.Haftalar[this.hafta].ToplamPuan, o.GuncelGrup, o.Dogum_Yili))
-                .OrderByDescending(c=>c.MS_Puan)
              .ToArray();
 
       
