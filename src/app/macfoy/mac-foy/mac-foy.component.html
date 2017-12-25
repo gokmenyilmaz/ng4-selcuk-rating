@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card >
 
     <mat-tab-group focusChange="alert('gruplu')">
         <mat-tab>
@@ -7,29 +7,31 @@
                 <span (click)="grupluMu=1">Gruplar</span>
             </ng-template>
 
-            <div class="container">
-                <div fxLayout="row"  fxLayout.sm="column">
-                    <mat-form-field  class="flex-item">
-                        <mat-select matInput placeholder="Hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
-                            <mat-option *ngFor="let hafta of haftalar" [value]="hafta">{{hafta}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+            <div class="container" >
+                <div fxLayout="row"  fxFlexFill fxLayout.sm="column">
+                    <mat-card  fxFlex="75" fxLayoutGap="30px">
+                        <mat-form-field   fxFlex="25">
+                            <mat-select matInput placeholder="Hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
+                                <mat-option *ngFor="let hafta of haftalar" [value]="hafta">{{hafta}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-                    <mat-form-field class="flex-item">
-                        <input matInput  type="text" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
-                    </mat-form-field>
+                        <mat-form-field  fxFlex="25">
+                            <input matInput  type="text" placeholder="Mac Tarih" [(ngModel)]='grupMacTarih' (ngModelChange)='mactarihiDegisti()'>
+                        </mat-form-field>
 
-                    <mat-form-field  class="flex-item">
-                        <mat-select placeholder="Grup" class="flex-item"  [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
-                            <mat-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                        <mat-form-field   fxFlex="25">
+                            <mat-select placeholder="Grup"   [(ngModel)]="grup" (ngModelChange)='grupDegisti()'>
+                                <mat-option *ngFor="let grup of gruplar" [value]="grup">{{grup}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-                    <mat-form-field class="flex-item">
-                        <input matInput placeholder="Grup Bölünmeleri"  type="text" [(ngModel)]='grupElememanSayilari'>
-                    </mat-form-field>
+                        <mat-form-field  fxFlex="25">
+                            <input matInput placeholder="Grup Bölünmeleri"  type="text" [(ngModel)]='grupElememanSayilari'>
+                        </mat-form-field>
+                    </mat-card>
 
-                    <mat-card class="flex-item">
+                    <mat-card fxFlex="25">
                         <mat-slide-toggle [(ngModel)]='gelismisMod' class="example-margin">Gelişmiş</mat-slide-toggle>
                         <button mat-raised-button color="primary" (click)="macFoyeOyuncuEkle(eklenecekOyuncu,true)">
                             <span>{{grup}}'yı </span> Ekle
