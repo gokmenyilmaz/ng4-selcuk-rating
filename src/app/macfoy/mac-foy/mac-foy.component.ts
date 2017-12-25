@@ -142,9 +142,8 @@ export class MacFoyComponent implements OnInit {
             var _ayar=new Ayarlar("6,6,6,6","1-3");
             this.af.object(this.donemBasePath + "/Ayarlar").set(_ayar);
             this.Ayarlar=_ayar;
+            this.grupElememanSayilari=this.Ayarlar.VarsayilanGrupBolunme;
         }
-
-        this.grupElememanSayilari=this.Ayarlar.VarsayilanGrupBolunme;
 
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
       
@@ -163,6 +162,8 @@ export class MacFoyComponent implements OnInit {
 
             this.aktifMacFoy=yeniMacFoy;
             this.grupMacTarih=bugun;
+
+           
         }
         else{
 
@@ -171,6 +172,7 @@ export class MacFoyComponent implements OnInit {
 
             this.aktifMacFoy=_aktifMacFoy;
             this.grupMacTarih=_aktifMacFoy.Tarih;
+            this.grupElememanSayilari=_aktifMacFoy.GrupElemanSayilari;
         }
  
         this.aktifOyuncular=await this. AdSoyadSirali_AktifOyunculariGetir();
@@ -203,10 +205,7 @@ export class MacFoyComponent implements OnInit {
             this.af.object<MacFoy>(this.macfoyPath)
                    .valueChanges()
                    .subscribe(p =>{ 
-                    
-                    // p.EklenenOyuncuAdlari=p.EklenenOyuncuAdlari===undefined?[]:p.EklenenOyuncuAdlari;
-                    // p.Mac_Satirlari=p.Mac_Satirlari===undefined?[]:p.Mac_Satirlari;
-                    
+                   
                     return resolve(p) }
  
                 );
