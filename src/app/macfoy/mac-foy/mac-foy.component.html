@@ -33,7 +33,7 @@
 
                     <mat-card fxFlex="25">
                         <mat-slide-toggle [(ngModel)]='gelismisMod' class="example-margin">Gelişmiş</mat-slide-toggle>
-                        <button mat-raised-button color="primary" (click)="macFoyeOyuncuEkle(eklenecekOyuncu,true)">
+                        <button matTooltip="maç tarihinde aktif olan oyuncuları önceki hafta maç sonu puan sıralamasına göre seçerek ekler." mat-raised-button color="primary" (click)="macFoyeOyuncuEkle(eklenecekOyuncu,true)">
                             <span>{{grup}}'yı </span> Ekle
                         </button>
                         <button mat-raised-button color="primary" (click)="kaydet()">kaydet</button>
@@ -191,10 +191,17 @@
             <ng-template mat-tab-label>
                 <span (click)="PuanTablosunuGuncelle(true)">Puan Durumu</span>
             </ng-template>
+            <mat-card>
+                <strong>Sıralama Koşulu (Eşitlik halinde 3 lü kontrol)</strong>
+                <br/>
+                <div>
+                    Aktif hafta Maç Sonu Puanı->Aldığı Toplam Puan->Yaş
+                </div>
+            </mat-card>
 
-            <div class="row" id="puanListeContainer">
+            <mat-card  id="puanListeContainer">
 
-                <table class="table table-bordered" style="margin-right: 15px">
+                <table style="margin:auto" class="table table-bordered">
                     <thead>
                         <tr>
                             <th style="text-align: center">Sıra No</th>
@@ -226,7 +233,7 @@
                     </tbody>
                 </table>
 
-            </div>
+            </mat-card>
 
 
         </mat-tab>

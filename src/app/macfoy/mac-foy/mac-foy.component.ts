@@ -302,7 +302,7 @@ export class MacFoyComponent implements OnInit {
             let baslangicIndex: number = grup_inx == 0 ? 0 : listeBirikimli[grup_inx - 1];
 
 
-            var puanSiraliOncekiHafta=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta-1,this.aktifMacFoy.Tarih)
+            var puanSiraliOncekiHafta=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta-1,this.grupMacTarih)
          
             for (var i = baslangicIndex; i < listeBirikimli[grup_inx]; i++) {
                 var o = puanSiraliOncekiHafta[i]
