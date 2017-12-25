@@ -72,7 +72,7 @@ export class OyuncuListComponent implements OnInit {
     var d1 = new Date(); d1.setFullYear(2020);
 
     this.eklenecek_oyuncu = new Oyuncu(" ",1500, 
-                          d.toLocaleDateString("tr-TR"), d1.toLocaleDateString("tr-TR"), 'A', 1970,
+                          d.toLocaleDateString("tr-TR"), d1.toLocaleDateString("tr-TR"), 1970,
                           [ new HaftaPuan(1500,0,1500)])
 
   }

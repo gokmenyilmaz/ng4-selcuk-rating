@@ -4,7 +4,6 @@ export class Oyuncu {
         public BaslamaPuan: number,
         public BaslamaTarihi?: string,
         public AyrilisTarihi?: string,
-        public GuncelGrup?: string,
         public Dogum_Yili?: number,
         public Haftalar?:HaftaPuan[]
     )
@@ -12,6 +11,17 @@ export class Oyuncu {
        
     }
 }
+
+
+export class Ayarlar {
+    constructor(
+        public VarsayilanGrupBolunme: string,
+        public MacaGelmemeSkoru: string,
+     
+    )
+    { }
+}
+
 
 export class HaftaPuan {
     constructor(

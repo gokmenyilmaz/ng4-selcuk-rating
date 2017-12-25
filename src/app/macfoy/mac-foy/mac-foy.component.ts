@@ -8,7 +8,7 @@ import { FormsModule, FormGroup } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Oyuncu, MacSatir, MacFoy, HaftaPuan } from '../../Models/entityAll';
+import { Oyuncu, MacSatir, MacFoy, HaftaPuan, Ayarlar } from '../../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -38,6 +38,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 
 export class MacFoyComponent implements OnInit {
+    donemBasePath: string;
 
     aktifMacFoy:MacFoy;
 
@@ -56,7 +57,7 @@ export class MacFoyComponent implements OnInit {
     haftalar: number[] = [];
 
     gruplar: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
-    grupElememanSayilari = "6,6,6,6";
+    grupElememanSayilari = "0,0,0,0";
 
     form: FormGroup;
 
@@ -78,6 +79,8 @@ export class MacFoyComponent implements OnInit {
 
     PuanTabloItemList:PuanTabloItem[];
 
+    Ayarlar:Ayarlar;
+
     constructor(
         private macFoyServis: MacFoyService,
         private af: AngularFireDatabase,
@@ -94,7 +97,6 @@ export class MacFoyComponent implements OnInit {
     degisiklikVarMi(): boolean {
         return true;
 
-       
     }
 
     async ngOnInit() {
@@ -121,6 +123,7 @@ export class MacFoyComponent implements OnInit {
             }
 
             this.macfoyBasePath=`/${this.klup}/${this.donem}/macfoy`;
+            this.donemBasePath=`/${this.klup}/${this.donem}`;
             this.macfoyPath = this.macfoyBasePath + `/${this.hafta}/${this.grup}`;
             this.oyuncularPath = `/${this.klup}/${this.donem}/Oyuncular`;
 
@@ -130,6 +133,18 @@ export class MacFoyComponent implements OnInit {
     }
 
     async macFoyuYukle() {
+
+        this.Ayarlar= await this.AyarlariGetir();
+
+        if(this.Ayarlar==null)
+        {
+
+            var _ayar=new Ayarlar("6,6,6,6","1-3");
+            this.af.object(this.donemBasePath + "/Ayarlar").set(_ayar);
+            this.Ayarlar=_ayar;
+        }
+
+        this.grupElememanSayilari=this.Ayarlar.VarsayilanGrupBolunme;
 
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
       
@@ -160,6 +175,27 @@ export class MacFoyComponent implements OnInit {
  
         this.aktifOyuncular=await this. AdSoyadSirali_AktifOyunculariGetir();
 
+    }
+
+    AyarlariGetir(): Promise<Ayarlar> {
+        return new Promise<Ayarlar>(resolve=> {
+            this.af.object<Ayarlar>(this.donemBasePath + "/Ayarlar")
+                   .valueChanges()
+                   .subscribe(p =>{ 
+                    return resolve(p) }
+ 
+                );
+        });
+    }
+
+    AyarlariKaydet()
+    {
+        this.af.object(this.donemBasePath + "/Ayarlar").set(
+           this.Ayarlar
+        )
+
+        this.grupElememanSayilari=this.Ayarlar.VarsayilanGrupBolunme;
+        
     }
 
     MacFoyuGetir(): Promise<MacFoy> {
@@ -515,10 +551,10 @@ export class MacFoyComponent implements OnInit {
         for (let _oy of this.aktifMacFoy.EklenenOyuncuAdlari) {
             inx++;
             if (_row['C' + inx].Skor != 'X-X') {
-                _row['C' + inx].Skor = '1-3';
+                _row['C' + inx].Skor = this.Ayarlar.MacaGelmemeSkoru;
 
                 if (_row.VarMi == false && this.aktifMacFoy.Mac_Satirlari[inx - 1].VarMi == false) {
-                    _row['C' + (inx)].Skor = "(1-3)";
+                    _row['C' + (inx)].Skor = `(${this.Ayarlar.MacaGelmemeSkoru})`;
                     _row['C' + (inx)].Aciklama = "K.H.";
 
                     this.aktifMacFoy.Mac_Satirlari[inx - 1]["C" + (satirIndex + 1)].Aciklama = "K.H.";

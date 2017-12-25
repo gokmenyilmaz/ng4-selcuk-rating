@@ -43,7 +43,6 @@ export class OyuncuService {
             "AyrilisTarihi":oyuncu.AyrilisTarihi,
             "BaslamaPuan":oyuncu.BaslamaPuan,
             "Dogum_Yili":oyuncu.Dogum_Yili,
-            "GuncelGrup":oyuncu.GuncelGrup,
             "BaslamaTarihi":oyuncu.BaslamaTarihi,
             
             

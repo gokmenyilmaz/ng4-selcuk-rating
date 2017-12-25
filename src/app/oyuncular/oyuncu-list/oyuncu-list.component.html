@@ -1,23 +1,28 @@
 <mat-card>
-    <mat-form-field  style="width:150px;display: inline-block">
+    <mat-form-field class="flex-item">
         <input matInput class="form-control" style="text-align:center"  placeholder="Oyuncu Ad Soyad"
             [(ngModel)]='eklenecek_oyuncu.OyuncuAdSoyad'>
     </mat-form-field >
 
-    <mat-form-field  style="width:150px;display: inline-block">
+    <mat-form-field class="flex-item">
         <input matInput class="form-control" style="text-align:center"  placeholder="Başlama Tarihi"
             [(ngModel)]='eklenecek_oyuncu.BaslamaTarihi'>
     </mat-form-field >
     
-    <mat-form-field  style="width:150px;display: inline-block">
+    <mat-form-field  class="flex-item">
         <input matInput class="form-control" style="text-align:center"  placeholder="Ayrılış Tarihi"
             [(ngModel)]='eklenecek_oyuncu.AyrilisTarihi'>
     </mat-form-field >
 
-    <mat-form-field  style="width:150px;display: inline-block">
+    <mat-form-field class="flex-item">
         <input matInput class="form-control" style="text-align:center"  placeholder="Başlama Puan"
             [(ngModel)]='eklenecek_oyuncu.BaslamaPuan'>
     </mat-form-field >
+
+    <mat-form-field  class="flex-item">
+            <input matInput class="form-control" style="text-align:center"  placeholder="Doğum Yılı"
+                [(ngModel)]='eklenecek_oyuncu.Dogum_Yili'>
+        </mat-form-field >
 
     <div>
         <button mat-raised-button  color="primary" (click)="OyuncuEkle()">Ekle</button>
@@ -39,10 +44,8 @@
                 <th style="text-align: center">Baslama Tarihi</th>
                 <th style="text-align: center">Ayrılış Tarihi</th>
                 <th style="text-align: center" >Başlama Puan</th>
-                <th style="text-align: center;width:50px" >Grup</th>
-                <th style="text-align: center" >Dogum_Yili</th>
-
-               
+                <th style="text-align: center" >Doğum Yılı</th>
+      
                 <th>#</th>
 
             </tr>
@@ -80,12 +83,7 @@
                                 
                             </td> 
     
-                            <td style="text-align: center;font-weight: bold;">
-                                    <input   style="text-align:center;width:50px" 
-                                    [(ngModel)]='o.Grup'>
-        
-                                   
-                            </td> 
+                           
     
                             <td style="text-align: center;font-weight: bold;">
                                     <input   style="text-align:center;width:50px" 
@@ -127,9 +125,6 @@
                                 <span *ngIf="!_isEditMode">{{o.BaslamaPuan}}</span>
                             </td> 
     
-                            <td style="text-align: center;font-weight: bold;">
-                                <span *ngIf="!_isEditMode">{{o.Grup}}</span>
-                            </td> 
     
                             <td style="text-align: center;font-weight: bold;">
                                 <span *ngIf="!_isEditMode">{{o.Dogum_Yili}}</span>
