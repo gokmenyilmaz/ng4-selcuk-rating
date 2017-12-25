@@ -63,7 +63,6 @@ export class MacFoyComponent implements OnInit {
 
     gelismisMod: boolean = false;
 
-    puanTabloGenislik: number = 100;
     Count: number;
     subscription: any;
 
@@ -101,13 +100,7 @@ export class MacFoyComponent implements OnInit {
 
     async ngOnInit() {
 
-       
-
-        this.puanTabloGenislik = 100;
-
         this.eklenecekOyuncu = new Oyuncu('', 0, null, null);
-
-      
 
         this.activatedRoute.params.subscribe(params => {
             this.klup = params.klup;

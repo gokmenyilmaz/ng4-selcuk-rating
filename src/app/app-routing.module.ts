@@ -6,8 +6,8 @@ import { MacFoyComponent } from "./macfoy/mac-foy/mac-foy.component";
 const routes: Routes = [
     {path:":klup/:donem/oyuncular", component:OyuncuListComponent},
     {path:":klup/:donem/macfoy", component:MacFoyComponent},
-    {path:":klup/:donem/macfoy/:hafta/:grup", component:MacFoyComponent}
-
+    {path:":klup/:donem/macfoy/:hafta/:grup", component:MacFoyComponent},
+    {path:":klup/:donem", component:MacFoyComponent},
  
 ];
 

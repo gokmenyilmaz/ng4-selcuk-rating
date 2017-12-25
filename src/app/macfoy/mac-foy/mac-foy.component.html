@@ -8,7 +8,7 @@
             </ng-template>
 
             <div class="container" >
-                <div fxLayout="row"  fxFlexFill fxLayout.sm="column">
+                <div fxLayout="row"  fxFlexFill fxLayout.lt-sm="column">
                     <mat-card  fxFlex="75" fxLayoutGap="30px">
                         <mat-form-field   fxFlex="25">
                             <mat-select matInput placeholder="Hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
@@ -194,7 +194,7 @@
 
             <div class="row" id="puanListeContainer">
 
-                <table class="table table-bordered" style="margin-right: 15px" [style.width]="puanTabloGenislik + '%'">
+                <table class="table table-bordered" style="margin-right: 15px">
                     <thead>
                         <tr>
                             <th style="text-align: center">Sıra No</th>
@@ -238,18 +238,18 @@
 
         <mat-tab label="Ayarlar">
                 <div class="container">
-                        <div fxLayout="row"  fxLayout.sm="column">
+                        <div *ngIf="Ayarlar" fxLayout="row"  fxLayout.sm="column">
       
-                            <mat-form-field class="flex-item">
+                            <mat-form-field>
                                 <input matInput placeholder="Grup Bölünmeleri 6,6,5,5 gibi "  type="text" [(ngModel)]='Ayarlar.VarsayilanGrupBolunme'>
                             </mat-form-field>
 
-                            <mat-form-field class="flex-item">
+                            <mat-form-field>
                                 <input matInput placeholder="Maca Gelmeme Skoru 1-3 gibi "  type="text" [(ngModel)]='Ayarlar.MacaGelmemeSkoru'>
                             </mat-form-field>
         
-                            <button (click)="AyarlariKaydet()" mat-menu-item>Kaydet</button>
-                         
+                            <button style="height:40px" matInput mat-raised-button color="primary" (click)="AyarlariKaydet()">Kaydet</button>
+                        
                         </div>
         
                     </div>
