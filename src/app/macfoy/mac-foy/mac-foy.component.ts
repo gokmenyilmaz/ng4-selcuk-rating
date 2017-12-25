@@ -244,28 +244,35 @@ export class MacFoyComponent implements OnInit {
         });
     }
 
-    PuanSiraliOyunculariGetirHaftadan(hafta:number, Tarih:string): Promise<Oyuncu[]> {
+    PuanSiraliOyunculariGetirHaftadan(_hafta:number, _tarih:string): Promise<Oyuncu[]> {
 
-        var zamanSayi=this.macFoyServis.parseDateDMY(this.aktifMacFoy.Tarih).getTime() ;
+        var zamanSayi=this.macFoyServis.parseDateDMY(_tarih).getTime() ;
 
         return new Promise<Oyuncu[]>(resolve=> {
             this.af.list<Oyuncu>(this.oyuncularPath)
-                   .valueChanges()
-                   .subscribe(p =>{ 
+                .valueChanges()
+                .subscribe(p =>
+                { 
+                    var sonuc =  new List<Oyuncu>(p)
+                            .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi &&
+                                        this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
+                            .Select(o=>
+                                {
+                                    if(o.Haftalar==undefined) o.Haftalar=[];
 
-                   var sonuc =  new List<Oyuncu>(p)
-                        .Where(o => this.macFoyServis.parseDateDMY(o.BaslamaTarihi).getTime() <= zamanSayi &&
-                                    this.macFoyServis.parseDateDMY(o.AyrilisTarihi).getTime() >= zamanSayi)
-                        .Select(o=>{o.Haftalar=o.Haftalar==undefined?
-                            [ new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan)]:o.Haftalar;  return o})
-                        
-                   var sonuc1= sonuc.OrderByDescending(o=>o.Haftalar[hafta].ToplamPuan)
-                            .ThenByDescending(o=>o.Haftalar[hafta].AlinanTPuan)
+                                    if(o.Haftalar[_hafta]==undefined) 
+                                        o.Haftalar[_hafta]=new HaftaPuan(o.BaslamaPuan,0,o.BaslamaPuan);
+
+                                return o
+                                
+                                })
+                            .OrderByDescending(o=>o.Haftalar[_hafta].ToplamPuan)
+                            .ThenByDescending(o=>o.Haftalar[_hafta].AlinanTPuan)
                             .ThenBy(o=>this.padLeft( o.Dogum_Yili.toString(),4))
                             .ToArray();
-                      
-                   return resolve(sonuc1)
-           
+                
+                    return resolve(sonuc)
+
                 });
 
         });
