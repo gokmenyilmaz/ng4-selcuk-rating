@@ -56,11 +56,16 @@ export class OyuncuListComponent implements OnInit {
 
   OyuncuEkle() {
 
+    this.oyuncularRef = this.af.list<any>(`/${this.klup}/${this.donem}/Oyuncular/`);
+    
     this.eklenecek_oyuncu.Haftalar[0].AlinanTPuan=0;
     this.eklenecek_oyuncu.Haftalar[0].MacOncesiPuan=this.eklenecek_oyuncu.BaslamaPuan;
     this.eklenecek_oyuncu.Haftalar[0].ToplamPuan=this.eklenecek_oyuncu.BaslamaPuan;
 
-    this.oyuncularRef.push(this.eklenecek_oyuncu);
+    const newKey=this.oyuncularRef.push(this.eklenecek_oyuncu).key;
+    
+    this.eklenecek_oyuncu["key"]=newKey;
+    this.oyuncularRef.update(newKey,this.eklenecek_oyuncu);
 
     this.YeniOyuncuOlustur();
 
