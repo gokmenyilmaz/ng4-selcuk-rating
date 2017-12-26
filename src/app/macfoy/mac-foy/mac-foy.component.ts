@@ -191,6 +191,13 @@ export class MacFoyComponent implements OnInit {
         
     }
 
+    async grupTabAktif()
+    {
+        if (this.grupMacTarih.length == 10) {
+            this.aktifOyuncular=await this.PuanSiraliOyunculariGetirHaftadan(this.hafta,this.grupMacTarih);
+        }
+    }
+
     MacFoyuGetir(): Promise<MacFoy> {
         return new Promise<MacFoy>(resolve=> {
             this.af.object<MacFoy>(this.macfoyPath)
@@ -413,33 +420,27 @@ export class MacFoyComponent implements OnInit {
 
     kaydet() {
 
-        let dialogRef = this._dialog.open(DialogContent, { width: '400px', height: '200px' });
+        // let dialogRef = this._dialog.open(DialogContent, { width: '400px', height: '200px' });
 
         var _macFoyPath=this.macfoyPath;
         var _aktifMacFoy= this.aktifMacFoy;
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result == 'Ok') {
                
-                this.af.object(_macFoyPath).set(_aktifMacFoy);
+        this.af.object(_macFoyPath).set(_aktifMacFoy);
 
-                var listOyuncu= new List<Oyuncu>(this.aktifOyuncular);
-                var oyuncularHaftaRef =  this.af.list<Oyuncu>(this.oyuncularPath);
+        var listOyuncu= new List<Oyuncu>(this.aktifOyuncular);
+        var oyuncularHaftaRef =  this.af.list<Oyuncu>(this.oyuncularPath);
 
-                for (let row of  this.aktifMacFoy.Mac_Satirlari) 
-                {
-                    var oyuncu= listOyuncu.Where(c=>c.OyuncuAdSoyad==row.OyuncuAdSoyad).First();
-                 
-                    if( oyuncu.Haftalar===undefined) oyuncu.Haftalar=[];
-                
-                    oyuncu.Haftalar[this.hafta]=new HaftaPuan(row.MO_Puan,row.AlinanTPuan,row.MS_Puan);
-                    oyuncularHaftaRef.update(oyuncu["key"],oyuncu);
-                }
-                this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
-    
-            }
-    
-        })
+        for (let row of  this.aktifMacFoy.Mac_Satirlari) 
+        {
+            var oyuncu= listOyuncu.Where(c=>c.OyuncuAdSoyad==row.OyuncuAdSoyad).First();
+            
+            if( oyuncu.Haftalar===undefined) oyuncu.Haftalar=[];
+        
+            oyuncu.Haftalar[this.hafta]=new HaftaPuan(row.MO_Puan,row.AlinanTPuan,row.MS_Puan);
+            oyuncularHaftaRef.update(oyuncu["key"],oyuncu);
+        }
+        this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
     }
 
     grupDegisti() {

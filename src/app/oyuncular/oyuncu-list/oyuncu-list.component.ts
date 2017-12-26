@@ -67,6 +67,8 @@ export class OyuncuListComponent implements OnInit {
     this.eklenecek_oyuncu["key"]=newKey;
     this.oyuncularRef.update(newKey,this.eklenecek_oyuncu);
 
+    
+
     this.YeniOyuncuOlustur();
 
   }
