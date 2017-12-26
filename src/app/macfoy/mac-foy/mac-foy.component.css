@@ -76,11 +76,19 @@ table {
 
 
     .E {
-        background-color: deepskyblue;
+        background-color:  moccasin;
     }
 
     .F {
-        background-color: beige;
+        background-color: white;
+    }
+
+    .G {
+        background-color: lightskyblue;
+    }
+
+    .H {
+        background-color: white;
     }
     /*-----skor tablo ------------------*/
 
