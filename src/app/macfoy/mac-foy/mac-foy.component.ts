@@ -426,7 +426,7 @@ export class MacFoyComponent implements OnInit {
                 var listOyuncu= new List<Oyuncu>(this.aktifOyuncular);
                 var oyuncularHaftaRef =  this.af.list<Oyuncu>(this.oyuncularPath);
 
-                for (let row of  this.aktifMacFoy.Mac_Satirlari) {
+                for (let row of  this.aktifMacFoy.Mac_Satirlari) 
                 {
                     var oyuncu= listOyuncu.Where(c=>c.OyuncuAdSoyad==row.OyuncuAdSoyad).First();
                  
@@ -435,12 +435,10 @@ export class MacFoyComponent implements OnInit {
                     oyuncu.Haftalar[this.hafta]=new HaftaPuan(row.MO_Puan,row.AlinanTPuan,row.MS_Puan);
                     oyuncularHaftaRef.update(oyuncu["key"],oyuncu);
                 }
+                this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
     
             }
-
-
-                this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
-            };
+    
         })
     }
 
