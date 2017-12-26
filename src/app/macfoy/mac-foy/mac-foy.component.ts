@@ -56,7 +56,7 @@ export class MacFoyComponent implements OnInit {
 
     haftalar: number[] = [];
 
-    gruplar: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
+    gruplar: string[] = ['A', 'B', 'C', 'D', 'E', 'F','G','H'];
     grupElememanSayilari = "";
 
     form: FormGroup;
