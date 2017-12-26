@@ -13,12 +13,14 @@ import { AdminModule } from "./admin/admin.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { OyuncularModule } from "./oyuncular/oyuncular.module";
 import { MacfoyModule } from "./macfoy/macfoy.module";
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent
     
   ],
   imports: [
