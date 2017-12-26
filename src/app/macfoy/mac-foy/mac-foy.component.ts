@@ -57,7 +57,7 @@ export class MacFoyComponent implements OnInit {
     haftalar: number[] = [];
 
     gruplar: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
-    grupElememanSayilari = "0,0,0,0";
+    grupElememanSayilari = "";
 
     form: FormGroup;
 
@@ -135,7 +135,6 @@ export class MacFoyComponent implements OnInit {
             var _ayar=new Ayarlar("6,6,6,6","1-3");
             this.af.object(this.donemBasePath + "/Ayarlar").set(_ayar);
             this.Ayarlar=_ayar;
-            this.grupElememanSayilari=this.Ayarlar.VarsayilanGrupBolunme;
         }
 
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
@@ -145,7 +144,7 @@ export class MacFoyComponent implements OnInit {
         if(_aktifMacFoy==null)
         {
             var macFoyRef=this.af.object(this.macfoyPath);
-            var yeniMacFoy=new MacFoy(bugun,this.grupElememanSayilari);
+            var yeniMacFoy=new MacFoy(bugun);
             yeniMacFoy.EklenenOyuncuAdlari=[];
             yeniMacFoy.Mac_Satirlari=[];
 
@@ -155,8 +154,6 @@ export class MacFoyComponent implements OnInit {
 
             this.aktifMacFoy=yeniMacFoy;
             this.grupMacTarih=bugun;
-
-           
         }
         else{
 
@@ -165,9 +162,10 @@ export class MacFoyComponent implements OnInit {
 
             this.aktifMacFoy=_aktifMacFoy;
             this.grupMacTarih=_aktifMacFoy.Tarih;
-            this.grupElememanSayilari=_aktifMacFoy.GrupElemanSayilari;
+           
         }
  
+        this.grupElememanSayilari=this.Ayarlar.VarsayilanGrupBolunme;
         this.aktifOyuncular=await this. AdSoyadSirali_AktifOyunculariGetir();
 
     }

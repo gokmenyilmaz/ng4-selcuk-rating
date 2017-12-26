@@ -60,8 +60,6 @@ export class SkorDetay {
 export class MacFoy {
     constructor(
         public Tarih: string,
-        public GrupElemanSayilari: string,
-       
         public Mac_Satirlari:MacSatir[]=[],
         public EklenenOyuncuAdlari:string[]=[]
     )

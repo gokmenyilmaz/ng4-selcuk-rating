@@ -19,10 +19,10 @@ export class DashboardComponent implements OnInit {
 
   klup: string;
   donem: string;
-  grupElememanSayilari = "0,0,0,0";
+  grupElememanSayilari = "";
   macagelmediSkoru="1-3";
 
-  klup_url: string;
+  klup_url: string=null;
 
 
   constructor( private af: AngularFireDatabase) { }

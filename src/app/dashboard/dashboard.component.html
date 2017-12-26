@@ -23,11 +23,23 @@
     <button (click)="RatingGrupOlustur()" style="width:200px;float: right" mat-raised-button color="primary">Rating Oluştur</button>
   </div>
 
-  <div *ngIf="klup_url">
-    <div>Uygulama Adresiniz...Adrese girip oyuncuları tanımlayarak kullanabilirsiniz</div>
-    <div>İyi Oyunlar :)</div>
-    <input matInput  [(ngModel)]="klup_url" >
-  </div>
+  <mat-card *ngIf="klup_url">
+
+      <mat-card-content >
+        <p>
+            Adrese girip oyuncuları tanımlayarak kullanabilirsiniz... Başarılar :)
+        </p>
+
+        <p>
+            <a routerLink={{klup_url}}>{{klup_url}}</a>
+        </p>
+       
+
+      </mat-card-content>
+    
+    </mat-card>
+ 
+   
   
 </div>
 </mat-card>
