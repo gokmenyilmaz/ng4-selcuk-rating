@@ -405,7 +405,9 @@ export class MacFoyComponent implements OnInit {
             }
 
             _row.AlinanTPuan = alinanPuan;
-            _row.MS_Puan = _row.MO_Puan + alinanPuan;
+
+            // toplarken yanyana yazıyordu o yüzden
+            _row.MS_Puan = parseInt(_row.MO_Puan.toString()) +parseInt(alinanPuan.toString());
         }
     }
 
