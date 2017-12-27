@@ -70,8 +70,6 @@ export class MacFoyService {
 
         alinanPuan = this.puanListObj[mutlakfarkPuanAralik][macSonucAlan] * carpan;
 
-
-
         return alinanPuan;
 
     }
@@ -91,8 +89,13 @@ export class MacFoyService {
     }
 
     parseDateDMY(input: string): Date {
+        // todlocaldate string veya textboxtan ilginç olarak bu karakterler geliyor
+
+      input = input.replace(/\u200E/g, '');
+   
         var parts = input.split('.');
-        return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+        var yeniTarih=new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+        return yeniTarih;
     }
 
 

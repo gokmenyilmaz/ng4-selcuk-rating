@@ -92,6 +92,9 @@ export class OyuncuListComponent implements OnInit {
 
   OyuncuGuncelle(key:string,oyuncu:Oyuncu)
   {
+    oyuncu.Haftalar[0].MacOncesiPuan=oyuncu.BaslamaPuan;
+    oyuncu.Haftalar[0].AlinanTPuan=0;
+    oyuncu.Haftalar[0].ToplamPuan=oyuncu.BaslamaPuan;
     
     this.oyuncularRef.update(key,oyuncu);
   }
