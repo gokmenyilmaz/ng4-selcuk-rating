@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase  } from '@angular/fire/database';
 
-
-
-
 import { Observable } from 'rxjs'
 import { Oyuncu, Ayarlar } from 'app/Models/entityAll';
 
@@ -33,7 +30,7 @@ export class DashboardComponent implements OnInit {
 
   RatingGrupOlustur()
   {
-      var _donemBasePath=`/${this.klup}/${this.donem}`
+      var _donemBasePath=`/${this.klup.toLocaleLowerCase()}/${this.donem.toLocaleLowerCase()}`
       var _ayarlar=new Ayarlar(this.grupElememanSayilari,this.macagelmediSkoru);
 
 
