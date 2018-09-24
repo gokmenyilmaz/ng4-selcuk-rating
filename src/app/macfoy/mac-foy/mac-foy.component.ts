@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MacFoyService } from '../macfoy.service';
 
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase  } from '@angular/fire/database';
 
-import { List } from 'linqts/dist/linq';
+import { List } from 'linqts';
 import { FormsModule, FormGroup } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,12 +19,8 @@ import {OyuncuListComponent } from '../../oyuncular/oyuncu-list/oyuncu-list.comp
 
 
 //import {Observable} from 'rxjs/Rx' 
-import { Observable } from 'rxjs/Observable'
+import { Observable, from } from 'rxjs'
 
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/observable/from';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { isDefined } from '@angular/compiler/src/util';
 import { Route } from '@angular/router/src/config';
@@ -44,7 +40,7 @@ export class MacFoyComponent implements OnInit {
 
     aktifOyuncular: Oyuncu[] = [];
     
-    oyuncularRef: AngularFireList<Oyuncu>;
+    oyuncularRef: Observable<Oyuncu>;
 
     oyuncularGruplu: Oyuncu[] = [];
  
@@ -299,8 +295,7 @@ export class MacFoyComponent implements OnInit {
 
             var grup_inx = this.gruplar.indexOf(this.grup);
 
-            Observable.from(liste)
-                .scan((x, y) => x + y)
+            from(liste)
                 .subscribe(c => listeBirikimli.push(c));
 
 

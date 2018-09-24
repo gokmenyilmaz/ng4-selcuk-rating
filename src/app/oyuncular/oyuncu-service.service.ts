@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
 
 import { Oyuncu, MacSatir } from '../Models/entityAll';
 import { PuanTabloItem, SkorDetay } from '../Models/entityAll';
@@ -16,10 +16,8 @@ export class OyuncuService {
 
     }
 
-    OyuncuGetir(id: number): AngularFireObject<Oyuncu> {
-        return this.af.object('/Selcuk/Oyuncular/' + id)
-
-            ;
+    OyuncuGetir(id: number): object {
+        return this.af.object('/Selcuk/Oyuncular/' + id);
 
     }
 

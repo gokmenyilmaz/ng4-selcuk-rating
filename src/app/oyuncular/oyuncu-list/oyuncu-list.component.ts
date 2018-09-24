@@ -1,8 +1,8 @@
 
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { List } from 'linqts/dist/linq';
+import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
+import { List } from 'linqts';
 import { FormsModule, FormGroup } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,8 @@ import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
 
 
 import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-oyuncu-list',
@@ -45,10 +46,12 @@ export class OyuncuListComponent implements OnInit {
 
     this.oyuncularRef = this.af.list<Oyuncu>(`/${this.klup}/${this.donem}/Oyuncular/`);
 
-    this.oyuncular = this.oyuncularRef.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
 
+    this.oyuncular = this.oyuncularRef.snapshotChanges().pipe(
+      map(changes => 
+         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    );
 
     this.YeniOyuncuOlustur();
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/observable/from';
-import { Observable } from 'rxjs/Observable'
+import { AngularFireDatabase  } from '@angular/fire/database';
+
+
+
+
+import { Observable } from 'rxjs'
 import { Oyuncu, Ayarlar } from 'app/Models/entityAll';
 
 @Component({
@@ -14,7 +14,7 @@ import { Oyuncu, Ayarlar } from 'app/Models/entityAll';
 })
 export class DashboardComponent implements OnInit {
 
-  oyuncularRef: AngularFireList<Oyuncu>;
+  oyuncularRef: Observable<Oyuncu>;
 
 
   klup: string;

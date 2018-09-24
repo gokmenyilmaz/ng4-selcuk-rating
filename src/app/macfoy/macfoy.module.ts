@@ -6,9 +6,8 @@ import { MacFoyService } from "./macfoy.service";
 import {OyuncuListComponent } from '../oyuncular/oyuncu-list/oyuncu-list.component'
 
 import {OyuncularModule} from '../oyuncular/oyuncular.module'
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 export const config = {
   apiKey: "AIzaSyCmxxECnZY5VKWHWl7PfIflQPUexr-6Tjc",

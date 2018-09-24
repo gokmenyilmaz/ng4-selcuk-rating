@@ -55,10 +55,10 @@
                 </mat-form-field>
 
               
-                    <mat-input-container mat-no-float class="flex-item">
+                    <mat-form-field mat-no-float class="flex-item">
                         <input matInput style="text-align:right" placeholder="Puan" type="number" (keyup.enter)="grupluMu=false;macFoyeOyuncuEkle(eklenecekOyuncu,false)"
                             [(ngModel)]='eklenecekOyuncu.BaslamaPuan'>
-                    </mat-input-container>
+                    </mat-form-field>
 
                     <button mat-raised-button class="flex-item" color="primary" class="btn btn-success" (click)="macFoyeOyuncuEkle(eklenecekOyuncu,false)">
                         Ekle
@@ -123,9 +123,9 @@
                             </td>
 
                             <td>
-                                <mat-input-container>
+                                <mat-form-field>
                                     <input matInput type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)" />
-                                </mat-input-container>
+                                </mat-form-field>
 
 
                             </td>
@@ -135,9 +135,9 @@
                             </td>
 
                             <td [hidden]='!gelismisMod'>
-                                <mat-input-container>
+                                <mat-form-field>
                                     <input matInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
-                                </mat-input-container>
+                                </mat-form-field>
                             </td>
 
                             <td style="border-right:6px double black;">
