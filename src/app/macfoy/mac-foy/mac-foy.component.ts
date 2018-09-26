@@ -19,7 +19,9 @@ import {OyuncuListComponent } from '../../oyuncular/oyuncu-list/oyuncu-list.comp
 
 
 //import {Observable} from 'rxjs/Rx' 
-import { Observable, from } from 'rxjs'
+import { Observable, from, of } from 'rxjs'
+import { map, filter, scan } from "rxjs/operators";
+
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { isDefined } from '@angular/compiler/src/util';
@@ -296,7 +298,8 @@ export class MacFoyComponent implements OnInit {
             var grup_inx = this.gruplar.indexOf(this.grup);
 
             from(liste)
-                .subscribe(c => listeBirikimli.push(c));
+            .pipe(scan((x, y) => x + y))
+            .subscribe(c => listeBirikimli.push(c));
 
 
             let baslangicIndex: number = grup_inx == 0 ? 0 : listeBirikimli[grup_inx - 1];
