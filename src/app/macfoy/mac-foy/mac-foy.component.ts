@@ -89,6 +89,8 @@ export class MacFoyComponent implements OnInit {
     ) {
 
         this.haftalar = Array.from(Array(52).keys());
+
+        
     }
 
     degisiklikVarMi(): boolean {
@@ -130,10 +132,14 @@ export class MacFoyComponent implements OnInit {
         if(this.Ayarlar==null)
         {
 
-            var _ayar=new Ayarlar("6,6,6,6","1-3");
+            var _ayar=new Ayarlar("6,6,6,6","1-3",0);
             this.af.object(this.donemBasePath + "/Ayarlar").set(_ayar);
             this.Ayarlar=_ayar;
         }
+
+        if(this.Ayarlar.RatingSistemKodu==null)  this.Ayarlar.RatingSistemKodu=1;
+
+        this.macFoyServis.puanlariTanimla(this.Ayarlar.RatingSistemKodu);
 
         let bugun = new Date(Date.now()).toLocaleDateString("tr-TR")
       

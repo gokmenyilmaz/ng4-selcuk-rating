@@ -17,6 +17,7 @@ export class Ayarlar {
     constructor(
         public VarsayilanGrupBolunme: string,
         public MacaGelmemeSkoru: string,
+        public RatingSistemKodu:number
      
     )
     { }

@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   donem: string;
   grupElememanSayilari = "";
   macagelmediSkoru="1-3";
+  ratingSistemKodu:0;
 
   klup_url: string=null;
 
@@ -31,7 +32,7 @@ export class DashboardComponent implements OnInit {
   RatingGrupOlustur()
   {
       var _donemBasePath=`/${this.klup.toLocaleLowerCase()}/${this.donem.toLocaleLowerCase()}`
-      var _ayarlar=new Ayarlar(this.grupElememanSayilari,this.macagelmediSkoru);
+      var _ayarlar=new Ayarlar(this.grupElememanSayilari,this.macagelmediSkoru,this.ratingSistemKodu);
 
 
       this.af.object(_donemBasePath + "/Ayarlar").set( _ayarlar );
