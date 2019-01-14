@@ -1,5 +1,5 @@
-python hatası
-https://catalin.me/how-to-fix-node-js-gyp-err-cant-find-python-executable-python-on-windows/
+git config --global user.name "gokmen.yilmaz"
+git config --global user.email "gokmen1977@gmail.com"
 
 # Kullanilan Paketler...
 Angular5, AngularFire5, MaterialDesign5  
