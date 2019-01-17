@@ -88,28 +88,31 @@ export class MacFoyService {
         mutlakfarkPuanAralik = this.PuanAralikBul(mutlakfark,this.ratingSistemKod);
         reytingiYuksekOyuncu = this.IsaretDegerUclu(puanfarki);
 
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '4-0')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-1')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '2-2')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '1-3')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '0-4')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '4-0')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-1')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '2-2')) { carpan = -1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '1-3')) { carpan = -1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '0-4')) { carpan = -1; }
 
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-0')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '0-3')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-2')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '2-3')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-0')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '0-3')) { carpan = -1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-2')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 1 && (macSonuc === '2-3')) { carpan = -1; }
 
 
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '4-0')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-1')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '2-2')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '1-3')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '0-4')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '4-0')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-1')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '2-2')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '1-3')) { carpan = -1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '0-4')) { carpan = -1; }
 
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-0')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '0-3')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-2')) { macSonucAlan = 'x' + macSonuc; carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '2-3')) { macSonucAlan = 'x' + macSonuc; carpan = -1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-0')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '0-3')) { carpan = -1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-2')) { carpan = 1; }
+        if (reytingiYuksekOyuncu === 2 && (macSonuc === '2-3')) { carpan = -1; }
+
+
+        macSonucAlan='x' + macSonuc.replace('-','_');
 
         if(this.ratingSistemKod==1)
             alinanPuan = this.puanListObj[mutlakfarkPuanAralik][macSonucAlan] * carpan;
