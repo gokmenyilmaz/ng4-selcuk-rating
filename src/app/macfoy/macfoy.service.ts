@@ -32,8 +32,7 @@ export class MacFoyService {
     puanlariTanimla(ratingSistemKod:number): void {
 
         this.ratingSistemKod=ratingSistemKod;
-
-        if(ratingSistemKod==1)
+        if(this.ratingSistemKod==1)
         {
             this.puanListObj[50] =   { Diff: 50,   x4_0: 50, x0_4: 50, x3_1: 25,  x1_3: 25,   x2_2: 0, x3_0:0, x0_3:0,x3_2:0,x2_3:0 };
             this.puanListObj[150] =  { Diff: 150,  x4_0: 46, x0_4: 63, x3_1: 21,  x1_3: 32,   x2_2: 4, x3_0:0, x0_3:0,x3_2:0,x2_3:0 };
@@ -51,19 +50,19 @@ export class MacFoyService {
     
         }
        
-        if(ratingSistemKod==2)
+        //x[puanı çok][puanı az]
+        if(this.ratingSistemKod==2)
         {
-            this.puanListObj2[12] = { Diff: 12,   x4_0: 0, x0_4: 0, x3_1: 8, x1_3: 8,  x2_2: 0,x3_0:8, x0_3:8 ,  x3_2: 8, x2_3: 8  };
-            this.puanListObj2[37] = { Diff: 37,   x4_0: 0, x0_4: 0, x3_1: 7, x1_3: 10, x2_2: 0,x3_0:7, x0_3:10 , x3_2: 7, x2_3: 10 };
-            this.puanListObj2[62] = { Diff: 62,   x4_0: 0, x0_4: 0, x3_1: 6, x1_3: 13, x2_2: 0,x3_0:6, x0_3:13 , x3_2: 6, x2_3: 13 };
-            this.puanListObj2[87] = { Diff: 87,   x4_0: 0, x0_4: 0, x3_1: 5, x1_3: 16, x2_2: 0,x3_0:5, x0_3:16,  x3_2: 5, x2_3: 16 };
-            this.puanListObj2[112] = { Diff: 112, x4_0: 0, x0_4: 0, x3_1: 4, x1_3: 20, x2_2: 0,x3_0:4, x0_3:20,  x3_2: 4, x2_3: 20 };
-            this.puanListObj2[137] = { Diff: 137, x4_0: 0, x0_4: 0, x3_1: 3, x1_3: 25, x2_2: 0,x3_0:3, x0_3:25,  x3_2: 3, x2_3: 25 };
-            this.puanListObj2[162] = { Diff: 162, x4_0: 0, x0_4: 0, x3_1: 2, x1_3: 30, x2_2: 0,x3_0:2, x0_3:30,  x3_2: 2, x2_3: 30 };
-            this.puanListObj2[187] = { Diff: 187, x4_0: 0, x0_4: 0, x3_1: 2, x1_3: 35, x2_2: 0,x3_0:2, x0_3:35,  x3_2: 2, x2_3: 35 };
-            this.puanListObj2[212] = { Diff: 212, x4_0: 0, x0_4: 0, x3_1: 1, x1_3: 40, x2_2: 0,x3_0:1, x0_3:40,  x3_2: 1, x2_3: 40 };
-            this.puanListObj2[237] = { Diff: 237, x4_0: 0, x0_4: 0, x3_1: 1, x1_3: 45, x2_2: 0,x3_0:1, x0_3:45,  x3_2: 1, x2_3: 45 };
-            this.puanListObj2[1000] = { Diff:900, x4_0: 0, x0_4: 0, x3_1: 0, x1_3: 50, x2_2: 0,x3_0:0, x0_3:50,  x3_2: 0, x2_3: 50 };
+            this.puanListObj2[12] =  { Diff: 12,  x4_0: 0, x3_0:8, x3_1: 8, x3_2: 8, x0_4: 0, x0_3:8 ,  x1_3: 8,  x2_3: 8 ,  x2_2: 0, };
+            this.puanListObj2[37] =  { Diff: 37,  x4_0: 0, x3_0:7, x3_1: 7, x3_2: 7, x0_4: 0, x0_3:10 , x1_3: 10, x2_3: 10,  x2_2: 0, };
+            this.puanListObj2[62] =  { Diff: 62,  x4_0: 0, x3_0:6, x3_1: 6, x3_2: 6, x0_4: 0, x0_3:13 , x1_3: 13, x2_3: 13,  x2_2: 0, };
+            this.puanListObj2[87] =  { Diff: 87,  x4_0: 0, x3_0:5, x3_1: 5, x3_2: 5, x0_4: 0, x0_3:16,  x1_3: 16, x2_3: 16,  x2_2: 0, };
+            this.puanListObj2[112] = { Diff: 112, x4_0: 0, x3_0:4, x3_1: 4, x3_2: 4, x0_4: 0, x0_3:20,  x1_3: 20, x2_3: 20,  x2_2: 0, };
+            this.puanListObj2[137] = { Diff: 137, x4_0: 0, x3_0:3, x3_1: 3, x3_2: 3, x0_4: 0, x0_3:25,  x1_3: 25, x2_3: 25,  x2_2: 0, };
+            this.puanListObj2[162] = { Diff: 162, x4_0: 0, x3_0:2, x3_1: 2, x3_2: 2, x0_4: 0, x0_3:30,  x1_3: 30, x2_3: 30,  x2_2: 0, };
+            this.puanListObj2[187] = { Diff: 187, x4_0: 0, x3_0:2, x3_1: 2, x3_2: 2, x0_4: 0, x0_3:35,  x1_3: 35, x2_3: 35,  x2_2: 0, };
+            this.puanListObj2[212] = { Diff: 212, x4_0: 0, x3_0:1, x3_1: 1, x3_2: 1, x0_4: 0, x0_3:40,  x1_3: 40, x2_3: 40,  x2_2: 0, };
+            this.puanListObj2[237] = { Diff: 237, x4_0: 0, x3_0:1, x3_1: 1, x3_2: 1, x0_4: 0, x0_3:45,  x1_3: 45, x2_3: 45,  x2_2: 0, };
           
         }
     }
@@ -71,9 +70,12 @@ export class MacFoyService {
 
     hesapla(oyuncu1_puan: number, oyuncu2_puan: number, macSonuc: string): number {
 
+       
+
         if (macSonuc === '__' || macSonuc === 'X-X') { return 0 };
 
         let reytingiYuksekOyuncu: number;
+        let kazananOyuncu:number;
         let alinanPuan = 0;
 
         let puanfarki = oyuncu1_puan - oyuncu2_puan;
@@ -86,40 +88,36 @@ export class MacFoyService {
 
 
         mutlakfarkPuanAralik = this.PuanAralikBul(mutlakfark,this.ratingSistemKod);
-        reytingiYuksekOyuncu = this.IsaretDegerUclu(puanfarki);
-
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '4-0')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-1')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '2-2')) { carpan = -1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '1-3')) { carpan = -1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '0-4')) { carpan = -1; }
-
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-0')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '0-3')) { carpan = -1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '3-2')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 1 && (macSonuc === '2-3')) { carpan = -1; }
-
-
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '4-0')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-1')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '2-2')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '1-3')) { carpan = -1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '0-4')) { carpan = -1; }
-
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-0')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '0-3')) { carpan = -1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '3-2')) { carpan = 1; }
-        if (reytingiYuksekOyuncu === 2 && (macSonuc === '2-3')) { carpan = -1; }
-
+        reytingiYuksekOyuncu = oyuncu1_puan>oyuncu2_puan ? 1 : 2;
+ 
 
         macSonucAlan='x' + macSonuc.replace('-','_');
+        let yuksekRatinliIcinSonuc="";
+
+        let birinciOyuncuAldigiSetSayisi=parseInt(macSonucAlan.replace('x','').split('_')[0]);
+        let ikinciOyuncuAldigiSetSayisi=parseInt(macSonucAlan.replace('x','').split('_')[1]);
+        let mutlakSetFark=birinciOyuncuAldigiSetSayisi-ikinciOyuncuAldigiSetSayisi;
+
+        kazananOyuncu=this.IsaretDegerUclu(mutlakSetFark);
+
+        let kazananOyuncuSetSayisi=Math.max(birinciOyuncuAldigiSetSayisi, ikinciOyuncuAldigiSetSayisi);
+        let kaybedenOyuncuSetSayisi=Math.min(birinciOyuncuAldigiSetSayisi, ikinciOyuncuAldigiSetSayisi);
+
+        carpan=kazananOyuncu==1 ? 1 :-1;
+
+        if(reytingiYuksekOyuncu!=kazananOyuncu)
+            yuksekRatinliIcinSonuc='x' + kaybedenOyuncuSetSayisi + "_" + kazananOyuncuSetSayisi;
+        else
+            yuksekRatinliIcinSonuc='x' + kazananOyuncuSetSayisi  + "_" + kaybedenOyuncuSetSayisi;
+         
 
         if(this.ratingSistemKod==1)
-            alinanPuan = this.puanListObj[mutlakfarkPuanAralik][macSonucAlan] * carpan;
+            alinanPuan = this.puanListObj[mutlakfarkPuanAralik][yuksekRatinliIcinSonuc] * carpan;
 
             
         if(this.ratingSistemKod==2)
-            alinanPuan = this.puanListObj2[mutlakfarkPuanAralik][macSonucAlan] * carpan;
+            alinanPuan = this.puanListObj2[mutlakfarkPuanAralik][yuksekRatinliIcinSonuc] * carpan;
+          
 
         return alinanPuan;
 
@@ -127,7 +125,7 @@ export class MacFoyService {
 
     IsaretDegerUclu(sayi: number) {
         if (sayi > 0) { return 1; }
-        if (sayi === 0) { return 1; }
+        if (sayi === 0) { return 0; }
         if (sayi < 0) { return 2; }
 
     }

@@ -380,7 +380,7 @@ export class MacFoyComponent implements OnInit {
         skor = skor.replace('(', '').replace(')', '');
 
         let puan = this.macFoyServis.hesapla(selectedRow.MO_Puan, caprazRow.MO_Puan, skor);
-        let puan_capraz = this.macFoyServis.hesapla(caprazRow.MO_Puan, selectedRow.MO_Puan, skor);
+        let puan_capraz = this.macFoyServis.hesapla(caprazRow.MO_Puan, selectedRow.MO_Puan, this.SonucuTersCevir(skor));
 
         selectedRow[aktifSutun].Puan = puan;
 
@@ -389,6 +389,10 @@ export class MacFoyComponent implements OnInit {
         } else {
             caprazRow[caprazSutun] = new SkorDetay('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;', "");
         }
+
+
+
+
 
         this.macFoySolGuncelle();
 
