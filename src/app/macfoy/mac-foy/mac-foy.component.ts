@@ -362,40 +362,50 @@ export class MacFoyComponent implements OnInit {
 
 
 
-    macFoySkorlariGuncelle(selectedRow: MacSatir, aktifSutunKey: number) {
+    macFoySkorlariGuncelle(kendiSatir: MacSatir, aktifSutunKey: number) {
 
-        let aktifRowIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(selectedRow);
-        let caprazRow =  this.aktifMacFoy.Mac_Satirlari[aktifSutunKey - 1];
+        let aktifSatirIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(kendiSatir);
+        let rakipSatir =  this.aktifMacFoy.Mac_Satirlari[aktifSutunKey - 1];
 
-        let caprazRowIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(caprazRow);
+        let rakipSutun = 'C' + (aktifSatirIndex + 1).toString();
+        let kendiSutun = 'C' + aktifSutunKey.toString();
 
+        let kendiSkorDetay=kendiSatir[kendiSutun];
+        let rakipSkorDetay=rakipSatir[rakipSutun];
 
-        let caprazSutun = 'C' + (aktifRowIndex + 1).toString();
-        let aktifSutun = 'C' + aktifSutunKey.toString();
+        let skor_kendi = kendiSkorDetay.Skor;
+      
+        let karsilikliHukmenMi: boolean = skor_kendi.indexOf('(') >= 0;
 
-        let skor = selectedRow[aktifSutun].Skor;
+        skor_kendi = skor_kendi.replace('(', '').replace(')', '');
+        let skor_rakip=this.SkoruTersCevir(skor_kendi);
+       
 
-        let karsilikliHukmenMi: boolean = skor.indexOf('(') >= 0;
+        let puan_kendi = this.macFoyServis.hesapla(kendiSatir.MO_Puan, rakipSatir.MO_Puan, skor_kendi);
+        let puan_rakip = this.macFoyServis.hesapla(rakipSatir.MO_Puan, kendiSatir.MO_Puan, skor_rakip);
 
-        skor = skor.replace('(', '').replace(')', '');
-
-        let puan = this.macFoyServis.hesapla(selectedRow.MO_Puan, caprazRow.MO_Puan, skor);
-        let puan_capraz = this.macFoyServis.hesapla(caprazRow.MO_Puan, selectedRow.MO_Puan, this.SonucuTersCevir(skor));
-
-        selectedRow[aktifSutun].Puan = puan;
-
-        if (karsilikliHukmenMi) {
-            caprazRow[caprazSutun] = new SkorDetay('xx', '(' + skor.toString() + ')', puan_capraz, ' background-color: yellow;', "K.H.");
-        } else {
-            caprazRow[caprazSutun] = new SkorDetay('xx', this.SonucuTersCevir(skor), puan * (-1), ' background-color: yellow;', "");
-        }
+        let skor_rakip_kh='(' + skor_kendi.toString() + ')';
+        let puan_rakip_kh = this.macFoyServis.hesapla(rakipSatir.MO_Puan, kendiSatir.MO_Puan, skor_kendi);
 
 
+        kendiSkorDetay.Puan = puan_kendi;
 
+        this.SkorDetayGuncelle(rakipSkorDetay,'xx',skor_rakip, puan_rakip, ' background-color: yellow;', "");
 
+        if (karsilikliHukmenMi)
+            this.SkorDetayGuncelle(rakipSkorDetay,'xx', skor_rakip_kh, puan_rakip_kh, ' background-color: yellow;', "K.H.");
 
         this.macFoySolGuncelle();
+    }
 
+
+    public SkorDetayGuncelle(skorDetay:SkorDetay,oyuncuKod:string,skor:string,puan:number,sitil:string,aciklama:string)
+    {
+        skorDetay.OyuncuKod=oyuncuKod;
+        skorDetay.Skor=skor,
+        skorDetay.Puan=puan,
+        skorDetay.Sitil=sitil,
+        skorDetay.Aciklama=aciklama
     }
 
     macFoySolGuncelle(): void {
@@ -403,23 +413,23 @@ export class MacFoyComponent implements OnInit {
         let alinanPuan: number = 0;
         let oyuncuInx: number = 0;
 
-        for (let _row of this.aktifMacFoy.Mac_Satirlari) {
+        for (let _Satir of this.aktifMacFoy.Mac_Satirlari) {
             let alinanPuan = 0;
 
             oyuncuInx = 0;
             for (let _col of this.aktifMacFoy.EklenenOyuncuAdlari) {
                 oyuncuInx++;
-                alinanPuan = alinanPuan + _row['C' + oyuncuInx].Puan;
+                alinanPuan = alinanPuan + _Satir['C' + oyuncuInx].Puan;
             }
 
-            _row.AlinanTPuan = alinanPuan;
+            _Satir.AlinanTPuan = alinanPuan;
 
             // toplarken yanyana yazıyordu o yüzden
-            _row.MS_Puan = parseInt(_row.MO_Puan.toString()) +parseInt(alinanPuan.toString());
+            _Satir.MS_Puan = parseInt(_Satir.MO_Puan.toString()) +parseInt(alinanPuan.toString());
         }
     }
 
-    SonucuTersCevir(s: string) {
+    SkoruTersCevir(s: string) {
 
         if (s === '__') { return s; };
 
@@ -441,13 +451,13 @@ export class MacFoyComponent implements OnInit {
         var listOyuncu= new List<Oyuncu>(this.aktifOyuncular);
         var oyuncularHaftaRef =  this.af.list<Oyuncu>(this.oyuncularPath);
 
-        for (let row of  this.aktifMacFoy.Mac_Satirlari) 
+        for (let Satir of  this.aktifMacFoy.Mac_Satirlari) 
         {
-            var oyuncu= listOyuncu.Where(c=>c.OyuncuAdSoyad==row.OyuncuAdSoyad).First();
+            var oyuncu= listOyuncu.Where(c=>c.OyuncuAdSoyad==Satir.OyuncuAdSoyad).First();
             
             if( oyuncu.Haftalar===undefined) oyuncu.Haftalar=[];
         
-            oyuncu.Haftalar[this.hafta]=new HaftaPuan(row.MO_Puan,row.AlinanTPuan,row.MS_Puan);
+            oyuncu.Haftalar[this.hafta]=new HaftaPuan(Satir.MO_Puan,Satir.AlinanTPuan,Satir.MS_Puan);
             oyuncularHaftaRef.update(oyuncu["key"],oyuncu);
         }
         this._snackbar.open('Kayıt işlemi yapıldı', '', { duration: 400 });
@@ -463,18 +473,18 @@ export class MacFoyComponent implements OnInit {
         this._router.navigateByUrl(this.macfoyBasePath + "/" + this.hafta + "/" + this.grup);
     }
 
-    MacSil(_row: MacSatir) {
+    MacSil(_Satir: MacSatir) {
 
-        var colIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(_row);
+        var colIndex =  this.aktifMacFoy.Mac_Satirlari.indexOf(_Satir);
         var colCount =  this.aktifMacFoy.Mac_Satirlari.length;
 
 
-        for (let row of  this.aktifMacFoy.Mac_Satirlari) {
+        for (let Satir of  this.aktifMacFoy.Mac_Satirlari) {
             for (let i = colIndex + 1; i < colCount; i++) {
-                row["C" + i] = row["C" + (i + 1)];
+                Satir["C" + i] = Satir["C" + (i + 1)];
             }
 
-            row['C' + colCount] = null;
+            Satir['C' + colCount] = null;
 
         }
 
@@ -485,19 +495,19 @@ export class MacFoyComponent implements OnInit {
 
     }
 
-    satirKonumDegistir(row: MacSatir, indexYon: number) {
-        var index = this.aktifMacFoy.Mac_Satirlari.indexOf(row);
+    satirKonumDegistir(Satir: MacSatir, indexYon: number) {
+        var index = this.aktifMacFoy.Mac_Satirlari.indexOf(Satir);
 
-        var eskiRowIndex = index;
-        var aktifRowIndex = index + indexYon;
+        var eskiSatirIndex = index;
+        var aktifSatirIndex = index + indexYon;
 
-        if (aktifRowIndex >= this.aktifMacFoy.Mac_Satirlari.length || aktifRowIndex == -1) {
+        if (aktifSatirIndex >= this.aktifMacFoy.Mac_Satirlari.length || aktifSatirIndex == -1) {
 
             alert("Bu işlemi gerçekleştiremezsiniz");
             return;
         }
 
-        let element: MacSatir = this.aktifMacFoy.Mac_Satirlari[eskiRowIndex];
+        let element: MacSatir = this.aktifMacFoy.Mac_Satirlari[eskiSatirIndex];
 
 
         this.aktifMacFoy.Mac_Satirlari.splice(index, 1);
@@ -507,12 +517,12 @@ export class MacFoyComponent implements OnInit {
         this.aktifMacFoy.EklenenOyuncuAdlari.splice(index, 1);
         this.aktifMacFoy.EklenenOyuncuAdlari.splice(index + indexYon, 0, elementy);
 
-        var sutunIndex1 = aktifRowIndex;
-        var sutunIndex2 = aktifRowIndex + 1;
+        var sutunIndex1 = aktifSatirIndex;
+        var sutunIndex2 = aktifSatirIndex + 1;
 
         if (indexYon == -1) {
-            sutunIndex1 = aktifRowIndex + 1 + 1;
-            sutunIndex2 = aktifRowIndex + 1;
+            sutunIndex1 = aktifSatirIndex + 1 + 1;
+            sutunIndex2 = aktifSatirIndex + 1;
         }
 
 
@@ -531,46 +541,46 @@ export class MacFoyComponent implements OnInit {
     }
 
 
-    MacaGelmedi(_row: MacSatir) {
+    MacaGelmedi(_Satir: MacSatir) {
         let inx: number = 0;
-        if (_row.VarMi == false) {
-            _row.VarMi = true;
+        if (_Satir.VarMi == false) {
+            _Satir.VarMi = true;
 
             for (let _oy of this.aktifMacFoy.EklenenOyuncuAdlari) {
                 inx++;
-                if (_row['C' + inx].Skor != 'X-X') {
-                    _row['C' + inx].Aciklama = "";
-                    _row['C' + inx].Skor = "__";
+                if (_Satir['C' + inx].Skor != 'X-X') {
+                    _Satir['C' + inx].Aciklama = "";
+                    _Satir['C' + inx].Skor = "__";
                 }
 
-                this.macFoySkorlariGuncelle(_row, inx);
+                this.macFoySkorlariGuncelle(_Satir, inx);
 
             }
 
             return;
         }
 
-        _row.VarMi = false;
+        _Satir.VarMi = false;
 
-        var satirIndex =this.aktifMacFoy.Mac_Satirlari.indexOf(_row);
+        var satirIndex =this.aktifMacFoy.Mac_Satirlari.indexOf(_Satir);
 
         for (let _oy of this.aktifMacFoy.EklenenOyuncuAdlari) {
             inx++;
-            if (_row['C' + inx].Skor != 'X-X') {
-                _row['C' + inx].Skor = this.Ayarlar.MacaGelmemeSkoru;
+            if (_Satir['C' + inx].Skor != 'X-X') {
+                _Satir['C' + inx].Skor = this.Ayarlar.MacaGelmemeSkoru;
 
-                if (_row.VarMi == false && this.aktifMacFoy.Mac_Satirlari[inx - 1].VarMi == false) {
-                    _row['C' + (inx)].Skor = `(${this.Ayarlar.MacaGelmemeSkoru})`;
-                    _row['C' + (inx)].Aciklama = "K.H.";
+                if (_Satir.VarMi == false && this.aktifMacFoy.Mac_Satirlari[inx - 1].VarMi == false) {
+                    _Satir['C' + (inx)].Skor = `(${this.Ayarlar.MacaGelmemeSkoru})`;
+                    _Satir['C' + (inx)].Aciklama = "K.H.";
 
                     this.aktifMacFoy.Mac_Satirlari[inx - 1]["C" + (satirIndex + 1)].Aciklama = "K.H.";
                 }
 
-                this.macFoySkorlariGuncelle(_row, inx);
+                this.macFoySkorlariGuncelle(_Satir, inx);
             }
         }
 
-        _row.VarMi = false;
+        _Satir.VarMi = false;
 
 
 
@@ -578,12 +588,12 @@ export class MacFoyComponent implements OnInit {
 
 
 
-    MacOncesiPuanGuncellendi(selectedRow: MacSatir) {
-        let aktifRowIndex = this.aktifMacFoy.Mac_Satirlari.indexOf(selectedRow);
-        let caprazSutun = 'C' + (aktifRowIndex + 1).toString();
+    MacOncesiPuanGuncellendi(selectedSatir: MacSatir) {
+        let aktifSatirIndex = this.aktifMacFoy.Mac_Satirlari.indexOf(selectedSatir);
+        let rakipSutun = 'C' + (aktifSatirIndex + 1).toString();
 
-        for (let _row of this.aktifMacFoy.Mac_Satirlari) {
-            this.macFoySkorlariGuncelle(_row, aktifRowIndex + 1);
+        for (let _Satir of this.aktifMacFoy.Mac_Satirlari) {
+            this.macFoySkorlariGuncelle(_Satir, aktifSatirIndex + 1);
         }
     }
 
@@ -598,9 +608,9 @@ export class MacFoyComponent implements OnInit {
         }
     }
 
-    BonusDegisti(_row: MacSatir) {
+    BonusDegisti(_Satir: MacSatir) {
 
-        _row.MS_Puan = _row.MO_Puan + _row.AlinanTPuan + _row.BonusPuan;
+        _Satir.MS_Puan = _Satir.MO_Puan + _Satir.AlinanTPuan + _Satir.BonusPuan;
     }
 
 

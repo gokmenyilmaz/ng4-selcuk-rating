@@ -55,7 +55,11 @@ export class SkorDetay {
         public Sitil: string,
         public Aciklama: string
         )
-    { }
+    {       
+
+    }
+
+    
 }
 
 export class MacFoy {
