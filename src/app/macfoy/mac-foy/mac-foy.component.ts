@@ -25,8 +25,7 @@ import { map, filter, scan } from "rxjs/operators";
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { isDefined } from '@angular/compiler/src/util';
-import { Route } from '@angular/router/src/config';
-import { forEach } from '@angular/router/src/utils/collection';
+import { Route } from '@angular/router';
 
 
 @Component({

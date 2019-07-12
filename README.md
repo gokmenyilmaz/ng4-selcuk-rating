@@ -1,3 +1,6 @@
+Angular 8
+
+
 git config --global user.name "gokmen.yilmaz"
 git config --global user.email "gokmen1977@gmail.com"
 
