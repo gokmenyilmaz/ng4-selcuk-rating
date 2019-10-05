@@ -8,7 +8,7 @@
             </ng-template>
 
             <div class="container" >
-                <div fxLayout="row"  fxFlexFill fxLayout.lt-sm="column">
+                <div style="height: 10px" fxLayout="row"  fxFlexFill fxLayout.lt-sm="column">
                     <mat-card  fxFlex="75" fxLayoutGap="30px">
                         <mat-form-field   fxFlex="25">
                             <mat-select matInput placeholder="Hafta" [(ngModel)]="hafta" (ngModelChange)='haftaDegisti()'>
@@ -123,11 +123,9 @@
                             </td>
 
                             <td>
-                                <mat-form-field>
+                              
                                     <input matInput type="number" [(ngModel)]='row.MO_Puan' (ngModelChange)="MacOncesiPuanGuncellendi(row)" />
-                                </mat-form-field>
-
-
+                               
                             </td>
 
                             <td>
@@ -135,9 +133,9 @@
                             </td>
 
                             <td [hidden]='!gelismisMod'>
-                                <mat-form-field>
+                               
                                     <input matInput style="width:100%" type="number" [(ngModel)]='row.BonusPuan' (ngModelChange)='BonusDegisti(row)' />
-                                </mat-form-field>
+                              
                             </td>
 
                             <td style="border-right:6px double black;">
