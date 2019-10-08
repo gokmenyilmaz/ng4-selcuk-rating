@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase  } from '@angular/fire/database';
-import { Ayarlar } from 'app/Models/entityAll';
+import { Ayarlar } from 'app/models/entityAll';
 
 interface IPuanBilgi {
     Diff: number;

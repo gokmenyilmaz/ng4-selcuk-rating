@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase  } from '@angular/fire/database';
 
 import { Observable } from 'rxjs'
-import { Oyuncu, Ayarlar } from 'app/Models/entityAll';
+import { Oyuncu, Ayarlar } from 'app/models/entityAll';
 
 @Component({
   selector: 'app-dashboard',

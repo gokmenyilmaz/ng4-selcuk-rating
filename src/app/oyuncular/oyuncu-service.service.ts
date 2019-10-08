@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
 
-import { Oyuncu, MacSatir } from '../Models/entityAll';
-import { PuanTabloItem, SkorDetay } from '../Models/entityAll';
+import { Oyuncu, MacSatir } from '../models/entityAll';
+import { PuanTabloItem, SkorDetay } from '../models/entityAll';
 
 @Injectable()
 export class OyuncuService {

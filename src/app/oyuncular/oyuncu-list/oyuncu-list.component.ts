@@ -9,8 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import {MatIconModule} from '@angular/material/icon';
 
-import { Oyuncu, MacSatir, HaftaPuan } from '../../Models/entityAll';
-import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
+import { Oyuncu, MacSatir, HaftaPuan } from '../../models/entityAll';
+import { PuanTabloItem, SkorDetay } from '../../models/entityAll';
 
 
 

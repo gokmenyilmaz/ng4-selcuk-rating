@@ -8,8 +8,9 @@ import { FormsModule, FormGroup } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Oyuncu, MacSatir, MacFoy, HaftaPuan, Ayarlar } from '../../Models/entityAll';
-import { PuanTabloItem, SkorDetay } from '../../Models/entityAll';
+import { Oyuncu, MacSatir, MacFoy, HaftaPuan, Ayarlar } from '../../models/entityAll';
+import { PuanTabloItem, SkorDetay } from '../../models/entityAll';
+
 
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
