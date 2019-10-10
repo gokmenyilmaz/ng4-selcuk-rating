@@ -1,5 +1,7 @@
 Angular 8
 
+Travis CI
+
 
 git config --global user.name "gokmen.yilmaz"
 git config --global user.email "gokmen1977@gmail.com"
