@@ -1,7 +1,7 @@
 Angular 8
 
-Travis CI
-
+# Travis CI
+[![Build Status](https://travis-ci.com/gokmenyilmaz/ng5-selcuk-rating.svg?branch=master)](https://travis-ci.com/gokmenyilmaz/ng5-selcuk-rating)
 
 git config --global user.name "gokmen.yilmaz"
 git config --global user.email "gokmen1977@gmail.com"
