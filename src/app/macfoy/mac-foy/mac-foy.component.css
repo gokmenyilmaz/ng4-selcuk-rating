@@ -1,0 +1,183 @@
+    
+.mat-form-field-infix {
+    width: 10px!important
+}
+
+mat-card
+{
+   margin: 0px;
+   max-width: 100%!important;
+    padding: 5px;
+ 
+}
+     
+
+table {
+    border: 4px solid black !important;
+    /* table-layout: fixed;*/
+}
+
+.mat-option {
+    padding: 0 2px!important;
+}
+    
+
+    .siyah-zemin {
+        background-color: black !important;
+        width: 100%;
+        height: 45px;
+        border-radius: 5px;
+    }
+
+
+    a {
+        cursor: pointer;
+    }
+
+
+    .siyah {
+        background-color: black;
+    }
+
+
+    .kirmizi {
+        background-color: red;
+    }
+
+
+    .yesil {
+        background-color: green;
+    }
+
+
+    .sari {
+        background-color: yellow !important;
+    }
+
+
+    .A {
+        background-color: moccasin;
+    }
+
+
+    .B {
+        background-color: white;
+    }
+
+
+    .C {
+        background-color: lightskyblue;
+    }
+
+
+    .D {
+        background-color: white;
+    }
+
+
+    .E {
+        background-color:  moccasin;
+    }
+
+    .F {
+        background-color: white;
+    }
+
+    .G {
+        background-color: lightskyblue;
+    }
+
+    .H {
+        background-color: white;
+    }
+    /*-----skor tablo ------------------*/
+
+    div#skortablo-container {
+        overflow-x: auto;
+        margin-top: 10px;
+        padding: 5px;
+    }
+
+    table#skortablo {
+        table-layout: fixed;
+        width: 100%;
+        font-size: 0.90em;
+        zoom: 90%;
+
+        /*transform: scale(0.9,0.9)*/
+    }
+
+    table#skortablo .form-control {
+        padding: 2px!important;
+    }
+
+    th.grup1-oyuncu {
+        width: 100px;
+    }
+
+    th.grup1-mopuan,
+    th.grup1-mspuan {
+        width: 60px;
+    }
+
+    th.grup1-apuan {
+        width: 45px;
+    }
+
+    th.grup1-bonus {
+        width: 45px;
+    }
+
+
+    th.skor {
+        width: 60px;
+    }
+
+    th,
+    td button {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    table#skortablo .form-control {
+        padding: 1px!important;
+    }
+
+    table#skortablo input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    div#puanListeContainer {
+        padding: 5px;
+    }
+
+
+    .label-success
+    {
+        background-color: green;
+        color: white;
+        width: 20px;
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    .label-danger
+    {
+       
+         background-color: red;
+          color: white;
+        width: 20px;
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    .pull-right
+    {
+        float: right;
+    }
+
+    .form-control
+    {
+        width: 100%;
+    }
+
