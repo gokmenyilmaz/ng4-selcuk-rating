@@ -21,7 +21,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/favicon.png",
               "src/CNAME",
               "src/.nojekyll",
               "src/_config.yml",
