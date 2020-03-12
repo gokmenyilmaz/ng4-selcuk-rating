@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "ng6"
+  "defaultProject": "ng6",
+  "cli": {
+    "analytics": "711132fc-3614-4842-89b8-049edd2bf39f"
+  }
 }
